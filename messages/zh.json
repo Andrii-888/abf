@@ -1,0 +1,43 @@
+{
+  "header": {
+    "logo": "ABF",
+    "nav": {
+      "home": "首页",
+      "services": "服务",
+      "process": "流程",
+      "compliance": "合规",
+      "partners": "合作伙伴",
+      "contact": "联系我们"
+    },
+    "lang": { "title": "选择语言" }
+  },
+
+  "nav": {
+    "home": "首页",
+    "services": "服务",
+    "process": "流程",
+    "compliance": "合规",
+    "partners": "合作伙伴",
+    "contact": "联系我们",
+    "language": "选择语言"
+  },
+
+  "language": {
+    "title": "选择语言",
+    "subtitle": "切换站点语言",
+    "current": "当前",
+    "list": {
+      "en": "English",
+      "it": "Italiano",
+      "de": "Deutsch",
+      "fr": "Français",
+      "ru": "Русский",
+      "zh": "中文"
+    }
+  },
+
+  "home": {
+    "title": "欢迎使用 ABF",
+    "subtitle": "金融科技平台起步版"
+  }
+}

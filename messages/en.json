@@ -1,0 +1,43 @@
+{
+  "header": {
+    "logo": "ABF",
+    "nav": {
+      "home": "Home",
+      "services": "Services",
+      "process": "Process",
+      "compliance": "Compliance",
+      "partners": "Partners",
+      "contact": "Contact"
+    },
+    "lang": { "title": "Choose language" }
+  },
+
+  "nav": {
+    "home": "Home",
+    "services": "Services",
+    "process": "Process",
+    "compliance": "Compliance",
+    "partners": "Partners",
+    "contact": "Contact",
+    "language": "Choose language"
+  },
+
+  "language": {
+    "title": "Choose language",
+    "subtitle": "Switch the site language",
+    "current": "Current",
+    "list": {
+      "en": "English",
+      "it": "Italiano",
+      "de": "Deutsch",
+      "fr": "Français",
+      "ru": "Русский",
+      "zh": "中文"
+    }
+  },
+
+  "home": {
+    "title": "Welcome to ABF",
+    "subtitle": "Fintech platform starter"
+  }
+}

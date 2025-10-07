@@ -1,0 +1,43 @@
+{
+  "header": {
+    "logo": "ABF",
+    "nav": {
+      "home": "Accueil",
+      "services": "Services",
+      "process": "Processus",
+      "compliance": "Conformité",
+      "partners": "Partenaires",
+      "contact": "Contact"
+    },
+    "lang": { "title": "Choisir la langue" }
+  },
+
+  "nav": {
+    "home": "Accueil",
+    "services": "Services",
+    "process": "Processus",
+    "compliance": "Conformité",
+    "partners": "Partenaires",
+    "contact": "Contact",
+    "language": "Choisir la langue"
+  },
+
+  "language": {
+    "title": "Choisir la langue",
+    "subtitle": "Changer la langue du site",
+    "current": "Actuelle",
+    "list": {
+      "en": "English",
+      "it": "Italiano",
+      "de": "Deutsch",
+      "fr": "Français",
+      "ru": "Русский",
+      "zh": "中文"
+    }
+  },
+
+  "home": {
+    "title": "Bienvenue sur ABF",
+    "subtitle": "Plateforme fintech de démarrage"
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "header": {
+    "logo": "ABF",
+    "nav": {
+      "home": "Главная",
+      "services": "Услуги",
+      "process": "Процесс",
+      "compliance": "Комплаенс",
+      "partners": "Партнёры",
+      "contact": "Контакты"
+    },
+    "lang": { "title": "Выбрать язык" }
+  },
+
+  "nav": {
+    "home": "Главная",
+    "services": "Услуги",
+    "process": "Процесс",
+    "compliance": "Комплаенс",
+    "partners": "Партнёры",
+    "contact": "Контакты",
+    "language": "Выбрать язык"
+  },
+
+  "language": {
+    "title": "Выбор языка",
+    "subtitle": "Переключите язык сайта",
+    "current": "Текущий",
+    "list": {
+      "en": "English",
+      "it": "Italiano",
+      "de": "Deutsch",
+      "fr": "Français",
+      "ru": "Русский",
+      "zh": "中文"
+    }
+  },
+
+  "home": {
+    "title": "Добро пожаловать в ABF",
+    "subtitle": "Стартовая финтех-платформа"
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "header": {
+    "logo": "ABF",
+    "nav": {
+      "home": "Startseite",
+      "services": "Leistungen",
+      "process": "Ablauf",
+      "compliance": "Compliance",
+      "partners": "Partner",
+      "contact": "Kontakt"
+    },
+    "lang": { "title": "Sprache wählen" }
+  },
+
+  "nav": {
+    "home": "Startseite",
+    "services": "Leistungen",
+    "process": "Ablauf",
+    "compliance": "Compliance",
+    "partners": "Partner",
+    "contact": "Kontakt",
+    "language": "Sprache wählen"
+  },
+
+  "language": {
+    "title": "Sprache wählen",
+    "subtitle": "Website-Sprache ändern",
+    "current": "Aktuell",
+    "list": {
+      "en": "English",
+      "it": "Italiano",
+      "de": "Deutsch",
+      "fr": "Français",
+      "ru": "Русский",
+      "zh": "中文"
+    }
+  },
+
+  "home": {
+    "title": "Willkommen bei ABF",
+    "subtitle": "Fintech-Startplattform"
+  }
+}
