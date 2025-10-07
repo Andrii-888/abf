@@ -8,9 +8,15 @@ export default async function LocaleLayout({
   params,
 }: {
   children: React.ReactNode;
-  params: { locale: string };
+  // В Next 15 params типизирован как Promise<T> | undefined
+  params?: Promise<{ locale?: string }>;
 }) {
-  const locale = params.locale;
+  // Распаковываем params (в деве часто объект, в проде — Promise)
+  const resolved = (await (params ?? Promise.resolve({ locale: "en" }))) || {
+    locale: "en",
+  };
+  const locale = typeof resolved.locale === "string" ? resolved.locale : "en";
+
   setRequestLocale(locale);
 
   const { messages } = await getRequestConfig({
@@ -20,7 +26,7 @@ export default async function LocaleLayout({
   return (
     <NextIntlClientProvider locale={locale} messages={messages}>
       <SiteHeader />
-      {/* отступ под фиксированный header: h-14 md:h-16 */}
+      {/* отступ под фиксированный header */}
       <div className="pt-14 md:pt-16">{children}</div>
     </NextIntlClientProvider>
   );
