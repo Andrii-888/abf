@@ -1,33 +1,33 @@
 import { NextIntlClientProvider } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import getRequestConfig from "@/i18n/request";
-import SiteHeader from "@/components/layout/SiteHeader";
+import Chrome from "@/components/layout/Chrome";
 
 export default async function LocaleLayout({
   children,
   params,
 }: {
   children: React.ReactNode;
-  // В Next 15 params типизирован как Promise<T> | undefined
   params?: Promise<{ locale?: string }>;
 }) {
-  // Распаковываем params (в деве часто объект, в проде — Promise)
+  // 👇 Распаковываем locale
   const resolved = (await (params ?? Promise.resolve({ locale: "en" }))) || {
     locale: "en",
   };
   const locale = typeof resolved.locale === "string" ? resolved.locale : "en";
 
+  // 👇 Фиксируем locale для next-intl
   setRequestLocale(locale);
 
+  // 👇 Загружаем переводы
   const { messages } = await getRequestConfig({
     requestLocale: Promise.resolve(locale),
   });
 
+  // 👇 Оборачиваем всё в Chrome
   return (
     <NextIntlClientProvider locale={locale} messages={messages}>
-      <SiteHeader />
-      {/* отступ под фиксированный header */}
-      <div className="pt-14 md:pt-16">{children}</div>
+      <Chrome>{children}</Chrome>
     </NextIntlClientProvider>
   );
 }

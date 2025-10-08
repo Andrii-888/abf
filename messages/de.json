@@ -37,7 +37,43 @@
   },
 
   "home": {
-    "title": "Willkommen bei ABF",
-    "subtitle": "Fintech-Startplattform"
+    "hero": {
+      "slogan": "Ihr vertrauenswürdiger Partner für digitale und reale Vermögenswerte.",
+      "desc1": "Wir begleiten Transaktionen zwischen Kryptowährungen, Fiat-Währungen und Gold – mit professioneller Beratung und Sicherheit auf jedem Schritt.",
+      "desc2": "Individuelle Begleitung im Einklang mit den Compliance-Anforderungen, Schritt für Schritt.",
+      "bullets": {
+        "b1": "Persönliche Beratung und Szenarienplanung",
+        "b2": "KYC/AML-Checkliste und Vorprüfung",
+        "b3": "Individuelle Kundenbetreuung bei jeder Transaktion",
+        "b4": "Umfassende Unterstützung durch unser lizenziertes Partnernetzwerk"
+      },
+      "ctaPrimary": "Beratung anfordern"
+    },
+    "features": {
+      "f1": {
+        "title": "Compliance und Sicherheit",
+        "text": "Transparente KYC/AML-Verfahren gemäß Schweizer Gesetzgebung."
+      },
+      "f2": {
+        "title": "Persönlicher Expertenansatz",
+        "text": "Schritt-für-Schritt-Begleitung durch unsere Spezialisten."
+      },
+      "f3": {
+        "title": "Multi-Asset-Flexibilität",
+        "text": "Nahtlose Konvertierung zwischen Krypto, Fiat und Gold."
+      },
+      "f4": {
+        "title": "Professionelles Ökosystem",
+        "text": "Zuverlässige Unterstützung bei Transaktionen mit Vermögenswerten und Immobilien."
+      }
+    }
+  },
+  "footer": {
+    "copyright": "© {year} ABF. Alle Rechte vorbehalten.",
+    "links": {
+      "privacy": "Datenschutzrichtlinie",
+      "terms": "Nutzungsbedingungen",
+      "contact": "Kontakt"
+    }
   }
 }

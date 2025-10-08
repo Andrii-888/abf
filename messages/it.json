@@ -37,7 +37,43 @@
   },
 
   "home": {
-    "title": "Benvenuto su ABF",
-    "subtitle": "Piattaforma fintech iniziale"
+    "hero": {
+      "slogan": "Il tuo partner di fiducia nel mondo degli asset digitali e reali.",
+      "desc1": "Accompagniamo le operazioni tra criptovalute, valute fiat e oro, garantendo consulenza professionale e sicurezza in ogni fase.",
+      "desc2": "Assistenza personalizzata in conformità ai requisiti normativi, con un processo chiaro e passo dopo passo.",
+      "bullets": {
+        "b1": "Consulenza personale e pianificazione degli scenari",
+        "b2": "Checklist KYC/AML e verifica preliminare",
+        "b3": "Assistenza individuale per ogni transazione",
+        "b4": "Supporto completo tramite una rete di partner autorizzati"
+      },
+      "ctaPrimary": "Richiedi una consulenza"
+    },
+    "features": {
+      "f1": {
+        "title": "Conformità e Sicurezza",
+        "text": "Procedure KYC/AML trasparenti in piena conformità con la legislazione svizzera."
+      },
+      "f2": {
+        "title": "Approccio Esperto Personale",
+        "text": "Incontri con i nostri specialisti per un accompagnamento passo dopo passo."
+      },
+      "f3": {
+        "title": "Flessibilità Multi-Asset",
+        "text": "Conversione fluida tra criptovalute, valute fiat e oro."
+      },
+      "f4": {
+        "title": "Ecosistema Professionale",
+        "text": "Supporto affidabile per operazioni su asset e immobili."
+      }
+    }
+  },
+  "footer": {
+    "copyright": "© {year} ABF. Tutti i diritti riservati.",
+    "links": {
+      "privacy": "Informativa sulla privacy",
+      "terms": "Termini di servizio",
+      "contact": "Contatto"
+    }
   }
 }

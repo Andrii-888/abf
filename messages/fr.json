@@ -37,7 +37,43 @@
   },
 
   "home": {
-    "title": "Bienvenue sur ABF",
-    "subtitle": "Plateforme fintech de démarrage"
+    "hero": {
+      "slogan": "Votre partenaire de confiance dans le monde des actifs numériques et réels.",
+      "desc1": "Nous accompagnons vos transactions entre cryptomonnaies, devises fiat et or, en garantissant expertise et sécurité à chaque étape.",
+      "desc2": "Un accompagnement personnalisé conforme aux exigences réglementaires, étape par étape.",
+      "bullets": {
+        "b1": "Consultation personnalisée et planification de scénarios",
+        "b2": "Checklist KYC/AML et vérification préliminaire",
+        "b3": "Accompagnement individuel pour chaque opération",
+        "b4": "Soutien complet grâce à un réseau de partenaires agréés"
+      },
+      "ctaPrimary": "Obtenir une consultation"
+    },
+    "features": {
+      "f1": {
+        "title": "Conformité et Sécurité",
+        "text": "Procédures KYC/AML transparentes conformément à la législation suisse."
+      },
+      "f2": {
+        "title": "Approche d’Expert Personnel",
+        "text": "Un suivi pas à pas avec nos spécialistes."
+      },
+      "f3": {
+        "title": "Flexibilité Multi-Actifs",
+        "text": "Conversion fluide entre crypto, fiat et or."
+      },
+      "f4": {
+        "title": "Écosystème Professionnel",
+        "text": "Un accompagnement fiable pour vos opérations sur actifs et immobilier."
+      }
+    }
+  },
+  "footer": {
+    "copyright": "© {year} ABF. Tous droits réservés.",
+    "links": {
+      "privacy": "Politique de confidentialité",
+      "terms": "Conditions d’utilisation",
+      "contact": "Contact"
+    }
   }
 }
