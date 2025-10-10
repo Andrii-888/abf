@@ -12,7 +12,6 @@ export default function SiteHeader() {
   const t = useTranslations("nav");
   const pathname = usePathname();
 
-  // Локаленеутральные ключи для переводов пунктов меню
   const hrefToKey: Record<string, string> = {
     "/": "home",
     "/services": "services",
@@ -34,7 +33,7 @@ export default function SiteHeader() {
     };
   }, [open]);
 
-  // Закрывать меню при навигации (если меняется путь)
+  // Закрывать меню при навигации
   useEffect(() => {
     if (open) setOpen(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -47,7 +46,7 @@ export default function SiteHeader() {
                    bg-[linear-gradient(90deg,#f5f5f7cc,#f3f6ffcc,#f5f5f7cc)] backdrop-blur-md"
       >
         <div className="relative mx-auto flex h-full max-w-6xl items-center px-4">
-          {/* Логотип (слева) */}
+          {/* Логотип */}
           <Link
             href="/"
             className="flex items-center space-x-2"
@@ -64,12 +63,12 @@ export default function SiteHeader() {
             />
           </Link>
 
-          {/* Центр: меню (desktop) */}
+          {/* Меню (desktop) */}
           <nav className="absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 items-center gap-6 text-sm text-gray-700 md:flex">
             {NAV_LINKS.map((i) => (
               <Link
                 key={i.href}
-                href={i.href} // локаленеутрально
+                href={i.href}
                 className="hover:text-gray-900 transition-colors"
               >
                 {t(hrefToKey[i.href] ?? "") || i.label}
@@ -77,8 +76,9 @@ export default function SiteHeader() {
             ))}
           </nav>
 
-          {/* Справа: язык (всегда) + бургер (только mobile) */}
-          <div className="ml-auto flex items-center gap-2">
+          {/* Правый блок: язык + бургер */}
+          <div className="ml-auto flex items-center gap-2 pr-3 sm:pr-4">
+            {/* Язык */}
             <Link
               href="/language"
               aria-label="Select language"
@@ -89,6 +89,7 @@ export default function SiteHeader() {
               <Globe className="h-5 w-5 sm:h-6 sm:w-6 text-gray-800" />
             </Link>
 
+            {/* Бургер */}
             <button
               aria-label="Open menu"
               onClick={() => setOpen(true)}
@@ -100,7 +101,7 @@ export default function SiteHeader() {
         </div>
       </header>
 
-      {/* Fullscreen меню (mobile, светлое) */}
+      {/* Мобильное меню */}
       <div
         aria-hidden={!open}
         className={`fixed inset-0 z-[60] md:hidden transition-opacity duration-300 ${
@@ -112,7 +113,7 @@ export default function SiteHeader() {
         {/* фон */}
         <div className="absolute inset-0 bg-[linear-gradient(180deg,#ffffff_0%,#f6f7fb_100%)] backdrop-blur-sm" />
 
-        {/* Шапка меню: логотип + крестик */}
+        {/* Шапка меню */}
         <div className="relative z-10 mx-auto flex w-full max-w-6xl items-center justify-between px-4 py-3">
           <Link
             href="/"
@@ -139,7 +140,7 @@ export default function SiteHeader() {
           </button>
         </div>
 
-        {/* Список ссылок */}
+        {/* Ссылки */}
         <nav
           className={`relative z-10 mx-auto flex h-[calc(100vh-64px)] w-full max-w-6xl flex-col items-center justify-center gap-6 px-6 text-2xl font-medium text-gray-800 transition-opacity duration-300 ${
             open ? "opacity-100" : "opacity-0"

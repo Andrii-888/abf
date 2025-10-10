@@ -16,16 +16,15 @@ export default function HeroLeft() {
       {/* Brand */}
       <h1
         className="
-    block mx-auto
-    text-3xl sm:text-3xl lg:text-4xl font-bold tracking-tight leading-[1.18]
-    pb-1
-    bg-gradient-to-r from-[var(--color-fiat)] via-[var(--color-crypto)] to-[var(--color-gold)]
-    bg-clip-text text-transparent [-webkit-text-fill-color:transparent]
-
-    text-center                        /* центр по умолчанию (мобилка) */
-    sm:mt-6                            /* отступ сверху для планшета */
-    md:w-full md:text-center md:mt-10  /* по центру на десктопе + чуть больше отступ */
-  "
+          block mx-auto
+          text-3xl sm:text-3xl lg:text-4xl font-bold tracking-tight leading-[1.18]
+          pb-1
+          bg-gradient-to-r from-[var(--color-fiat)] via-[var(--color-crypto)] to-[var(--color-gold)]
+          bg-clip-text text-transparent [-webkit-text-fill-color:transparent]
+          text-center
+          sm:mt-6
+          md:w-full md:text-center md:mt-10
+        "
       >
         AlpineBridgeFinance
       </h1>
@@ -72,7 +71,8 @@ export default function HeroLeft() {
           {t("ctaPrimary")}
         </a>
 
-        <div className="mt-3 sm:mt-0 flex justify-center sm:justify-start sm:pl-12">
+        {/* QR-код виден только на десктопе */}
+        <div className="hidden lg:flex mt-3 sm:mt-0 justify-center sm:justify-start sm:pl-12">
           <ClickShield selector="#qr-zone" />
           <div
             id="qr-zone"
