@@ -46,11 +46,13 @@ export default function SiteHeader() {
                    bg-[linear-gradient(90deg,#f5f5f7cc,#f3f6ffcc,#f5f5f7cc)] backdrop-blur-md"
       >
         <div className="relative mx-auto flex h-full max-w-6xl items-center px-4">
-          {/* Логотип */}
+          {/* Логотип: на мобиле скрываем, когда меню open=true; на десктопе всегда виден */}
           <Link
             href="/"
-            className="flex items-center space-x-2"
             aria-label="AlpineBridgeFinance — Home"
+            className={`${
+              open ? "hidden" : "flex"
+            } md:flex items-center space-x-2`}
           >
             <Image
               src="/logo.png"
@@ -92,6 +94,7 @@ export default function SiteHeader() {
             {/* Бургер */}
             <button
               aria-label="Open menu"
+              aria-expanded={open}
               onClick={() => setOpen(true)}
               className="inline-flex md:hidden items-center justify-center p-2 text-gray-900 hover:opacity-70 focus:outline-none"
             >
@@ -101,7 +104,7 @@ export default function SiteHeader() {
         </div>
       </header>
 
-      {/* Мобильное меню */}
+      {/* Мобильное меню (без логотипа в оверлее) */}
       <div
         aria-hidden={!open}
         className={`fixed inset-0 z-[60] md:hidden transition-opacity duration-300 ${
@@ -113,36 +116,18 @@ export default function SiteHeader() {
         {/* фон */}
         <div className="absolute inset-0 bg-[linear-gradient(180deg,#ffffff_0%,#f6f7fb_100%)] backdrop-blur-sm" />
 
-        {/* Шапка меню */}
-        <div className="relative z-10 mx-auto flex w-full max-w-6xl items-center justify-between px-4 py-3">
-          <Link
-            href="/"
-            aria-label="AlpineBridgeFinance — Home"
-            className="flex items-center space-x-2"
-            onClick={() => setOpen(false)}
-          >
-            <Image
-              src="/logo.png"
-              alt="AlpineBridgeFinance"
-              width={160}
-              height={56}
-              className="h-10 w-auto"
-              priority
-            />
-          </Link>
+        {/* Кнопка закрытия — в правом верхнем углу, без логотипа */}
+        <button
+          aria-label="Close menu"
+          onClick={() => setOpen(false)}
+          className="absolute right-4 top-3 z-20 inline-flex items-center justify-center p-2 text-gray-900 hover:opacity-70 focus:outline-none"
+        >
+          <X className="h-6 w-6" />
+        </button>
 
-          <button
-            aria-label="Close menu"
-            onClick={() => setOpen(false)}
-            className="inline-flex items-center justify-center p-2 text-gray-900 hover:opacity-70 focus:outline-none"
-          >
-            <X className="h-6 w-6" />
-          </button>
-        </div>
-
-        {/* Ссылки */}
+        {/* Ссылки — только они видны в меню */}
         <nav
-          className={`relative z-10 mx-auto flex h-[calc(100vh-64px)] w-full max-w-6xl flex-col items-center justify-center gap-6 px-6 text-2xl font-medium text-gray-800 transition-opacity duration-300 ${
+          className={`relative z-10 mx-auto flex h-full w-full max-w-6xl flex-col items-center justify-center gap-6 px-6 text-2xl font-medium text-gray-800 transition-opacity duration-300 ${
             open ? "opacity-100" : "opacity-0"
           } md:text-3xl`}
         >
