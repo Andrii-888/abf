@@ -1,0 +1,10 @@
+{
+  "footer": {
+    "copyright": "© {year} ABF. All rights reserved.",
+    "links": {
+      "privacy": "Privacy Policy",
+      "terms": "Terms of Service",
+      "contact": "Contact"
+    }
+  }
+}

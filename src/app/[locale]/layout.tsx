@@ -10,24 +10,48 @@ export default async function LocaleLayout({
   children: React.ReactNode;
   params?: Promise<{ locale?: string }>;
 }) {
-  // 👇 Распаковываем locale
+  // --- 1. Извлекаем локаль из параметров URL (или по умолчанию "en")
   const resolved = (await (params ?? Promise.resolve({ locale: "en" }))) || {
     locale: "en",
   };
-  const locale = typeof resolved.locale === "string" ? resolved.locale : "en";
 
-  // 👇 Фиксируем locale для next-intl
+  const locale =
+    typeof resolved.locale === "string" && resolved.locale.trim() !== ""
+      ? resolved.locale
+      : "en";
+
+  // --- 2. Устанавливаем текущую локаль для SSR
   setRequestLocale(locale);
 
-  // 👇 Загружаем переводы
-  const { messages } = await getRequestConfig({
-    requestLocale: Promise.resolve(locale),
-  });
+  // --- 3. Загружаем переводы из messages/{locale}.json
+  let messages;
+  try {
+    const config = await getRequestConfig({
+      requestLocale: Promise.resolve(locale),
+    });
+    messages = config.messages;
+  } catch (error) {
+    console.warn(
+      `⚠️ Missing translation for locale "${locale}", fallback → en`
+    );
+    const fallback = await getRequestConfig({
+      requestLocale: Promise.resolve("en"),
+    });
+    messages = fallback.messages;
+  }
 
-  // 👇 Оборачиваем всё в Chrome
+  // --- 4. Возвращаем разметку
   return (
-    <NextIntlClientProvider locale={locale} messages={messages}>
-      <Chrome>{children}</Chrome>
-    </NextIntlClientProvider>
+    <html lang={locale} translate="no">
+      <body>
+        <NextIntlClientProvider
+          key={locale} // 🔑 фикс гидрации при смене языка
+          locale={locale}
+          messages={messages}
+        >
+          <Chrome>{children}</Chrome>
+        </NextIntlClientProvider>
+      </body>
+    </html>
   );
 }

@@ -6,27 +6,24 @@ import SiteFooter from "@/components/layout/SiteFooter";
 
 /**
  * Обёртка хрома приложения.
- * Скрывает Header/Footer на /language (локалепрефикс уже убран next-intl usePathname)
- * и показывает на всех остальных страницах.
+ * На /language скрывает Header/Footer. На остальных — sticky footer.
  */
 export default function Chrome({ children }: { children: React.ReactNode }) {
-  // next-intl возвращает pathname БЕЗ префикса локали (на /en/language -> "/language")
   const pathname = usePathname() || "/";
-
-  const segments = pathname.split("/").filter(Boolean); // ['language'] | ['services'] | []
-  const isLanguagePage = segments[0] === "language"; // ключевое отличие
+  const segments = pathname.split("/").filter(Boolean);
+  const isLanguagePage = segments[0] === "language";
 
   if (isLanguagePage) {
-    // Никакого Header/Footer и без отступа
+    // Без хедера/футера (например, для селектора языка)
     return <>{children}</>;
   }
 
-  // Обычный режим с хедером/футером
+  // Sticky footer + отступ под фиксированный хедер (h-14 / md:h-16)
   return (
-    <>
+    <div className="flex min-h-screen flex-col">
       <SiteHeader />
-      <main className="pt-[56px] md:pt-[64px]">{children}</main>
+      <main className="flex-1 pt-14 md:pt-16">{children}</main>
       <SiteFooter />
-    </>
+    </div>
   );
 }

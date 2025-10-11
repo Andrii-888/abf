@@ -1,41 +1,4 @@
 {
-  "header": {
-    "logo": "ABF",
-    "nav": {
-      "home": "Home",
-      "services": "Services",
-      "process": "Process",
-      "compliance": "Compliance",
-      "partners": "Partners",
-      "contact": "Contact"
-    },
-    "lang": { "title": "Choose language" }
-  },
-
-  "nav": {
-    "home": "Home",
-    "services": "Services",
-    "process": "Process",
-    "compliance": "Compliance",
-    "partners": "Partners",
-    "contact": "Contact",
-    "language": "Choose language"
-  },
-
-  "language": {
-    "title": "Choose language",
-    "subtitle": "Switch the site language",
-    "current": "Current",
-    "list": {
-      "en": "English",
-      "it": "Italiano",
-      "de": "Deutsch",
-      "fr": "Français",
-      "ru": "Русский",
-      "zh": "中文"
-    }
-  },
-
   "home": {
     "hero": {
       "slogan": "Your trusted partner in the world of digital and real assets.",
@@ -66,15 +29,6 @@
         "title": "Professional Ecosystem",
         "text": "Reliable support for asset and real-estate transactions."
       }
-    }
-  },
-  
-  "footer": {
-    "copyright": "© {year} ABF. All rights reserved.",
-    "links": {
-      "privacy": "Privacy Policy",
-      "terms": "Terms of Service",
-      "contact": "Contact"
     }
   }
 }

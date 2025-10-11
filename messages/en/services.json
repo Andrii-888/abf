@@ -1,0 +1,49 @@
+{
+  "services": {
+    "hero": {
+      "title": "Comprehensive Deal Support",
+      "desc1": "We accompany transactions in a secure environment — from standard exchanges to tailored payment scenarios for your case.",
+      "desc2": "Security",
+      "desc3": "Transparency",
+      "desc4": "Reliability",
+      "ctaPrimary": "Submit a request",
+      "ctaSecondary": "How it works",
+      "badges": {
+        "b1": "Compliance-first",
+        "b2": "KYC/AML guidance",
+        "b3": "Trusted partners",
+        "b4": "Clear timelines"
+      }
+    },
+    "value": {
+      "title": "Our services",
+      "subtitle": "We act as your trusted guide.",
+      "cards": {
+        "c1": {
+          "title": "Personal consultation",
+          "text": "A smart scenario tailored to your case — logical, secure, step by step."
+        },
+        "c2": {
+          "title": "KYC/AML readiness",
+          "text": "Document checklist, timelines, and expectations aligned with Swiss standards."
+        },
+        "c3": {
+          "title": "Office-based deals",
+          "text": "Meet in our offices. Professional environment and secure workflow."
+        },
+        "c4": {
+          "title": "Partner network",
+          "text": "Banks, notaries, lawyers, and real-estate experts for complex transactions."
+        },
+        "c5": {
+          "title": "Risk & compliance",
+          "text": "We explain requirements, reduce friction, and keep the process transparent."
+        },
+        "c6": {
+          "title": "Time-boxed process",
+          "text": "A clear, step-by-step path with realistic timing at every stage."
+        }
+      }
+    }
+  }
+}
