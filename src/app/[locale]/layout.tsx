@@ -30,7 +30,7 @@ export default async function LocaleLayout({
       requestLocale: Promise.resolve(locale),
     });
     messages = config.messages;
-  } catch (error) {
+  } catch {
     console.warn(
       `⚠️ Missing translation for locale "${locale}", fallback → en`
     );
@@ -45,7 +45,7 @@ export default async function LocaleLayout({
     <html lang={locale} translate="no">
       <body>
         <NextIntlClientProvider
-          key={locale} // 🔑 фикс гидрации при смене языка
+          key={locale}
           locale={locale}
           messages={messages}
         >
