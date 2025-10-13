@@ -4,6 +4,7 @@ export const runtime = "nodejs";
 
 import { promises as fs } from "node:fs";
 import path from "node:path";
+import Link from "next/link";
 import {
   Handshake,
   ShieldCheck,
@@ -113,10 +114,7 @@ export default async function PartnersPage({
       {/* Кого ищем / категории партнёров */}
       {dict.partnerCategories?.length > 0 && (
         <section className="mb-10">
-          <h2 className="text-lg font-semibold mb-4">
-            {/* подзаголовок можно держать в JSON при желании */}
-            Категории партнёров
-          </h2>
+          <h2 className="text-lg font-semibold mb-4">Категории партнёров</h2>
           <div className="grid gap-4 sm:grid-cols-2 items-stretch auto-rows-fr">
             {dict.partnerCategories.map((c, i) => (
               <div
@@ -168,13 +166,13 @@ export default async function PartnersPage({
       <section className="text-center">
         <h3 className="text-lg font-semibold">{dict.cta.title}</h3>
         <div className="mt-4 flex items-center justify-center gap-3">
-          <a
-            href="/contact"
+          <Link
+            href={`/${locale}/contact`}
             className="inline-flex items-center gap-2 rounded-xl px-4 py-2 font-medium bg-gradient-to-r from-[var(--color-fiat)] via-[var(--color-crypto)] to-[var(--color-gold)] text-white shadow-md hover:opacity-90 transition"
           >
             <Mail className="h-4 w-4" />
             {dict.cta.buttonText}
-          </a>
+          </Link>
         </div>
         {dict.cta.contactNote && (
           <p className="mt-3 text-xs text-slate-600">{dict.cta.contactNote}</p>
