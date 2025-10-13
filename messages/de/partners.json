@@ -1,1 +1,59 @@
-{}
+{
+  "title": "Partnerschaft, die Ergebnisse liefert.",
+  "subtitle": "Wir arbeiten in einem Netzwerk lizenzierter Schweizer Intermediäre und Fachexperten. Schließen Sie sich an und erweitern Sie Ihr Leistungsangebot für Kunden.",
+  "highlights": [
+    {
+      "title": "Zertifiziertes Netzwerk",
+      "desc": "Transaktionen erfolgen über lizenzierte Schweizer Partner unter Einhaltung von KYC/AML und Vertraulichkeitsstandards.",
+      "icon": "ShieldCheck"
+    },
+    {
+      "title": "Schlüsselfertige B2B-Szenarien",
+      "desc": "Krypto ⇄ Fiat, Gold, Immobilien — fertige Prozesse mit Unterstützung in jedem Schritt.",
+      "icon": "Handshake"
+    },
+    {
+      "title": "Transparente Vergütungen",
+      "desc": "Klares Partnervergütungsmodell und nachvollziehbare Spielregeln.",
+      "icon": "Banknote"
+    }
+  ],
+  "partnerCategories": [
+    {
+      "title": "Agenten & Berater",
+      "desc": "Empfehlungsmodell für unabhängige Berater, Trader und Finanzintermediäre."
+    },
+    {
+      "title": "Anwälte & Notare",
+      "desc": "Kundenbetreuung bei Asset-Transaktionen und Dokumentation, Integration in laufende Fälle."
+    },
+    {
+      "title": "Immobilien & Broker",
+      "desc": "Annahme von Krypto mit legaler Konvertierung in CHF/EUR/USD/GBP für Immobilientransaktionen."
+    },
+    {
+      "title": "Finanz- & Wechselservices",
+      "desc": "Erweitern Sie Ihr Portfolio durch gemeinsame Operationen mit transparentem KYC/AML."
+    }
+  ],
+  "howTo": [
+    {
+      "title": "Kontakt aufnehmen",
+      "desc": "Beschreiben Sie Fälle und Kundenregionen. Wir schlagen ein Setup vor."
+    },
+    {
+      "title": "Modell abstimmen",
+      "desc": "Referral, White-Label oder Partner-Integration — wir wählen das optimale Format."
+    },
+    {
+      "title": "Start & Support",
+      "desc": "Prozesse, Playbooks und Kommunikation aufsetzen. Laufende Unterstützung bei Deals."
+    }
+  ],
+  "cta": {
+    "title": "Bereit, über eine Partnerschaft zu sprechen?",
+    "buttonText": "Kontaktieren Sie uns",
+    "contactNote": "Schreiben Sie per Messenger oder E-Mail — wir antworten zügig."
+  },
+  "legalNote": "Wir nehmen keine Kundengelder an und erteilen keine Anlageberatung. Alle Operationen erfolgen über lizenzierte Partner gemäß Schweizer Recht."
+}

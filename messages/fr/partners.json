@@ -1,1 +1,59 @@
-{}
+{
+  "title": "Un partenariat qui porte ses fruits.",
+  "subtitle": "Nous opérons au sein d’un réseau d’intermédiaires suisses agréés et d’experts sectoriels. Rejoignez-nous et élargissez votre offre pour vos clients.",
+  "highlights": [
+    {
+      "title": "Réseau certifié",
+      "desc": "Les opérations sont effectuées via des partenaires suisses agréés, dans le respect des normes KYC/AML et de la confidentialité.",
+      "icon": "ShieldCheck"
+    },
+    {
+      "title": "Scénarios B2B clés en main",
+      "desc": "Crypto ⇄ fiat, or, immobilier — processus prêts à l’emploi avec accompagnement à chaque étape.",
+      "icon": "Handshake"
+    },
+    {
+      "title": "Rémunérations transparentes",
+      "desc": "Schéma de rémunération partenaire clair et règles de collaboration simples.",
+      "icon": "Banknote"
+    }
+  ],
+  "partnerCategories": [
+    {
+      "title": "Agents et consultants",
+      "desc": "Modèle de parrainage pour consultants indépendants, traders et intermédiaires financiers."
+    },
+    {
+      "title": "Avocats et notaires",
+      "desc": "Accompagnement des clients pour les opérations sur actifs et la documentation, intégration aux dossiers en cours."
+    },
+    {
+      "title": "Immobilier et courtiers",
+      "desc": "Acceptation de crypto avec conversion légale en CHF/EUR/USD/GBP pour les transactions immobilières."
+    },
+    {
+      "title": "Services financiers et de change",
+      "desc": "Élargissez votre gamme via des opérations conjointes avec KYC/AML transparent."
+    }
+  ],
+  "howTo": [
+    {
+      "title": "Prenez contact",
+      "desc": "Présentez-nous vos cas et la zone géographique de vos clients. Nous proposerons une solution opérationnelle."
+    },
+    {
+      "title": "Aligner le modèle",
+      "desc": "Parrainage, white-label ou intégration partenaire — choisissons le format optimal."
+    },
+    {
+      "title": "Lancement et support",
+      "desc": "Mise en place des processus, guides et communications. Support continu sur les opérations."
+    }
+  ],
+  "cta": {
+    "title": "Prêt à parler partenariat ?",
+    "buttonText": "Nous contacter",
+    "contactNote": "Écrivez-nous par messagerie ou par e-mail — réponse rapide."
+  },
+  "legalNote": "Nous n’acceptons pas de fonds clients et ne fournissons pas de conseils en investissement. Toutes les opérations sont réalisées via des partenaires agréés conformément au droit suisse."
+}

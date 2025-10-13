@@ -1,1 +1,59 @@
-{}
+{
+  "title": "Partnership that delivers results.",
+  "subtitle": "We operate within a network of licensed Swiss intermediaries and subject-matter experts. Join us and extend your service offering for clients.",
+  "highlights": [
+    {
+      "title": "Certified network",
+      "desc": "Transactions are conducted through licensed Swiss partners in full compliance with KYC/AML and confidentiality standards.",
+      "icon": "ShieldCheck"
+    },
+    {
+      "title": "Turnkey B2B scenarios",
+      "desc": "Crypto ⇄ fiat, gold, real estate — ready-made processes with support at every step.",
+      "icon": "Handshake"
+    },
+    {
+      "title": "Transparent rewards",
+      "desc": "Clear partner remuneration scheme and straightforward rules of engagement.",
+      "icon": "Banknote"
+    }
+  ],
+  "partnerCategories": [
+    {
+      "title": "Agents & consultants",
+      "desc": "Referral model for independent consultants, traders and financial intermediaries."
+    },
+    {
+      "title": "Lawyers & notaries",
+      "desc": "Client support for asset deals and documentation, integration into ongoing cases."
+    },
+    {
+      "title": "Real estate & brokers",
+      "desc": "Accepting crypto with legal conversion to CHF/EUR/USD/GBP for property transactions."
+    },
+    {
+      "title": "Financial & exchange services",
+      "desc": "Broaden your product line via joint operations with transparent KYC/AML."
+    }
+  ],
+  "howTo": [
+    {
+      "title": "Contact us",
+      "desc": "Tell us about your cases and client geography. We will propose a working setup."
+    },
+    {
+      "title": "Align the model",
+      "desc": "Referral, white-label or partner integration — we will choose the optimal format."
+    },
+    {
+      "title": "Launch & support",
+      "desc": "We set up the process, playbooks and communications. Ongoing support across deals."
+    }
+  ],
+  "cta": {
+    "title": "Ready to discuss a partnership?",
+    "buttonText": "Contact us",
+    "contactNote": "You can write via messenger or email — we reply quickly."
+  },
+  "legalNote": "We do not accept client funds and do not provide investment advice. All operations are conducted through licensed partners in compliance with Swiss law."
+}

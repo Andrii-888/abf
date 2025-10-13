@@ -16,7 +16,6 @@ export default function SiteHeader() {
     "/": "home",
     "/services": "services",
     "/process": "process",
-    "/compliance": "compliance",
     "/partners": "partners",
     "/contact": "contact",
   };

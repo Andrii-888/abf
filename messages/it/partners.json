@@ -1,1 +1,59 @@
-{}
+{
+  "title": "Un partenariato che porta risultati.",
+  "subtitle": "Operiamo all’interno di una rete di intermediari svizzeri autorizzati ed esperti di settore. Unisciti a noi ed estendi l’offerta per i tuoi clienti.",
+  "highlights": [
+    {
+      "title": "Rete certificata",
+      "desc": "Le operazioni sono eseguite tramite partner svizzeri autorizzati nel pieno rispetto degli standard KYC/AML e della riservatezza.",
+      "icon": "ShieldCheck"
+    },
+    {
+      "title": "Scenari B2B chiavi in mano",
+      "desc": "Crypto ⇄ fiat, oro, immobiliare — processi pronti con supporto in ogni fase.",
+      "icon": "Handshake"
+    },
+    {
+      "title": "Remunerazioni trasparenti",
+      "desc": "Schema di compensi per i partner e regole operative chiare.",
+      "icon": "Banknote"
+    }
+  ],
+  "partnerCategories": [
+    {
+      "title": "Agenti e consulenti",
+      "desc": "Modello referenziale per consulenti indipendenti, trader e intermediari finanziari."
+    },
+    {
+      "title": "Avvocati e notai",
+      "desc": "Supporto ai clienti per operazioni su asset e documentazione, integrazione nei casi in corso."
+    },
+    {
+      "title": "Immobiliare e broker",
+      "desc": "Accettazione di crypto con conversione legale in CHF/EUR/USD/GBP per transazioni immobiliari."
+    },
+    {
+      "title": "Servizi finanziari e di cambio",
+      "desc": "Amplia la tua offerta tramite operazioni congiunte e KYC/AML trasparente."
+    }
+  ],
+  "howTo": [
+    {
+      "title": "Contattaci",
+      "desc": "Raccontaci i tuoi casi e la geografia dei clienti. Prepareremo un setup operativo."
+    },
+    {
+      "title": "Allineiamo il formato",
+      "desc": "Referenziale, white-label o integrazione partnership — scegliamo il formato ottimale."
+    },
+    {
+      "title": "Avvio e supporto",
+      "desc": "Impostiamo processi, linee guida e comunicazioni. Supporto continuo sulle operazioni."
+    }
+  ],
+  "cta": {
+    "title": "Pronti a parlare di partnership?",
+    "buttonText": "Contattaci",
+    "contactNote": "Puoi scriverci via messenger o email — rispondiamo rapidamente."
+  },
+  "legalNote": "Non accettiamo fondi dei clienti e non forniamo consulenza d’investimento. Tutte le operazioni sono eseguite tramite partner autorizzati nel rispetto della legge svizzera."
+}
