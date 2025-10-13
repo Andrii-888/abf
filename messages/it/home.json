@@ -1,1 +1,32 @@
-{}
+{
+  "hero": {
+    "slogan": "Il tuo partner affidabile nel mondo degli asset digitali e reali.",
+    "desc1": "Accompagniamo le transazioni tra criptovalute, valuta fiat e oro, garantendo consulenze professionali e sicurezza in ogni fase.",
+    "desc2": "Assistenza personalizzata in conformità ai requisiti normativi, con un processo passo dopo passo.",
+    "bullets": {
+      "b1": "Consulenza personalizzata e pianificazione strategica",
+      "b2": "Checklist KYC/AML e verifica preliminare",
+      "b3": "Assistenza individuale per ogni transazione",
+      "b4": "Supporto completo attraverso una rete di partner autorizzati"
+    },
+    "ctaPrimary": "Richiedi una consulenza"
+  },
+  "features": {
+    "f1": {
+      "title": "Conformità e sicurezza",
+      "text": "Procedura KYC/AML trasparente in conformità con la legislazione svizzera."
+    },
+    "f2": {
+      "title": "Approccio esperto e personale",
+      "text": "Incontri con i nostri specialisti — assistenza passo dopo passo."
+    },
+    "f3": {
+      "title": "Flessibilità multi-asset",
+      "text": "Conversione fluida tra cripto, valuta fiat e oro."
+    },
+    "f4": {
+      "title": "Ecosistema di soluzioni professionali",
+      "text": "Supporto affidabile per le operazioni con asset e immobili."
+    }
+  }
+}

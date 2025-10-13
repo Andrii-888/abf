@@ -42,16 +42,8 @@ export default async function LocaleLayout({
 
   // --- 4. Возвращаем разметку
   return (
-    <html lang={locale} translate="no">
-      <body>
-        <NextIntlClientProvider
-          key={locale}
-          locale={locale}
-          messages={messages}
-        >
-          <Chrome>{children}</Chrome>
-        </NextIntlClientProvider>
-      </body>
-    </html>
+    <NextIntlClientProvider key={locale} locale={locale} messages={messages}>
+      <Chrome>{children}</Chrome>
+    </NextIntlClientProvider>
   );
 }

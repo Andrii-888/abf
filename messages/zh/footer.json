@@ -1,1 +1,8 @@
-{}
+{
+  "copyright": "© {year} ABF. 保留所有权利。",
+  "links": {
+    "privacy": "隐私政策",
+    "terms": "服务条款",
+    "contact": "联系我们"
+  }
+}

@@ -1,8 +1,12 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ABF — Fintech Platform (Next.js + TypeScript + i18n)
 
-## Getting Started
+This is a [Next.js](https://nextjs.org) multilingual fintech platform powered by [`next-intl`](https://next-intl-docs.vercel.app) for internationalization, Tailwind CSS for UI, and TypeScript for type safety.
 
-First, run the development server:
+---
+
+## 🚀 Getting Started
+
+Run the development server:
 
 ```bash
 npm run dev
@@ -14,96 +18,125 @@ pnpm dev
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Then open http://localhost:3000
+to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+🧩 Project Overview
+Stack Description
+Framework Next.js 15 (App Router)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Language TypeScript 5.9
 
-## Learn More
+Styling Tailwind CSS v4
 
-To learn more about Next.js, take a look at the following resources:
+i18n next-intl v4
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Deployment Vercel Platform
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Node version ≥ 18.18 (LTS 20 recommended)
 
-## Deploy on Vercel
+🌍 Localization
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Supported locales:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+en (default), it, de, fr, ru, zh
 
-# ABF — Fintech Platform (Next.js + i18n)
+URL structure:
+Each page is automatically prefixed with a locale — for example:
 
-Короткий, практичный план: сначала создаём каркас, затем подключаем i18n (только Header), тестируем, коммитим, деплоим. Работаем **по одному шагу**.
+/en/services /it/services /fr/services
 
----
+All translation files live in:
 
-## 0) Предпосылки
+messages/<locale>/\*.json
 
-- **Node.js**: рекомендуется ≥ **18.18** (лучше LTS 20.x). Если сейчас 18.17.1 — можно временно оставить, но лучше обновить позже.
-- **Пакеты**: Next.js 15 (App Router), TypeScript, Tailwind, **next-intl v4**.
-- **Репозиторий**: GitHub, деплой — Vercel.
+Each folder contains JSON dictionaries: home.json, services.json, footer.json, etc.
+They are combined via an index.ts file exporting all translations per locale.
 
----
-
-## 1) Технологии и цели
-
-- **Next.js (App Router)** — современная файловая маршрутизация, Layout/Segment.
-- **TypeScript** — строгая типизация.
-- **Tailwind CSS** — быстрые стили.
-- **next-intl** — мультиязычие (SSR/SSG).
-- **Локали**: `en` (дефолт), `it`, `de`, `fr`, `ru`, `zh`.
-- **URL-префиксы локалей**: `/en`, `/it`, ... (SEO-дружественно).
-
----
-
-## 2) Целевая структура проекта
-
-```
+📂 Project Structure
 abf/
-├─ messages/                      # словари переводов (по одному JSON на язык)
-│  ├─ en.json
-│  ├─ it.json
-│  ├─ de.json
-│  ├─ fr.json
-│  ├─ ru.json
-│  └─ zh.json
-├─ public/                        # статика (иконки, логотипы)
+├─ messages/
+│ ├─ en/
+│ │ ├─ home.json
+│ │ ├─ services.json
+│ │ └─ ...
+│ ├─ it/
+│ ├─ de/
+│ ├─ fr/
+│ ├─ ru/
+│ └─ zh/
+│
+├─ public/ # Static files (logos, icons, etc.)
 ├─ src/
-│  ├─ app/
-│  │  ├─ layout.tsx               # КОРНЕВОЙ layout: единственные <html>/<body>, импорт globals.css
-│  │  └─ [locale]/                # сегмент локали в URL
-│  │     ├─ layout.tsx            # локальный провайдер i18n + общий каркас (Header, позже Footer)
-│  │     ├─ page.tsx              # главная (Home)
-│  │     ├─ language/page.tsx     # выбор языка (сохраняет текущий маршрут)
-│  │     ├─ services/page.tsx
-│  │     ├─ process/page.tsx
-│  │     ├─ compliance/page.tsx
-│  │     ├─ partners/page.tsx
-│  │     └─ contact/page.tsx
-│  ├─ components/
-│  │  ├─ layout/
-│  │  │  ├─ SiteHeader.tsx        # шапка: лого, навигация, иконка языков
-│  │  │  └─ (Footer.tsx позже)
-│  │  ├─ home/
-│  │  │  ├─ HeroSection.tsx       # блок 1 главной (позже)
-│  │  │  └─ InfoSection.tsx       # блок 2 главной (позже)
-│  │  └─ ui/                       # атомарные компоненты (опционально)
-│  ├─ config/
-│  │  └─ nav.ts                    # список ссылок навигации (href/label)
-│  ├─ i18n/
-│  │  ├─ routing.ts                # locales + defaultLocale
-│  │  ├─ request.ts                # загрузка словаря по локали (SSR)
-│  │  └─ navigation.ts             # Link/useRouter/usePathname с учётом локали
-│  └─ styles/
-│     └─ globals.css               # Tailwind + глобальные стили
-├─ src/middleware.ts               # редирект / → /en и обработка префиксов локалей
-├─ next.config.mjs                 # плагин next-intl, ссылка на src/i18n/request.ts
+│ ├─ app/
+│ │ ├─ layout.tsx # Root layout with <html>/<body>
+│ │ └─ [locale]/
+│ │ ├─ layout.tsx # Locale provider (NextIntlClientProvider + Chrome)
+│ │ ├─ page.tsx # Home
+│ │ ├─ services/page.tsx
+│ │ ├─ contact/page.tsx
+│ │ └─ ...
+│ │
+│ ├─ components/
+│ │ ├─ layout/
+│ │ │ ├─ SiteHeader.tsx
+│ │ │ └─ SiteFooter.tsx
+│ │ ├─ home/
+│ │ └─ ui/
+│ │
+│ ├─ config/
+│ │ └─ nav.ts
+│ │
+│ ├─ i18n/
+│ │ ├─ routing.ts
+│ │ ├─ request.ts
+│ │ └─ navigation.ts
+│ │
+│ └─ styles/
+│ └─ globals.css
+│
+├─ src/middleware.ts # Locale redirect / → /en
+├─ next.config.mjs # next-intl plugin
 ├─ package.json
 └─ tsconfig.json
 
----
+🧱 Development Commands
+Command Description
+npm run dev Start local dev server
+npm run lint Run ESLint
+npm run type-check Run TypeScript check (tsc --noEmit)
+npm run build Build production bundle
+npm run predeploy Run all checks before deployment
+vercel --prod Deploy to production (Vercel)
+💡 Notes
 
+Before deployment, always run:
+
+npm run predeploy
+
+to catch type or lint errors early.
+
+Each new language must contain its own index.ts in messages/<locale>/
+importing and exporting all .json files.
+
+Root layout must include <html> and <body> — required by Next 15.
+
+🌐 Deployment
+
+Deploy directly to Vercel:
+
+vercel --prod
+
+After build success, you’ll receive a production URL like:
+
+https://abf-yourproject.vercel.app
+
+📘 Learn More
+
+Next.js Docs
+
+next-intl Docs
+
+Tailwind CSS Docs
+
+Vercel Deployment Guide

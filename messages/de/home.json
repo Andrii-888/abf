@@ -1,1 +1,32 @@
-{}
+{
+  "hero": {
+    "slogan": "Ihr verlässlicher Partner in der Welt digitaler und realer Vermögenswerte.",
+    "desc1": "Wir begleiten Transaktionen zwischen Kryptowährungen, Fiat und Gold und gewährleisten dabei professionelle Beratung und Sicherheit in jeder Phase.",
+    "desc2": "Persönliche Betreuung nach gesetzlichen Anforderungen – Schritt für Schritt.",
+    "bullets": {
+      "b1": "Persönliche Beratung und Szenarienplanung",
+      "b2": "KYC/AML-Checkliste und Vorabprüfung",
+      "b3": "Individuelle Begleitung bei jeder Transaktion",
+      "b4": "Umfassende Unterstützung durch ein Netzwerk lizenzierter Partner"
+    },
+    "ctaPrimary": "Beratung anfordern"
+  },
+  "features": {
+    "f1": {
+      "title": "Compliance und Sicherheit",
+      "text": "Transparente KYC/AML-Prozesse in Übereinstimmung mit dem Schweizer Recht."
+    },
+    "f2": {
+      "title": "Individuelle Fachberatung",
+      "text": "Treffen mit unseren Experten – Begleitung Schritt für Schritt."
+    },
+    "f3": {
+      "title": "Multi-Asset-Flexibilität",
+      "text": "Nahtlose Konvertierung zwischen Krypto, Fiat und Gold."
+    },
+    "f4": {
+      "title": "Ökosystem professioneller Lösungen",
+      "text": "Zuverlässige Unterstützung bei Transaktionen mit Vermögenswerten und Immobilien."
+    }
+  }
+}

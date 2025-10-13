@@ -1,1 +1,14 @@
-{}
+{
+  "header": {
+    "logo": "ABF",
+    "nav": {
+      "home": "Startseite",
+      "services": "Dienstleistungen",
+      "process": "Prozess",
+      "compliance": "Compliance",
+      "partners": "Partner",
+      "contact": "Kontakt"
+    },
+    "lang": { "title": "Sprache wählen" }
+  }
+}

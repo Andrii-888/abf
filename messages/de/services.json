@@ -1,1 +1,47 @@
-{}
+{
+  "hero": {
+    "title": "Umfassende Begleitung von Transaktionen",
+    "desc1": "Wir schaffen sichere Bedingungen für Ihre Geschäfte.",
+    "desc2": "Sicherheit",
+    "desc3": "Transparenz",
+    "desc4": "Zuverlässigkeit",
+    "ctaPrimary": "Anfrage senden",
+    "ctaSecondary": "Wie es funktioniert",
+    "badges": {
+      "b1": "Priorität – Compliance",
+      "b2": "Leitfaden für KYC/AML",
+      "b3": "Vertrauenswürdige Partner",
+      "b4": "Klare Zeitrahmen für jeden Schritt"
+    }
+  },
+  "value": {
+    "title": "Unsere Dienstleistungen",
+    "subtitle": "Wir sind Ihr zuverlässiger Wegbegleiter.",
+    "cards": {
+      "c1": {
+        "title": "Persönliche Beratung",
+        "text": "Ein intelligentes Szenario für Ihren Fall: logisch, sicher und schrittweise."
+      },
+      "c2": {
+        "title": "KYC/AML-Bereitschaft",
+        "text": "Dokumenten-Checkliste, Fristen und Erwartungen gemäß Schweizer Standards."
+      },
+      "c3": {
+        "title": "Transaktionen in unseren Büros",
+        "text": "Treffen Sie uns in unseren Büros – professionelle Umgebung und sicherer Ablauf."
+      },
+      "c4": {
+        "title": "Partnernetzwerk",
+        "text": "Banken, Notare, Anwälte und Immobilienexperten für komplexe Transaktionen."
+      },
+      "c5": {
+        "title": "Risiken & Compliance",
+        "text": "Wir erklären Anforderungen, minimieren Reibungen und gewährleisten Transparenz im Prozess."
+      },
+      "c6": {
+        "title": "Prozess mit klaren Fristen",
+        "text": "Ein schrittweiser Ablauf mit realistischen Zeitrahmen auf jeder Etappe."
+      }
+    }
+  }
+}

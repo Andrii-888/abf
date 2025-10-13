@@ -1,1 +1,13 @@
-{}
+{
+  "title": "Scelta della lingua",
+  "subtitle": "Cambia la lingua del sito",
+  "current": "Attuale",
+  "list": {
+    "en": "English",
+    "it": "Italiano",
+    "de": "Deutsch",
+    "fr": "Français",
+    "ru": "Русский",
+    "zh": "中文"
+  }
+}

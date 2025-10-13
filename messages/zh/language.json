@@ -1,1 +1,13 @@
-{}
+{
+  "title": "语言选择",
+  "subtitle": "切换网站语言",
+  "current": "当前",
+  "list": {
+    "en": "English",
+    "it": "Italiano",
+    "de": "Deutsch",
+    "fr": "Français",
+    "ru": "Русский",
+    "zh": "中文"
+  }
+}

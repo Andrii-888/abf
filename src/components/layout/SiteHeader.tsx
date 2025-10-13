@@ -21,7 +21,16 @@ export default function SiteHeader() {
     "/contact": "contact",
   };
 
-  // Блокируем прокрутку фона при открытом меню, Esc закрывает меню
+  // 👇 безопасный перевод: если ключа нет — не бросаем ошибку
+  const safeT = (key?: string) => {
+    if (!key) return "";
+    try {
+      return t(key);
+    } catch {
+      return "";
+    }
+  };
+
   useEffect(() => {
     const prev = document.documentElement.style.overflow;
     document.documentElement.style.overflow = open ? "hidden" : prev || "";
@@ -33,11 +42,9 @@ export default function SiteHeader() {
     };
   }, [open]);
 
-  // Закрывать меню при навигации
   useEffect(() => {
     if (open) setOpen(false);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pathname]);
+  }, [pathname, open]);
 
   return (
     <>
@@ -46,7 +53,6 @@ export default function SiteHeader() {
                    bg-[linear-gradient(90deg,#f5f5f7cc,#f3f6ffcc,#f5f5f7cc)] backdrop-blur-md"
       >
         <div className="relative mx-auto flex h-full max-w-6xl items-center px-4">
-          {/* Логотип: на мобиле скрываем, когда меню open=true; на десктопе всегда виден */}
           <Link
             href="/"
             aria-label="AlpineBridgeFinance — Home"
@@ -65,7 +71,7 @@ export default function SiteHeader() {
             />
           </Link>
 
-          {/* Меню (desktop) */}
+          {/* Desktop menu */}
           <nav className="absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 items-center gap-6 text-sm text-gray-700 md:flex">
             {NAV_LINKS.map((i) => (
               <Link
@@ -73,25 +79,20 @@ export default function SiteHeader() {
                 href={i.href}
                 className="hover:text-gray-900 transition-colors"
               >
-                {t(hrefToKey[i.href] ?? "") || i.label}
+                {safeT(hrefToKey[i.href]) || i.label}
               </Link>
             ))}
           </nav>
 
-          {/* Правый блок: язык + бургер */}
           <div className="ml-auto flex items-center gap-2 pr-3 sm:pr-4">
-            {/* Язык */}
             <Link
               href="/language"
               aria-label="Select language"
-              className="inline-flex items-center justify-center rounded-md
-                         hover:bg-black/5 focus:outline-none
-                         h-9 w-9 sm:h-10 sm:w-10"
+              className="inline-flex items-center justify-center rounded-md hover:bg-black/5 focus:outline-none h-9 w-9 sm:h-10 sm:w-10"
             >
               <Globe className="h-5 w-5 sm:h-6 sm:w-6 text-gray-800" />
             </Link>
 
-            {/* Бургер */}
             <button
               aria-label="Open menu"
               aria-expanded={open}
@@ -104,7 +105,7 @@ export default function SiteHeader() {
         </div>
       </header>
 
-      {/* Мобильное меню (без логотипа в оверлее) */}
+      {/* Mobile menu */}
       <div
         aria-hidden={!open}
         className={`fixed inset-0 z-[60] md:hidden transition-opacity duration-300 ${
@@ -113,10 +114,8 @@ export default function SiteHeader() {
             : "opacity-0 pointer-events-none"
         }`}
       >
-        {/* фон */}
         <div className="absolute inset-0 bg-[linear-gradient(180deg,#ffffff_0%,#f6f7fb_100%)] backdrop-blur-sm" />
 
-        {/* Кнопка закрытия — в правом верхнем углу, без логотипа */}
         <button
           aria-label="Close menu"
           onClick={() => setOpen(false)}
@@ -125,7 +124,6 @@ export default function SiteHeader() {
           <X className="h-6 w-6" />
         </button>
 
-        {/* Ссылки — только они видны в меню */}
         <nav
           className={`relative z-10 mx-auto flex h-full w-full max-w-6xl flex-col items-center justify-center gap-6 px-6 text-2xl font-medium text-gray-800 transition-opacity duration-300 ${
             open ? "opacity-100" : "opacity-0"
@@ -139,7 +137,7 @@ export default function SiteHeader() {
               className="hover:text-gray-600 transition-colors"
               style={{ transitionDelay: open ? `${idx * 40}ms` : "0ms" }}
             >
-              {t(hrefToKey[i.href] ?? "") || i.label}
+              {safeT(hrefToKey[i.href]) || i.label}
             </Link>
           ))}
         </nav>

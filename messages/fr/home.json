@@ -1,1 +1,32 @@
-{}
+{
+  "hero": {
+    "slogan": "Votre partenaire de confiance dans le monde des actifs numériques et réels.",
+    "desc1": "Nous accompagnons les transactions entre crypto-monnaies, monnaie fiduciaire et or, en garantissant des conseils professionnels et la sécurité à chaque étape.",
+    "desc2": "Un accompagnement personnalisé conforme aux exigences légales, étape par étape.",
+    "bullets": {
+      "b1": "Conseil personnalisé et planification de scénarios",
+      "b2": "Liste de contrôle KYC/AML et pré-vérification",
+      "b3": "Accompagnement individuel pour chaque transaction",
+      "b4": "Support complet via un réseau de partenaires agréés"
+    },
+    "ctaPrimary": "Obtenir une consultation"
+  },
+  "features": {
+    "f1": {
+      "title": "Conformité et sécurité",
+      "text": "Procédure KYC/AML transparente conformément à la législation suisse."
+    },
+    "f2": {
+      "title": "Approche experte et personnalisée",
+      "text": "Rencontrez nos spécialistes pour un accompagnement étape par étape."
+    },
+    "f3": {
+      "title": "Flexibilité multi-actifs",
+      "text": "Conversion fluide entre crypto, monnaie fiduciaire et or."
+    },
+    "f4": {
+      "title": "Écosystème de solutions professionnelles",
+      "text": "Soutien fiable pour les transactions sur les actifs et l’immobilier."
+    }
+  }
+}

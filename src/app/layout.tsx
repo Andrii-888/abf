@@ -1,4 +1,4 @@
-// app/layout.tsx
+// src/app/layout.tsx
 import "./globals.css";
 
 export default function RootLayout({
@@ -6,5 +6,9 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return children;
+  return (
+    <html lang="en" translate="no" suppressHydrationWarning>
+      <body>{children}</body>
+    </html>
+  );
 }

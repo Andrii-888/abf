@@ -1,1 +1,13 @@
-{}
+{
+  "title": "Sprachauswahl",
+  "subtitle": "Wechsle die Sprache der Website",
+  "current": "Aktuell",
+  "list": {
+    "en": "English",
+    "it": "Italiano",
+    "de": "Deutsch",
+    "fr": "Français",
+    "ru": "Русский",
+    "zh": "中文"
+  }
+}

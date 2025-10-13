@@ -1,11 +1,9 @@
 {
-  "nav": {
-    "home": "Главная",
-    "services": "Услуги",
-    "process": "Процесс",
-    "compliance": "Комплаенс",
-    "partners": "Партнёры",
-    "contact": "Контакты",
-    "language": "Выбрать язык"
-  }
+  "home": "Главная",
+  "services": "Услуги",
+  "process": "Процесс",
+  "compliance": "Комплаенс",
+  "partners": "Партнёры",
+  "contact": "Контакты",
+  "language": "Выбрать язык"
 }

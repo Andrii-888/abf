@@ -1,1 +1,47 @@
-{}
+{
+  "hero": {
+    "title": "Accompagnement complet des transactions",
+    "desc1": "Nous créons des conditions sûres pour vos opérations.",
+    "desc2": "Sécurité",
+    "desc3": "Transparence",
+    "desc4": "Fiabilité",
+    "ctaPrimary": "Envoyer une demande",
+    "ctaSecondary": "Comment ça marche",
+    "badges": {
+      "b1": "Priorité — Conformité",
+      "b2": "Guide KYC/AML",
+      "b3": "Partenaires de confiance",
+      "b4": "Délais clairs à chaque étape"
+    }
+  },
+  "value": {
+    "title": "Nos services",
+    "subtitle": "Nous sommes votre partenaire de confiance.",
+    "cards": {
+      "c1": {
+        "title": "Consultation personnalisée",
+        "text": "Un scénario intelligent adapté à votre cas : logique, sûr et étape par étape."
+      },
+      "c2": {
+        "title": "Préparation KYC/AML",
+        "text": "Liste de contrôle des documents, délais et attentes conformes aux normes suisses."
+      },
+      "c3": {
+        "title": "Transactions en bureau",
+        "text": "Rencontrez-nous dans nos bureaux : un environnement professionnel et un processus sécurisé."
+      },
+      "c4": {
+        "title": "Réseau de partenaires",
+        "text": "Banques, notaires, avocats et experts immobiliers pour des transactions complexes."
+      },
+      "c5": {
+        "title": "Risques et conformité",
+        "text": "Nous expliquons les exigences, réduisons les frictions et assurons la transparence du processus."
+      },
+      "c6": {
+        "title": "Processus à délais définis",
+        "text": "Un parcours clair, étape par étape, avec des délais réalistes à chaque phase."
+      }
+    }
+  }
+}

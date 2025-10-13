@@ -1,1 +1,8 @@
-{}
+{
+  "copyright": "© {year} ABF. Alle Rechte vorbehalten.",
+  "links": {
+    "privacy": "Datenschutzrichtlinie",
+    "terms": "Nutzungsbedingungen",
+    "contact": "Kontakt"
+  }
+}

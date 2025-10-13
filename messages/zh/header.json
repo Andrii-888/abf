@@ -1,1 +1,14 @@
-{}
+{
+  "header": {
+    "logo": "ABF",
+    "nav": {
+      "home": "主页",
+      "services": "服务",
+      "process": "流程",
+      "compliance": "合规",
+      "partners": "合作伙伴",
+      "contact": "联系"
+    },
+    "lang": { "title": "选择语言" }
+  }
+}

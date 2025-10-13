@@ -1,11 +1,9 @@
 {
-  "nav": {
-    "home": "Home",
-    "services": "Services",
-    "process": "Process",
-    "compliance": "Compliance",
-    "partners": "Partners",
-    "contact": "Contact",
-    "language": "Choose language"
-  }
+  "home": "Home",
+  "services": "Services",
+  "process": "Process",
+  "compliance": "Compliance",
+  "partners": "Partners",
+  "contact": "Contact",
+  "language": "Choose language"
 }

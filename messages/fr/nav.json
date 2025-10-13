@@ -1,1 +1,9 @@
-{}
+{
+  "home": "Accueil",
+  "services": "Services",
+  "process": "Processus",
+  "compliance": "Conformité",
+  "partners": "Partenaires",
+  "contact": "Contact",
+  "language": "Choisir la langue"
+}

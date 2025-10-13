@@ -1,1 +1,47 @@
-{}
+{
+  "hero": {
+    "title": "Supporto completo delle operazioni",
+    "desc1": "Accompagniamo le operazioni in un ambiente sicuro — dagli scambi standard agli scenari di pagamento personalizzati per il tuo caso.",
+    "desc2": "Sicurezza",
+    "desc3": "Trasparenza",
+    "desc4": "Affidabilità",
+    "ctaPrimary": "Invia una richiesta",
+    "ctaSecondary": "Come funziona",
+    "badges": {
+      "b1": "Priorità al compliance",
+      "b2": "Guida KYC/AML",
+      "b3": "Partner affidabili",
+      "b4": "Tempistiche chiare"
+    }
+  },
+  "value": {
+    "title": "I nostri servizi",
+    "subtitle": "Agiamo come la tua guida di fiducia.",
+    "cards": {
+      "c1": {
+        "title": "Consulenza personale",
+        "text": "Uno scenario intelligente su misura per il tuo caso — logico, sicuro, passo dopo passo."
+      },
+      "c2": {
+        "title": "Prontezza KYC/AML",
+        "text": "Checklist dei documenti, tempistiche e aspettative in linea con gli standard svizzeri."
+      },
+      "c3": {
+        "title": "Operazioni in ufficio",
+        "text": "Incontro nei nostri uffici. Ambiente professionale e flusso sicuro."
+      },
+      "c4": {
+        "title": "Rete di partner",
+        "text": "Banche, notai, avvocati ed esperti immobiliari per operazioni complesse."
+      },
+      "c5": {
+        "title": "Rischi & compliance",
+        "text": "Spieghiamo i requisiti, riduciamo gli attriti e manteniamo il processo trasparente."
+      },
+      "c6": {
+        "title": "Processo con tempistiche",
+        "text": "Un percorso chiaro, passo dopo passo, con tempi realistici per ogni fase."
+      }
+    }
+  }
+}
