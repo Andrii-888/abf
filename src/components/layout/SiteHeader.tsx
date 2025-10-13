@@ -21,7 +21,7 @@ export default function SiteHeader() {
     "/contact": "contact",
   };
 
-  // 👇 безопасный перевод: если ключа нет — не бросаем ошибку
+  // Безопасный перевод
   const safeT = (key?: string) => {
     if (!key) return "";
     try {
@@ -31,6 +31,7 @@ export default function SiteHeader() {
     }
   };
 
+  // Блокируем скролл при открытом меню + ESC закрывает
   useEffect(() => {
     const prev = document.documentElement.style.overflow;
     document.documentElement.style.overflow = open ? "hidden" : prev || "";
@@ -42,17 +43,25 @@ export default function SiteHeader() {
     };
   }, [open]);
 
+  // Закрываем меню при смене маршрута
   useEffect(() => {
     if (open) setOpen(false);
-  }, [pathname, open]);
+  }, [pathname]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <>
       <header
-        className="fixed top-0 z-50 w-full h-14 md:h-16 border-b border-black/5 
+        className="fixed top-0 left-0 z-[200] w-full h-14 md:h-16 border-b border-black/5 
                    bg-[linear-gradient(90deg,#f5f5f7cc,#f3f6ffcc,#f5f5f7cc)] backdrop-blur-md"
       >
-        <div className="relative mx-auto flex h-full max-w-6xl items-center px-4">
+        <div
+          className="
+            relative mx-auto flex h-full max-w-6xl items-center
+            justify-between
+            px-4 sm:px-6 md:px-8 lg:px-10
+          "
+        >
+          {/* Логотип */}
           <Link
             href="/"
             aria-label="AlpineBridgeFinance — Home"
@@ -71,8 +80,8 @@ export default function SiteHeader() {
             />
           </Link>
 
-          {/* Desktop menu */}
-          <nav className="absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 items-center gap-6 text-sm text-gray-700 md:flex">
+          {/* Меню (desktop) */}
+          <nav className="pointer-events-none md:pointer-events-auto absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 items-center gap-6 text-sm text-gray-700 md:flex">
             {NAV_LINKS.map((i) => (
               <Link
                 key={i.href}
@@ -84,20 +93,22 @@ export default function SiteHeader() {
             ))}
           </nav>
 
-          <div className="ml-auto flex items-center gap-2 pr-3 sm:pr-4">
+          {/* Правый блок */}
+          <div className="flex items-center gap-2 relative z-[220] shrink-0">
             <Link
               href="/language"
               aria-label="Select language"
               className="inline-flex items-center justify-center rounded-md hover:bg-black/5 focus:outline-none h-9 w-9 sm:h-10 sm:w-10"
             >
-              <Globe className="h-5 w-5 sm:h-6 sm:w-6 text-gray-800" />
+              <Globe className="h-5 w-5 sm:h-5 sm:w-5 text-gray-800" />
             </Link>
 
             <button
+              type="button"
               aria-label="Open menu"
               aria-expanded={open}
               onClick={() => setOpen(true)}
-              className="inline-flex md:hidden items-center justify-center p-2 text-gray-900 hover:opacity-70 focus:outline-none"
+              className="inline-flex md:hidden items-center justify-center p-2 text-gray-900 hover:opacity-80 focus:outline-none z-[300]"
             >
               <TextAlignJustify className="h-6 w-6" />
             </button>
@@ -105,43 +116,42 @@ export default function SiteHeader() {
         </div>
       </header>
 
-      {/* Mobile menu */}
-      <div
-        aria-hidden={!open}
-        className={`fixed inset-0 z-[60] md:hidden transition-opacity duration-300 ${
-          open
-            ? "opacity-100 pointer-events-auto"
-            : "opacity-0 pointer-events-none"
-        }`}
-      >
-        <div className="absolute inset-0 bg-[linear-gradient(180deg,#ffffff_0%,#f6f7fb_100%)] backdrop-blur-sm" />
-
-        <button
-          aria-label="Close menu"
-          onClick={() => setOpen(false)}
-          className="absolute right-4 top-3 z-20 inline-flex items-center justify-center p-2 text-gray-900 hover:opacity-70 focus:outline-none"
+      {/* Мобильное меню */}
+      {open && (
+        <div
+          className="fixed inset-0 z-[260] md:hidden opacity-100 pointer-events-auto transition-opacity duration-300"
+          role="dialog"
+          aria-modal="true"
         >
-          <X className="h-6 w-6" />
-        </button>
+          {/* Фон */}
+          <div className="absolute inset-0 bg-[linear-gradient(180deg,#ffffff_0%,#f6f7fb_100%)] backdrop-blur-sm" />
 
-        <nav
-          className={`relative z-10 mx-auto flex h-full w-full max-w-6xl flex-col items-center justify-center gap-6 px-6 text-2xl font-medium text-gray-800 transition-opacity duration-300 ${
-            open ? "opacity-100" : "opacity-0"
-          } md:text-3xl`}
-        >
-          {NAV_LINKS.map((i, idx) => (
-            <Link
-              key={i.href}
-              href={i.href}
-              onClick={() => setOpen(false)}
-              className="hover:text-gray-600 transition-colors"
-              style={{ transitionDelay: open ? `${idx * 40}ms` : "0ms" }}
-            >
-              {safeT(hrefToKey[i.href]) || i.label}
-            </Link>
-          ))}
-        </nav>
-      </div>
+          {/* Кнопка закрытия */}
+          <button
+            type="button"
+            aria-label="Close menu"
+            onClick={() => setOpen(false)}
+            className="absolute right-5 top-4 z-[270] inline-flex items-center justify-center p-2 text-gray-900 hover:opacity-80 focus:outline-none"
+          >
+            <X className="h-6 w-6" />
+          </button>
+
+          {/* Ссылки */}
+          <nav className="relative z-[265] mx-auto flex h-full w-full max-w-6xl flex-col items-center justify-center gap-6 px-6 text-2xl font-medium text-gray-800 md:text-3xl">
+            {NAV_LINKS.map((i, idx) => (
+              <Link
+                key={i.href}
+                href={i.href}
+                onClick={() => setOpen(false)}
+                className="hover:text-gray-600 transition-colors"
+                style={{ transitionDelay: `${idx * 40}ms` }}
+              >
+                {safeT(hrefToKey[i.href]) || i.label}
+              </Link>
+            ))}
+          </nav>
+        </div>
+      )}
     </>
   );
 }

@@ -3,13 +3,16 @@ import HeroRight from "@/components/home/HeroRight";
 
 export default function HomePage() {
   return (
-    <section
+    <main
       className="
-        min-h-[80vh]
+        relative
+        min-h-[85vh]
+        flex items-center
         bg-[linear-gradient(135deg,rgba(255,255,255,0)_0%,rgba(26,188,156,0.12)_45%,rgba(212,175,55,0.18)_100%),linear-gradient(#ffffff,#ffffff)]
-        pt-6 md:pt-8
+        pt-14 md:pt-14 pb-16 md:pb-20
       "
     >
+      {/* Контейнер */}
       <div
         className="
           mx-auto max-w-6xl px-4
@@ -20,6 +23,14 @@ export default function HomePage() {
         <HeroLeft />
         <HeroRight />
       </div>
-    </section>
+
+      {/* Декоративная подложка (при желании можно убрать) */}
+      <div
+        className="
+          absolute inset-0 -z-10
+          bg-[radial-gradient(ellipse_at_top_right,rgba(26,188,156,0.08),transparent_70%)]
+        "
+      />
+    </main>
   );
 }
