@@ -1,1 +1,32 @@
-{}
+{
+  "title": "De la consultation à la confirmation — un processus maîtrisé",
+  "subtitle": "L’ensemble du cycle d’échange sous la supervision de professionnels.",
+  "ctaHint": "Appuyez pour les détails",
+  "footnote": "Nous ne faisons pas qu’exécuter l’échange — nous accompagnons le client à chaque étape, en garantissant sécurité et transparence.",
+  "steps": [
+    {
+      "title": "Demande",
+      "desc": "Commencez en un clic — écrivez-nous par messagerie ou par e-mail en indiquant la direction et le montant."
+    },
+    {
+      "title": "Confirmation",
+      "desc": "Nous contactons le client pour confirmer les conditions et les paramètres de l’opération."
+    },
+    {
+      "title": "Vérification (KYC)",
+      "desc": "Si nécessaire, nous effectuons une vérification rapide du client (KYC) et un alignement des documents."
+    },
+    {
+      "title": "Visite au bureau",
+      "desc": "L’opération se déroule à l’heure convenue, en toute confidentialité et avec la documentation requise."
+    },
+    {
+      "title": "Échange",
+      "desc": "Le client envoie la cryptomonnaie au portefeuille de l’échangeur et reçoit en retour des euros en espèces ou un virement bancaire."
+    },
+    {
+      "title": "Versement",
+      "desc": "Après confirmation, les fonds sont transférés sous la forme convenue."
+    }
+  ]
+}

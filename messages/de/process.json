@@ -1,1 +1,32 @@
-{}
+{
+  "title": "Von der Beratung bis zur Bestätigung — der gesamte Prozess unter Kontrolle",
+  "subtitle": "Der gesamte Austauschablauf unter der Aufsicht von Fachleuten.",
+  "ctaHint": "Für Details tippen",
+  "footnote": "Wir führen nicht nur den Tausch aus — wir begleiten Sie in jedem Schritt und sorgen für Sicherheit und Transparenz.",
+  "steps": [
+    {
+      "title": "Anfrage",
+      "desc": "Starten Sie mit einem Klick — schreiben Sie uns per Messenger oder E-Mail mit Angabe der Richtung und des Betrags."
+    },
+    {
+      "title": "Bestätigung",
+      "desc": "Wir kontaktieren den Kunden, um die Konditionen und Parameter des Geschäfts zu bestätigen."
+    },
+    {
+      "title": "Verifizierung (KYC)",
+      "desc": "Falls erforderlich, führen wir eine kurze Kundenverifizierung (KYC) und Dokumentenabstimmung durch."
+    },
+    {
+      "title": "Bürobesuch",
+      "desc": "Das Geschäft findet zum vereinbarten Zeitpunkt vertraulich statt, mit allen erforderlichen Unterlagen."
+    },
+    {
+      "title": "Tausch",
+      "desc": "Der Kunde sendet Kryptowährung an die Wallet des Wechselbüros und erhält dafür Euro in bar oder eine Banküberweisung."
+    },
+    {
+      "title": "Auszahlung",
+      "desc": "Nach der Bestätigung werden die Mittel in der vereinbarten Form übertragen."
+    }
+  ]
+}

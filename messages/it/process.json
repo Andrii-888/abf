@@ -1,1 +1,32 @@
-{}
+{
+  "title": "Dalla consulenza alla conferma — un processo sempre sotto controllo",
+  "subtitle": "L’intero ciclo di cambio seguito passo dopo passo da professionisti qualificati.",
+  "ctaHint": "Tocca per maggiori dettagli",
+  "footnote": "Non ci limitiamo a eseguire l’operazione — accompagniamo ogni cliente in modo personale, garantendo sicurezza, trasparenza e riservatezza totale.",
+  "steps": [
+    {
+      "title": "Richiesta",
+      "desc": "Inizia in un clic — contattaci via messenger o email indicando la direzione e l’importo desiderato."
+    },
+    {
+      "title": "Conferma",
+      "desc": "Il nostro team conferma con te i termini dell’operazione e tutti i parametri dello scambio."
+    },
+    {
+      "title": "Verifica (KYC)",
+      "desc": "Se richiesto, viene effettuata una breve verifica del cliente (KYC) e l’allineamento dei documenti necessari."
+    },
+    {
+      "title": "Visita in ufficio",
+      "desc": "L’operazione avviene nell’orario concordato, in ambiente riservato e con la preparazione di tutta la documentazione."
+    },
+    {
+      "title": "Scambio",
+      "desc": "Il cliente invia la criptovaluta al wallet dell’operatore e riceve in cambio euro in contanti o un bonifico bancario."
+    },
+    {
+      "title": "Erogazione fondi",
+      "desc": "Dopo la conferma, i fondi vengono trasferiti nella modalità concordata."
+    }
+  ]
+}

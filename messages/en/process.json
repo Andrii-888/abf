@@ -1,1 +1,32 @@
-{}
+{
+  "title": "From consultation to confirmation — the whole process under control",
+  "subtitle": "The full exchange cycle under the guidance of professionals.",
+  "ctaHint": "Tap for details",
+  "footnote": "We don’t just execute the exchange — we guide you at every step, ensuring full safety and transparency.",
+  "steps": [
+    {
+      "title": "Request",
+      "desc": "Start in one click — message us via messenger or email, specifying the direction and amount."
+    },
+    {
+      "title": "Confirmation",
+      "desc": "We get back to the client to confirm the exchange terms and deal parameters."
+    },
+    {
+      "title": "Verification (KYC)",
+      "desc": "If required, a short client verification (KYC) and document alignment are performed."
+    },
+    {
+      "title": "Office visit",
+      "desc": "The deal takes place at the scheduled time, privately, with all paperwork prepared."
+    },
+    {
+      "title": "Exchange",
+      "desc": "The client receives the funds in the preferred format cryptocurrency, cash, or bank transfer."
+    },
+    {
+      "title": "Payout",
+      "desc": "After confirmation, funds are transferred in the agreed form."
+    }
+  ]
+}
