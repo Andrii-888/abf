@@ -5,6 +5,7 @@ import {
   ShieldCheck,
   Handshake,
   BadgeCheck,
+  RefreshCcw,
 } from "lucide-react";
 
 export default function ProcessPage() {
@@ -12,31 +13,37 @@ export default function ProcessPage() {
     {
       n: 1,
       title: "Создание заявки",
-      desc: "Вы выбираете направление обмена и сумму — онлайн, через менеджера или по телефону.",
+      desc: "Начните обмен в один клик — напишите в мессенджер или на email, указав направление и сумму.",
       Icon: Phone,
     },
     {
       n: 2,
-      title: "Подтверждение условий",
-      desc: "Менеджер уточняет курс, фиксирует параметры и назначает удобное время встречи.",
+      title: "Подтверждение",
+      desc: "Клиент получает обратную связь для подтверждения условий обмена и параметров сделки.",
       Icon: ClipboardList,
     },
     {
       n: 3,
-      title: "Проверка и подготовка",
-      desc: "Если требуется, проводится краткая верификация (KYC) и согласование документов.",
+      title: "Верификация (KYC)",
+      desc: "Если требуется, проводится краткая верификация клиента (KYC) и согласование документов.",
       Icon: ShieldCheck,
     },
     {
       n: 4,
-      title: "Встреча и сделка",
-      desc: "Встреча в офисе, подписание документов, перевод крипты и выдача фиата.",
+      title: "Визит в офис",
+      desc: "Сделка проходит в назначенное время, конфиденциально и с оформлением всех документов.",
       Icon: Handshake,
     },
     {
       n: 5,
-      title: "Подтверждение и завершение",
-      desc: "Получаете чек или квитанцию, сделка закрыта — при необходимости пост-сопровождение.",
+      title: "Обмен",
+      desc: "Клиент переводит криптовалюту на кошелёк обменника, а взамен получает наличные евро или перевод на свой банковский счёт.",
+      Icon: RefreshCcw,
+    },
+    {
+      n: 6,
+      title: "Получение средств",
+      desc: "После подтверждения операции осуществляется передача средств в согласованной форме.",
       Icon: BadgeCheck,
     },
   ];
@@ -45,22 +52,19 @@ export default function ProcessPage() {
     <div className="mx-auto w-full max-w-6xl px-4 py-10">
       {/* Заголовок блока */}
       <header className="mb-8 text-center">
-        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight bg-gradient-to-r from-[var(--color-fiat)] via-[var(--color-crypto)] to-[var(--color-gold)] bg-clip-text text-transparent">
-          Как всё проходит шаг за шагом
+        <h1 className="text-2xl sm:text-4xl font-bold tracking-tight bg-gradient-to-r from-[var(--color-fiat)] via-[var(--color-crypto)] to-[var(--color-gold)] bg-clip-text text-transparent">
+          От консультации до подтверждения — весь процесс под контролем
         </h1>
         <p className="mt-3 text-slate-700 text-sm sm:text-base max-w-2xl mx-auto">
-          От заявки до завершения сделки — безопасно, прозрачно и с личным
-          сопровождением.
+          Полный цикл обмена под контролем профессионалов.
         </p>
       </header>
 
       {/* Карточки шагов */}
-      <ol className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+      <ol className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {steps.map(({ n, title, desc, Icon }) => (
           <li key={n} className="group">
-            {/* Градиентный кант */}
             <div className="rounded-2xl p-[1px] bg-gradient-to-r from-[var(--color-fiat)] via-[var(--color-crypto)] to-[var(--color-gold)] shadow-lg transition-transform duration-200 group-hover:translate-y-[1px]">
-              {/* Внутренний контейнер */}
               <div className="rounded-2xl bg-white/85 backdrop-blur p-5 h-full border border-slate-200/70 flex flex-col justify-between">
                 <div>
                   <div className="flex items-center justify-between">
