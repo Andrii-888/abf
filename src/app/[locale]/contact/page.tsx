@@ -6,7 +6,6 @@ import { FaWhatsapp, FaTelegramPlane } from "react-icons/fa";
 export default function ContactPage() {
   return (
     <section className="max-w-5xl mx-auto px-4 py-16 text-gray-800">
-      {/* Основной заголовок */}
       <h1 className="text-3xl md:text-4xl font-semibold mb-10 text-start">
         Наши контакты
       </h1>
@@ -19,37 +18,39 @@ export default function ContactPage() {
             support inquiries.
           </p>
 
-          {/* Email */}
-          <div className="flex items-center gap-3">
-            <Mail className="text-crypto w-5 h-5" />
-            <span>info@alpinebf.ch</span>
-          </div>
+          {/* Email (ссылка mailto) */}
+          <a
+            href="mailto:info.alpinebf@gmx.ch?subject=Inquiry%20from%20website"
+            className="flex items-center gap-3 text-crypto hover:text-emerald-600 transition"
+            aria-label="Send email to info.alpinebf@gmx.ch"
+          >
+            <Mail className="w-5 h-5" />
+            <span>info.alpinebf@gmx.ch</span>
+          </a>
 
           {/* WhatsApp */}
-          <div className="flex items-center gap-3">
-            <a
-              href="https://wa.me/41764757408"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 text-crypto hover:text-emerald-600 transition"
-            >
-              <FaWhatsapp className="w-5 h-5" />
-              <span>WhatsApp: +41 76 475 74 08</span>
-            </a>
-          </div>
+          <a
+            href="https://wa.me/41764757408"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-3 text-crypto hover:text-emerald-600 transition"
+            aria-label="Open WhatsApp chat"
+          >
+            <FaWhatsapp className="w-5 h-5" />
+            <span>WhatsApp: +41 76 475 74 08</span>
+          </a>
 
           {/* Telegram */}
-          <div className="flex items-center gap-3">
-            <a
-              href="https://t.me/AlpineBridgeFinance"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 text-gold hover:text-yellow-500 transition"
-            >
-              <FaTelegramPlane className="w-5 h-5" />
-              <span>Telegram: +41 76 475 74 08</span>
-            </a>
-          </div>
+          <a
+            href="https://t.me/AlpineBridgeFinance"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-3 text-gold hover:text-yellow-500 transition"
+            aria-label="Open Telegram"
+          >
+            <FaTelegramPlane className="w-5 h-5" />
+            <span>Telegram: +41 76 475 74 08</span>
+          </a>
 
           {/* Address */}
           <div className="flex items-center gap-3">
