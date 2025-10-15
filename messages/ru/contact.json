@@ -1,1 +1,49 @@
-{}
+{
+  "title": "Связаться с нами",
+  "cards": [
+    {
+      "icon": "Phone",
+      "title": "Телефон",
+      "desc": "Позвоните нам в рабочее время. Если занято — перезвоним.",
+      "primary": "Позвонить",
+      "href": "tel:+41000000000"
+    },
+    {
+      "icon": "Mail",
+      "title": "Email",
+      "desc": "Отправьте детали запроса — вернёмся с решением.",
+      "primary": "Написать письмо",
+      "href": "mailto:contact@example.ch"
+    },
+    {
+      "icon": "MessageSquare",
+      "title": "Мессенджеры",
+      "desc": "Быстрее всего отвечаем в WhatsApp и Telegram.",
+      "actions": [
+        {
+          "label": "WhatsApp",
+          "href": "https://wa.me/41XXXXXXXXX?text=Здравствуйте%2C+нужна+консультация"
+        },
+        { "label": "Telegram", "href": "https://t.me/your_username" }
+      ]
+    },
+    {
+      "icon": "Building2",
+      "title": "Офис",
+      "desc": "Приём по записи. Адрес: Via Example 1, 6900 Lugano",
+      "primary": "Открыть карту",
+      "href": "https://maps.google.com/?q=Via%20Example%201%2C%206900%20Lugano"
+    }
+  ],
+  "form": {
+    "title": "Короткая форма",
+    "name": "Имя",
+    "email": "Email",
+    "message": "Сообщение",
+    "submit": "Отправить",
+    "or": "или",
+    "mailtoSubject": "Запрос с сайта",
+    "mailtoTo": "contact@example.ch"
+  },
+  "footnote": "Мы обрабатываем обращения в рабочее время. Отправляя сообщение, вы соглашаетесь на обработку данных для ответа на запрос."
+}

@@ -168,7 +168,7 @@ export default async function PartnersPage({
         <div className="mt-4 flex items-center justify-center gap-3">
           <Link
             href={`/${locale}/contact`}
-            className="inline-flex items-center gap-2 rounded-xl px-4 py-2 font-medium bg-gradient-to-r from-[var(--color-fiat)] via-[var(--color-crypto)] to-[var(--color-gold)] text-white shadow-md hover:opacity-90 transition"
+            className="inline-flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium border border-slate-300 bg-white/90 text-slate-800 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-slate-300 transition"
           >
             <Mail className="h-4 w-4" />
             {dict.cta.buttonText}

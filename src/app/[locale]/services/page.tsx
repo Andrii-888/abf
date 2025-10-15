@@ -43,7 +43,14 @@ export default function ServicesPage() {
               </h1>
               <p className="mt-4 text-slate-700">
                 {t("hero.desc1")} <br />
-                <span className="font-medium">Fiat ↔ Crypto ↔ Gold</span> <br />
+                <span className="font-medium">
+                  <span style={{ color: "var(--color-fiat)" }}>Fiat</span>
+                  {" ↔ "}
+                  <span style={{ color: "var(--color-crypto)" }}>Crypto</span>
+                  {" ↔ "}
+                  <span style={{ color: "var(--color-gold)" }}>Gold</span>
+                </span>
+                <br />
                 {t("hero.desc2")}
                 <br />
                 {t("hero.desc3")}

@@ -16,12 +16,13 @@ export default function SiteFooter() {
       <div className="mx-auto flex flex-col md:flex-row w-full max-w-6xl items-center justify-between px-4 py-6 text-sm gap-4">
         {/* Copyright */}
         <p className="text-center md:text-left text-gray-500">
+          {/* ✅ Используем корректный ICU-плейсхолдер */}
           {t("copyright", { year })}
         </p>
 
         {/* Навигация — адаптивная */}
         <nav aria-label="Footer" className="flex items-center gap-6">
-          {/* --- Мобильная и планшетная версия: только иконки --- */}
+          {/* --- Мобильная версия: иконки --- */}
           <div className="flex md:hidden items-center justify-center gap-6 text-gray-600">
             <Link
               href="/legal/privacy"
