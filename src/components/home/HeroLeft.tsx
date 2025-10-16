@@ -1,6 +1,7 @@
 "use client";
 
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
+import Link from "next/link";
 import ClickShield from "../ClickShield";
 import QRCodeCard from "../qr/QRCodeCard";
 
@@ -10,6 +11,7 @@ const SITE_URL = (
 
 export default function HeroLeft() {
   const t = useTranslations("home.hero");
+  const locale = useLocale(); 
 
   return (
     <div className="flex flex-col items-start gap-5 max-w-lg mt-[1rem] sm:mt-[-4rem]">
@@ -61,15 +63,15 @@ export default function HeroLeft() {
 
       {/* CTA + QR */}
       <div className="mt-3 w-full flex flex-col sm:flex-row sm:items-center sm:gap-4">
-        <a
-          href="#consult"
+        <Link
+          href={`/${locale}/contact`}
           className="block w-full sm:w-[260px] text-center rounded-xl px-5 py-3 text-sm sm:text-base font-medium
                  bg-[var(--color-crypto)] text-white transition-transform duration-200 active:scale-[0.98]
                  hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-0
                  focus-visible:ring-[var(--color-crypto)]"
         >
           {t("ctaPrimary")}
-        </a>
+        </Link>
 
         {/* QR-код виден только на десктопе */}
         <div className="hidden lg:flex mt-3 sm:mt-0 justify-center sm:justify-start sm:pl-12">
