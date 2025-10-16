@@ -8,6 +8,11 @@ export default function SiteFooter() {
   const t = useTranslations("footer");
   const year = new Date().getFullYear();
 
+  // fallback для отсутствующих переводов
+  const copyright =
+    t?.("copyright", { year }) ||
+    `© ${year} Alpine Bridge Finance. All rights reserved.`;
+
   return (
     <footer
       role="contentinfo"
@@ -15,10 +20,7 @@ export default function SiteFooter() {
     >
       <div className="mx-auto flex flex-col md:flex-row w-full max-w-6xl items-center justify-between px-4 py-6 text-sm gap-4">
         {/* Copyright */}
-        <p className="text-center md:text-left text-gray-500">
-          {/* ✅ Используем корректный ICU-плейсхолдер */}
-          {t("copyright", { year })}
-        </p>
+        <p className="text-center md:text-left text-gray-500">{copyright}</p>
 
         {/* Навигация — адаптивная */}
         <nav aria-label="Footer" className="flex items-center gap-6">
