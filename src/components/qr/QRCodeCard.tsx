@@ -1,19 +1,13 @@
-'use client';
+"use client";
 
-import QRCode from 'react-qr-code';
+import QRCode from "react-qr-code";
 
 type Props = { url?: string };
 
 export default function QrSimple({ url }: Props) {
-  // URL из .env
-  const baseUrl = (process.env.NEXT_PUBLIC_SITE_URL || '').trim();
-
-  // Итоговый адрес QR — на /open
-  const qrTarget = url
-    ? url
-    : baseUrl
-    ? `${baseUrl}/open`
-    : 'https://abf-blfh.vercel.app/open';
+  const baseUrl = (process.env.NEXT_PUBLIC_SITE_URL || "").trim();
+  const qrTarget =
+    url || (baseUrl ? `${baseUrl}/open` : "https://abf-blfh.vercel.app/open");
 
   return (
     <div
@@ -22,23 +16,22 @@ export default function QrSimple({ url }: Props) {
     >
       <div
         className="
-          w-[62px] h-[62px]
-          sm:w-[60px] sm:h-[60px]
-          lg:w-[64px] lg:h-[64px]
-          bg-white p-2 rounded-lg shadow-sm
-          hover:scale-105 transition-transform
+          w-[95px] h-[95px]           /* увеличено для настольных экранов */
+          sm:w-[75px] sm:h-[75px]     /* мобильный — чуть меньше */
+          bg-white p-2 rounded-xl shadow-md border border-gray-100
+          hover:scale-105 transition-transform duration-300
         "
       >
         <QRCode
           value={qrTarget}
           level="M"
-          style={{ width: '100%', height: '100%' }}
+          style={{ width: "100%", height: "100%" }}
           bgColor="#ffffff"
           fgColor="#111827"
         />
       </div>
 
-      <p className="mt-1 text-[11px] sm:text-[8px] font-medium text-slate-700">
+      <p className="mt-2 text-[10px] sm:text-[9px] font-medium text-slate-600">
         Open on mobile
       </p>
     </div>

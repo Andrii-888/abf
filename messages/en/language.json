@@ -2,6 +2,7 @@
   "title": "Choose language",
   "subtitle": "Switch the site language",
   "current": "Current",
+  "select": "Select",
   "list": {
     "en": "English",
     "it": "Italiano",

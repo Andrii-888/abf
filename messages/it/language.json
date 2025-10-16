@@ -2,6 +2,7 @@
   "title": "Scelta della lingua",
   "subtitle": "Cambia la lingua del sito",
   "current": "Attuale",
+  "select": "Seleziona",
   "list": {
     "en": "English",
     "it": "Italiano",

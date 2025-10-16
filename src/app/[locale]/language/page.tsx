@@ -1,36 +1,22 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { Check } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { routing } from "@/i18n/routing";
-import { usePathname, useRouter } from "@/i18n/navigation";
+import { useRouter } from "@/i18n/navigation";
 import { LANGUAGES, Locale } from "@/config/languages";
 
 export default function LanguagePage() {
   const t = useTranslations("language");
   const router = useRouter();
-  const pathname = usePathname();
+  const locale = useLocale() as Locale;
 
-  // текущая локаль из URL
-  const parts = pathname.split("/").filter(Boolean);
-  const currentLocale = (parts[0] ?? routing.defaultLocale) as Locale;
-
-  // если мы на /{locale}/language, убираем "language" из хвоста
-  const rest =
-    parts[1] === "language"
-      ? parts.slice(2).join("/")
-      : parts.slice(1).join("/");
-
-  // набор поддерживаемых языков
   const supported = useMemo(() => new Set<Locale>(routing.locales), []);
-  const [selected, setSelected] = useState<Locale>(currentLocale);
 
-  // переход с учётом next-intl router.push
   const go = (code: Locale) => {
-    setSelected(code);
-    const neutralPath = rest ? `/${rest}` : "/";
-    router.push(neutralPath, { locale: code });
+    // Всегда ведём на главную с выбранной локалью — даже если код совпадает с текущим
+    router.push("/", { locale: code });
   };
 
   return (
@@ -43,7 +29,6 @@ export default function LanguagePage() {
       "
     >
       <div className="mx-auto w-full max-w-md">
-        {/* Заголовок */}
         <div className="mb-6 text-center">
           <h1 className="text-2xl font-semibold tracking-tight">
             {t("title")}
@@ -51,7 +36,6 @@ export default function LanguagePage() {
           <p className="mt-1 text-sm text-gray-600">{t("subtitle")}</p>
         </div>
 
-        {/* Карточка со списком языков */}
         <div
           className="
             rounded-2xl border border-black/10
@@ -62,16 +46,19 @@ export default function LanguagePage() {
         >
           <ul className="divide-y divide-black/5">
             {LANGUAGES.filter((l) => supported.has(l.code)).map((lang) => {
-              const isActive = selected === lang.code;
+              const isActive = lang.code === locale;
 
               return (
                 <li key={lang.code}>
                   <button
                     type="button"
                     onClick={() => go(lang.code)}
+                    aria-current={isActive ? "true" : undefined}
                     className={[
                       "w-full px-4 py-3 flex items-center gap-3 text-left transition",
-                      "hover:bg-white focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/40",
+                      isActive
+                        ? "bg-emerald-50"
+                        : "hover:bg-white focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/40",
                     ].join(" ")}
                   >
                     <span className="text-2xl leading-none select-none">
@@ -86,12 +73,13 @@ export default function LanguagePage() {
                     </div>
 
                     {isActive ? (
-                      <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-emerald-500/10 ring-1 ring-emerald-400/30">
-                        <Check className="h-4 w-4 text-emerald-600" />
+                      <span className="inline-flex items-center gap-1 rounded-full px-2 py-1 text-xs font-medium bg-emerald-100 text-emerald-700 ring-1 ring-emerald-300/50">
+                        <Check className="h-3.5 w-3.5" />
+                        {t("current")}
                       </span>
                     ) : (
                       <span className="text-xs text-emerald-700/90">
-                        Select
+                        {t("select")}
                       </span>
                     )}
                   </button>
@@ -100,10 +88,6 @@ export default function LanguagePage() {
             })}
           </ul>
         </div>
-
-        <p className="mt-4 text-center text-xs text-gray-600">
-          {t("current")}: <span className="text-gray-800">{currentLocale}</span>
-        </p>
       </div>
     </main>
   );

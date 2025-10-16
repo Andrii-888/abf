@@ -2,6 +2,7 @@
   "title": "Sprachauswahl",
   "subtitle": "Wechsle die Sprache der Website",
   "current": "Aktuell",
+  "select": "Wählen",
   "list": {
     "en": "English",
     "it": "Italiano",
