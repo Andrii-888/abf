@@ -15,7 +15,9 @@ export default function ContactInfo() {
     try {
       await navigator.clipboard.writeText(email);
       setToastOpen(true);
-    } catch {}
+    } catch (err) {
+      console.warn("Clipboard copy failed:", err);
+    }
   }
 
   return (

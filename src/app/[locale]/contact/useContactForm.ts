@@ -10,7 +10,7 @@ import {
 
 /**
  * Хук управляет состоянием формы, валидацией (Zod) и отправкой на /api/contact.
- * Используй его внутри ContactForm.tsx
+ * Используется внутри ContactForm.tsx
  */
 export function useContactForm(locale: string) {
   const router = useRouter();
@@ -23,7 +23,9 @@ export function useContactForm(locale: string) {
     company: "", // honeypot
   });
 
-  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [errors, setErrors] = useState<
+    Partial<Record<keyof ContactFormInput, string>>
+  >({});
   const [loading, setLoading] = useState(false);
   const [err, setErr] = useState<string | null>(null);
 
@@ -32,8 +34,13 @@ export function useContactForm(locale: string) {
     value: ContactFormInput[K]
   ) {
     setForm((p) => ({ ...p, [key]: value }));
-    if (errors[key as string])
-      setErrors((e) => ({ ...e, [key as string]: undefined as any }));
+    // если для этого поля была ошибка — удаляем её
+    setErrors((prev) => {
+      if (!(key in prev)) return prev;
+      const next = { ...prev };
+      delete next[key];
+      return next;
+    });
   }
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -43,7 +50,11 @@ export function useContactForm(locale: string) {
     // Валидация Zod
     const parsed = contactSchema.safeParse(form);
     if (!parsed.success) {
-      setErrors(zodErrorsToRecord(parsed.error));
+      setErrors(
+        zodErrorsToRecord(parsed.error) as Partial<
+          Record<keyof ContactFormInput, string>
+        >
+      );
       return;
     }
     const data = parsed.data;
@@ -57,8 +68,9 @@ export function useContactForm(locale: string) {
       });
       if (!res.ok) throw new Error(await res.text());
       router.push(`/${locale}/contact/sent`);
-    } catch (e: any) {
-      setErr(e?.message || "Ошибка отправки. Попробуйте позже.");
+    } catch (e) {
+      const message = e instanceof Error ? e.message : String(e);
+      setErr(message || "Ошибка отправки. Попробуйте позже.");
     } finally {
       setLoading(false);
     }

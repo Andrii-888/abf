@@ -55,7 +55,7 @@ export async function POST(req: Request) {
     });
 
     return NextResponse.json({ ok: true });
-  } catch (err: any) {
+  } catch (err) {
     console.error("Mailer error:", err);
     return new NextResponse("Mailer error", { status: 500 });
   }
