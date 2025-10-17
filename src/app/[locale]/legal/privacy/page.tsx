@@ -1,18 +1,18 @@
+"use client";
+
+import { useTranslations } from "next-intl";
+
 export default function PrivacyPage() {
+  const t = useTranslations("privacy");
+
   return (
-    <section className="max-w-4xl mx-auto px-4 py-16 text-gray-800">
-      <h1 className="text-3xl font-semibold mb-6">
-        Политика конфиденциальности
-      </h1>
-      <p className="text-gray-600 mb-4">
-        Мы уважаем вашу конфиденциальность. Вся информация, отправляемая через
-        форму обратной связи, используется исключительно для ответа на ваш
-        запрос.
-      </p>
-      <p className="text-gray-600">
-        Данные не передаются третьим лицам и хранятся в соответствии с
-        действующим законодательством Швейцарии (FADP/nLPD) и ЕС (GDPR).
-      </p>
+    <section className="max-w-4xl mx-auto px-4 py-20 text-gray-800 text-center">
+      <h1 className="text-3xl md:text-4xl font-semibold mb-8">{t("title")}</h1>
+
+      <div className="space-y-4 text-gray-600 leading-relaxed text-base md:text-lg">
+        <p>{t("p1")}</p>
+        <p>{t("p2")}</p>
+      </div>
     </section>
   );
 }

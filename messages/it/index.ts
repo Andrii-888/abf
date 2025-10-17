@@ -1,12 +1,14 @@
-import header from './header.json';
-import nav from './nav.json';
-import language from './language.json';
-import home from './home.json';
-import services from './services.json';
-import process from './process.json';
-import partners from './partners.json';
-import contact from './contact.json';
-import footer from './footer.json';
+import header from "./header.json";
+import nav from "./nav.json";
+import language from "./language.json";
+import home from "./home.json";
+import services from "./services.json";
+import process from "./process.json";
+import partners from "./partners.json";
+import contact from "./contact.json";
+import privacy from "./privacy.json";
+import terms from "./terms.json";
+import footer from "./footer.json";
 
 export default {
   header,
@@ -17,5 +19,7 @@ export default {
   process,
   partners,
   contact,
-  footer
+  privacy,
+  terms,
+  footer,
 };

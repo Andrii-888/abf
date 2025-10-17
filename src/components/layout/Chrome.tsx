@@ -1,6 +1,6 @@
 "use client";
 
-import { usePathname } from "@/i18n/navigation";
+import { usePathname } from "@/i18n/routing";
 import SiteHeader from "@/components/layout/SiteHeader";
 import SiteFooter from "@/components/layout/SiteFooter";
 

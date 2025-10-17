@@ -6,6 +6,8 @@ import services from "./services.json";
 import process from "./process.json";
 import partners from "./partners.json";
 import contact from "./contact.json";
+import privacy from "./privacy.json";
+import terms from "./terms.json";
 import footer from "./footer.json";
 
 export default {
@@ -17,5 +19,7 @@ export default {
   process,
   partners,
   contact,
+  privacy,
+  terms,
   footer,
 };

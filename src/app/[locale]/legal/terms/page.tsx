@@ -1,17 +1,18 @@
+"use client";
+
+import { useTranslations } from "next-intl";
+
 export default function TermsPage() {
+  const t = useTranslations("terms");
+
   return (
-    <section className="max-w-4xl mx-auto px-4 py-16 text-gray-800">
-      <h1 className="text-3xl font-semibold mb-6">Условия использования</h1>
-      <p className="text-gray-600 mb-4">
-        Используя этот веб-сайт, вы соглашаетесь с условиями его использования.
-        Мы прилагаем все усилия, чтобы предоставленная информация была точной и
-        актуальной, однако не несем ответственности за возможные ошибки или сбои
-        в работе сайта.
-      </p>
-      <p className="text-gray-600">
-        Все материалы сайта принадлежат Alpine Bridge Finance и не могут быть
-        использованы без письменного согласия.
-      </p>
+    <section className="max-w-4xl mx-auto px-4 py-20 text-gray-800 text-center">
+      <h1 className="text-3xl md:text-4xl font-semibold mb-8">{t("title")}</h1>
+
+      <div className="space-y-4 text-gray-600 leading-relaxed text-base md:text-lg">
+        <p>{t("p1")}</p>
+        <p>{t("p2")}</p>
+      </div>
     </section>
   );
 }

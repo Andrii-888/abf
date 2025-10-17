@@ -1,4 +1,3 @@
-// src/app/[locale]/partners/page.tsx
 import "server-only";
 export const runtime = "nodejs";
 
@@ -38,7 +37,6 @@ async function loadDict(locale: string): Promise<Dict> {
   const candidates = [
     path.join(root, "messages", locale, "partners.json"),
     path.join(root, "src", "messages", locale, "partners.json"),
-    // fallback: EN как дефолт
     path.join(root, "messages", "en", "partners.json"),
     path.join(root, "src", "messages", "en", "partners.json"),
   ];
@@ -91,7 +89,7 @@ export default async function PartnersPage({
                   <div className="h-full rounded-2xl p-[1px] bg-gradient-to-r from-[var(--color-fiat)] via-[var(--color-crypto)] to-[var(--color-gold)] shadow-lg">
                     <div className="h-full rounded-2xl bg-white/85 backdrop-blur p-5 border border-slate-200/70 flex flex-col">
                       <div className="flex items-center justify-between">
-                        <span className="inline-flex h-7 w-7 items-center justify-center rounded-full text-white text-xs font-semibold bg-gradient-to-r from-[var(--color-fiat)] via-[var(--color-crypto)] to-[var(--color-gold)]">
+                        <span className="inline-flex h-7 w-7 items-center justify-center rounded-full text-white text-xs font-semibold bg-[var(--color-crypto)]">
                           {i + 1}
                         </span>
                         <Icon className="h-5 w-5 text-[var(--color-gold)] opacity-90" />
@@ -143,7 +141,7 @@ export default async function PartnersPage({
                 <div className="h-full rounded-2xl p-[1px] bg-gradient-to-r from-[var(--color-fiat)] via-[var(--color-crypto)] to-[var(--color-gold)]">
                   <div className="h-full rounded-2xl bg-white/85 backdrop-blur p-5 border border-slate-200/70 flex flex-col">
                     <div className="flex items-center justify-between">
-                      <span className="inline-flex h-7 w-7 items-center justify-center rounded-full text-white text-xs font-semibold bg-gradient-to-r from-[var(--color-fiat)] via-[var(--color-crypto)] to-[var(--color-gold)]">
+                      <span className="inline-flex h-7 w-7 items-center justify-center rounded-full text-white text-xs font-semibold bg-[var(--color-crypto)]">
                         {s.n ?? i + 1}
                       </span>
                       <UserPlus className="h-5 w-5 text-[var(--color-gold)] opacity-90" />
@@ -163,19 +161,38 @@ export default async function PartnersPage({
       )}
 
       {/* CTA */}
-      <section className="text-center">
-        <h3 className="text-lg font-semibold">{dict.cta.title}</h3>
-        <div className="mt-4 flex items-center justify-center gap-3">
+      <section className="text-center mt-14">
+        <h3 className="text-lg sm:text-xl font-semibold text-slate-800 mb-5">
+          {dict.cta.title}
+        </h3>
+
+        <div className="flex justify-center">
           <Link
             href={`/${locale}/contact`}
-            className="inline-flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium border border-slate-300 bg-white/90 text-slate-800 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-slate-300 transition"
+            className="
+              inline-flex items-center justify-center gap-2
+              px-6 py-3
+              rounded-xl
+              text-sm sm:text-base font-medium
+              text-white
+              bg-[var(--color-crypto)]
+              hover:bg-emerald-700
+              shadow-sm
+              hover:shadow-md
+              transition-all duration-300
+              active:scale-[0.97]
+              focus:outline-none focus:ring-2 focus:ring-[var(--color-crypto)] focus:ring-offset-1
+            "
           >
-            <Mail className="h-4 w-4" />
-            {dict.cta.buttonText}
+            <Mail className="h-5 w-5 text-white opacity-90" />
+            <span>{dict.cta.buttonText}</span>
           </Link>
         </div>
+
         {dict.cta.contactNote && (
-          <p className="mt-3 text-xs text-slate-600">{dict.cta.contactNote}</p>
+          <p className="mt-4 text-xs sm:text-sm text-slate-600">
+            {dict.cta.contactNote}
+          </p>
         )}
       </section>
 

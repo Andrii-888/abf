@@ -1,10 +1,10 @@
 "use client";
 
-import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { Shield, FileText, Mail } from "lucide-react";
+import { Link } from "@/i18n/routing";
 
-/** Чёткий SVG-флаг Швейцарии */
+/** SVG-флаг Швейцарии */
 function SwissFlagIcon({ size = 18 }: { size?: number }) {
   const s = size;
   const crossW = s * 0.56;
@@ -19,14 +19,7 @@ function SwissFlagIcon({ size = 18 }: { size?: number }) {
       aria-hidden="true"
       className="shrink-0"
     >
-      <rect
-        x="0"
-        y="0"
-        width={s}
-        height={s}
-        rx={Math.max(2, s * 0.08)}
-        fill="#D52B1E"
-      />
+      <rect width={s} height={s} rx={Math.max(2, s * 0.08)} fill="#D52B1E" />
       <rect
         x={cx + (crossW - crossT) / 2}
         y={s * 0.16}
@@ -41,7 +34,7 @@ function SwissFlagIcon({ size = 18 }: { size?: number }) {
 
 export default function SiteFooter() {
   const t = useTranslations("footer");
-  const year = new Date().getFullYear();
+  const year = String(new Date().getFullYear()); // строка, чтобы избежать Intl-ошибки
 
   return (
     <footer
@@ -51,18 +44,18 @@ export default function SiteFooter() {
       <div className="mx-auto flex w-full max-w-6xl flex-col items-center justify-between gap-4 px-4 py-6 text-sm md:flex-row">
         {/* Копирайт */}
         <p className="flex items-center gap-2 text-center text-gray-500 md:text-left">
-          <SwissFlagIcon />© {year} ABF. Все права защищены.
+          <SwissFlagIcon />
+          {t("copyright", { year })}
         </p>
 
         {/* Навигация: мобайл = иконки, десктоп = текст */}
-        <nav aria-label="Footer" className="flex items-center gap-6">
+        <nav className="flex items-center gap-6">
           {/* Мобайл: иконки */}
           <div className="flex items-center justify-center gap-6 text-gray-600 md:hidden">
             <Link
               href="/legal/privacy"
               aria-label={t("links.privacy")}
               title={t("links.privacy")}
-              className="hover:text-gray-900 transition-colors"
             >
               <Shield className="h-5 w-5" />
             </Link>
@@ -70,7 +63,6 @@ export default function SiteFooter() {
               href="/legal/terms"
               aria-label={t("links.terms")}
               title={t("links.terms")}
-              className="hover:text-gray-900 transition-colors"
             >
               <FileText className="h-5 w-5" />
             </Link>
@@ -78,7 +70,6 @@ export default function SiteFooter() {
               href="/contact"
               aria-label={t("links.contact")}
               title={t("links.contact")}
-              className="hover:text-gray-900 transition-colors"
             >
               <Mail className="h-5 w-5" />
             </Link>
