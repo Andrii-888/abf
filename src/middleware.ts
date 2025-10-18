@@ -1,29 +1,15 @@
 // src/middleware.ts
 import createMiddleware from "next-intl/middleware";
-import { routing } from "./i18n/routing";
-import type { NextRequest } from "next/server";
-import { NextResponse } from "next/server";
 
-const intlMiddleware = createMiddleware({
-  ...routing,
-  localeDetection: false, // выключаем автоопределение из cookie/браузера
+export default createMiddleware({
+  // перечисли только реально используемые локали
+  locales: ["en", "it", "ru", "de", "fr", "zh"],
+  defaultLocale: "en",
+  localeDetection: true,
 });
 
-export function middleware(req: NextRequest) {
-  const { pathname, origin } = req.nextUrl;
-
-  // Принудительно ведём с / → /en
-  if (pathname === "/") {
-    const url = new URL("/en", origin);
-    const res = NextResponse.redirect(url);
-    res.cookies.set("NEXT_LOCALE", "en", { path: "/" });
-    return res;
-  }
-
-  // Всё остальное — через next-intl
-  return intlMiddleware(req);
-}
-
+// Сужаем область действия мидлвари и исключаем всё "тяжёлое"
+// - не трогаем api, _next, статические файлы и любые пути с точкой (assets)
 export const config = {
-  matcher: ["/", "/(en|it|de|fr|ru|zh)/:path*"],
+  matcher: ["/((?!api|_next|.*\\..*).*)"],
 };

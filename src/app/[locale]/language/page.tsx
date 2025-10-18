@@ -30,9 +30,7 @@ export default function LanguagePage() {
     >
       <div className="mx-auto w-full max-w-md">
         <div className="mb-6 text-center">
-          <h1 className="text-2xl font-semibold tracking-tight">
-            {t("title")}
-          </h1>
+          <h1 className="text-2xl font-semibold tracking-tight">{t("title")}</h1>
           <p className="mt-1 text-sm text-gray-600">{t("subtitle")}</p>
         </div>
 
@@ -61,9 +59,7 @@ export default function LanguagePage() {
                         : "hover:bg-white focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/40",
                     ].join(" ")}
                   >
-                    <span className="text-2xl leading-none select-none">
-                      {lang.flag}
-                    </span>
+                    <span className="text-2xl leading-none select-none">{lang.flag}</span>
 
                     <div className="flex-1">
                       <div className="font-medium">{lang.label}</div>
@@ -78,9 +74,7 @@ export default function LanguagePage() {
                         {t("current")}
                       </span>
                     ) : (
-                      <span className="text-xs text-emerald-700/90">
-                        {t("select")}
-                      </span>
+                      <span className="text-xs text-emerald-700/90">{t("select")}</span>
                     )}
                   </button>
                 </li>

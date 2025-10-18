@@ -26,9 +26,7 @@ export function ogLocale(locale: Locale): string {
 }
 
 /** Сформировать hreflang-альтернативы для конкретного под-пути */
-export function languagesAlternates(
-  pathSuffix = ""
-): Record<Locale | "x-default", string> {
+export function languagesAlternates(pathSuffix = ""): Record<Locale | "x-default", string> {
   const suffix = pathSuffix === "" ? "" : `/${pathSuffix.replace(/^\/+/, "")}`;
 
   const map = {} as Record<Locale | "x-default", string>;

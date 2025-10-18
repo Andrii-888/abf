@@ -2,8 +2,7 @@
 
 import { useEffect } from "react";
 
-const TARGET_URL =
-  process.env.NEXT_PUBLIC_SITE_URL || "https://abf-blfh.vercel.app";
+const TARGET_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://abf-blfh.vercel.app";
 
 export default function OpenApp() {
   useEffect(() => {

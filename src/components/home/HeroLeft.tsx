@@ -11,7 +11,7 @@ const SITE_URL = (
 
 export default function HeroLeft() {
   const t = useTranslations("home.hero");
-  const locale = useLocale(); 
+  const locale = useLocale();
 
   return (
     <div className="flex flex-col items-start gap-5 max-w-lg mt-[1rem] sm:mt-[-4rem]">
@@ -32,9 +32,7 @@ export default function HeroLeft() {
       </h1>
 
       {/* Slogan */}
-      <p className="text-base sm:text-lg md:text-xl text-gray-900">
-        {t("slogan")}
-      </p>
+      <p className="text-base sm:text-lg md:text-xl text-gray-900">{t("slogan")}</p>
 
       {/* Short description */}
       <p className="text-sm sm:text-base leading-relaxed text-gray-600">
@@ -45,12 +43,7 @@ export default function HeroLeft() {
 
       {/* Quick value bullets */}
       <ul className="mt-1 space-y-2 text-sm sm:text-base text-gray-900">
-        {[
-          t("bullets.b1"),
-          t("bullets.b2"),
-          t("bullets.b3"),
-          t("bullets.b4"),
-        ].map((tItem, idx) => (
+        {[t("bullets.b1"), t("bullets.b2"), t("bullets.b3"), t("bullets.b4")].map((tItem, idx) => (
           <li key={idx} className="flex items-start gap-2">
             <span
               className="mt-2 inline-block h-1.5 w-1.5 rounded-full bg-[var(--color-crypto)]"
@@ -76,10 +69,7 @@ export default function HeroLeft() {
         {/* QR-код виден только на десктопе */}
         <div className="hidden lg:flex mt-3 sm:mt-0 justify-center sm:justify-start sm:pl-12">
           <ClickShield selector="#qr-zone" />
-          <div
-            id="qr-zone"
-            className="relative inline-block select-none [&_a]:pointer-events-none"
-          >
+          <div id="qr-zone" className="relative inline-block select-none [&_a]:pointer-events-none">
             <QRCodeCard url={SITE_URL} />
           </div>
         </div>

@@ -4,9 +4,7 @@ import "./globals.css";
 // определяем базовый URL (prod → из ENV, иначе локальный)
 const siteUrl =
   process.env.NEXT_PUBLIC_SITE_URL ||
-  (process.env.VERCEL_URL
-    ? `https://${process.env.VERCEL_URL}`
-    : "http://localhost:3000");
+  (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000");
 
 export const metadata = {
   metadataBase: new URL(siteUrl), // ← главное: база для OG/Twitter
@@ -44,28 +42,14 @@ export const metadata = {
   },
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" translate="no" suppressHydrationWarning>
       <head>
         {/* дублируем фавиконки для надёжности и сброса кэша */}
         <link rel="icon" href="/favicon.ico?v=4" sizes="any" />
-        <link
-          rel="icon"
-          type="image/png"
-          href="/favicon-32.png?v=4"
-          sizes="32x32"
-        />
-        <link
-          rel="icon"
-          type="image/png"
-          href="/favicon-16.png?v=4"
-          sizes="16x16"
-        />
+        <link rel="icon" type="image/png" href="/favicon-32.png?v=4" sizes="32x32" />
+        <link rel="icon" type="image/png" href="/favicon-16.png?v=4" sizes="16x16" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=4" />
       </head>
       <body>{children}</body>

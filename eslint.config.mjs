@@ -9,20 +9,14 @@ import tseslint from "typescript-eslint";
 export default tseslint.config(
   // 1) Игноры
   {
-    ignores: [
-      "node_modules/**",
-      ".next/**",
-      "dist/**",
-      "messages/**",
-      "**/*.json",
-    ],
+    ignores: ["node_modules/**", ".next/**", "dist/**", "messages/**/*.json", "**/*.json"],
   },
 
   // 2) Базовые конфиги
   js.configs.recommended,
   ...tseslint.configs.recommended,
 
-  // 3) Правила только для исходников
+  // 3) Правила для исходников
   {
     files: ["src/**/*.{ts,tsx,js,jsx}"],
     languageOptions: {
@@ -37,17 +31,24 @@ export default tseslint.config(
     },
     settings: { react: { version: "detect" } },
     rules: {
+      // Next (core-web-vitals)
       ...nextPlugin.configs["core-web-vitals"].rules,
+
+      // React
+      ...reactPlugin.configs.recommended.rules,
       "react/react-in-jsx-scope": "off",
       "react/jsx-uses-react": "off",
+
+      // React Hooks
       "react-hooks/rules-of-hooks": "error",
       "react-hooks/exhaustive-deps": "warn",
-      // чуть строже TS, можно ослабить при необходимости
+
+      // TypeScript
       "@typescript-eslint/no-explicit-any": "error",
       "@typescript-eslint/no-unused-vars": [
         "error",
         { argsIgnorePattern: "^_", varsIgnorePattern: "^_" },
       ],
     },
-  }
+  },
 );

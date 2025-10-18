@@ -10,10 +10,7 @@ export async function POST(req: Request) {
     const parsed = contactSchema.safeParse(json);
 
     // honeypot: не раскрываемся ботам
-    if (
-      !parsed.success &&
-      parsed.error.flatten().fieldErrors.company?.[0] === "bot"
-    ) {
+    if (!parsed.success && parsed.error.flatten().fieldErrors.company?.[0] === "bot") {
       return NextResponse.json({ ok: true });
     }
 
@@ -70,10 +67,7 @@ function mustEnv(key: string): string {
 }
 
 function escapeHtml(str: string) {
-  return String(str)
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;");
+  return String(str).replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
 }
 
 function renderHtml({
@@ -94,7 +88,7 @@ function renderHtml({
     <p><strong>Email:</strong> ${escapeHtml(email)}</p>
     <p><strong>Сообщение:</strong></p>
     <pre style="white-space:pre-wrap;background:#f7f7f7;padding:12px;border-radius:8px">${escapeHtml(
-      message
+      message,
     )}</pre>
     <hr/>
     <p style="color:#666">Отправлено автоматически с ${escapeHtml(site)}</p>

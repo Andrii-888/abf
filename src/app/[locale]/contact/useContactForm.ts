@@ -23,16 +23,11 @@ export function useContactForm(locale: string) {
     company: "", // honeypot
   });
 
-  const [errors, setErrors] = useState<
-    Partial<Record<keyof ContactFormInput, string>>
-  >({});
+  const [errors, setErrors] = useState<Partial<Record<keyof ContactFormInput, string>>>({});
   const [loading, setLoading] = useState(false);
   const [err, setErr] = useState<string | null>(null);
 
-  function handleChange<K extends keyof ContactFormInput>(
-    key: K,
-    value: ContactFormInput[K]
-  ) {
+  function handleChange<K extends keyof ContactFormInput>(key: K, value: ContactFormInput[K]) {
     setForm((p) => ({ ...p, [key]: value }));
     // если для этого поля была ошибка — удаляем её
     setErrors((prev) => {
@@ -50,11 +45,7 @@ export function useContactForm(locale: string) {
     // Валидация Zod
     const parsed = contactSchema.safeParse(form);
     if (!parsed.success) {
-      setErrors(
-        zodErrorsToRecord(parsed.error) as Partial<
-          Record<keyof ContactFormInput, string>
-        >
-      );
+      setErrors(zodErrorsToRecord(parsed.error) as Partial<Record<keyof ContactFormInput, string>>);
       return;
     }
     const data = parsed.data;

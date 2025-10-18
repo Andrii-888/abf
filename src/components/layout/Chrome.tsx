@@ -13,8 +13,7 @@ export default function Chrome({ children }: { children: React.ReactNode }) {
   const segments = pathname.split("/").filter(Boolean);
 
   // пример: "/en/language" -> ["en","language"], "/language" -> ["language"]
-  const isLanguagePage =
-    segments[0] === "language" || segments[1] === "language";
+  const isLanguagePage = segments[0] === "language" || segments[1] === "language";
 
   if (isLanguagePage) {
     // Без хедера/футера (например, селектор языка)

@@ -23,8 +23,7 @@ export default function ContactInfo() {
   return (
     <div className="space-y-6">
       <p className="text-lg text-gray-600">
-        Get in touch with our team for partnership, compliance, or client
-        support inquiries.
+        Get in touch with our team for partnership, compliance, or client support inquiries.
       </p>
 
       {/* Email */}

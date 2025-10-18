@@ -11,8 +11,7 @@ export default getRequestConfig(async ({ requestLocale }) => {
   const maybe = typeof req === "string" ? req : undefined;
 
   // 2) Валидируем локаль по списку поддерживаемых
-  const locale =
-    maybe && hasLocale(routing.locales, maybe) ? maybe : routing.defaultLocale;
+  const locale = maybe && hasLocale(routing.locales, maybe) ? maybe : routing.defaultLocale;
 
   // 3) Лоадер messages/<locale>/index.{ts,js}
   const load = async (loc: string): Promise<Messages> => {

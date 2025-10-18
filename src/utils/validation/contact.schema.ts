@@ -4,11 +4,7 @@ import { z } from "zod";
  * Схема валидации формы контактов (клиент + сервер).
  */
 export const contactSchema = z.object({
-  name: z
-    .string()
-    .trim()
-    .min(2, "Слишком короткое имя")
-    .max(80, "Слишком длинное имя"),
+  name: z.string().trim().min(2, "Слишком короткое имя").max(80, "Слишком длинное имя"),
   fromEmail: z.string().trim().email("Некорректный e-mail"),
   message: z
     .string()
@@ -16,11 +12,9 @@ export const contactSchema = z.object({
     .min(10, "Сообщение слишком короткое")
     .max(2000, "Слишком длинное сообщение (до 2000 символов)"),
   // было: z.literal(true, { errorMap: ... }) — так нельзя
-  consent: z
-    .boolean()
-    .refine((v) => v === true, {
-      message: "Нужно согласие на обработку данных",
-    }),
+  consent: z.boolean().refine((v) => v === true, {
+    message: "Нужно согласие на обработку данных",
+  }),
   // honeypot: поле должно быть пустым; если не пустое — "bot"
   company: z
     .string()

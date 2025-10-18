@@ -4,14 +4,7 @@ export const runtime = "nodejs";
 
 import { promises as fs } from "node:fs";
 import path from "node:path";
-import {
-  Phone,
-  ClipboardList,
-  ShieldCheck,
-  Handshake,
-  BadgeCheck,
-  RefreshCcw,
-} from "lucide-react";
+import { Phone, ClipboardList, ShieldCheck, Handshake, BadgeCheck, RefreshCcw } from "lucide-react";
 
 import { makePageMetadata } from "@/seo/factory";
 import { getProcessMeta } from "@/seo/meta";
@@ -53,22 +46,11 @@ async function loadDict(locale: string): Promise<Dict> {
   throw new Error("Не найден файл process.json в папке messages/<locale>.");
 }
 
-export default async function ProcessPage({
-  params,
-}: {
-  params: Promise<{ locale: string }>;
-}) {
+export default async function ProcessPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   const dict = await loadDict(locale || "en"); // ← теперь fallback = EN
 
-  const icons = [
-    Phone,
-    ClipboardList,
-    ShieldCheck,
-    Handshake,
-    RefreshCcw,
-    BadgeCheck,
-  ] as const;
+  const icons = [Phone, ClipboardList, ShieldCheck, Handshake, RefreshCcw, BadgeCheck] as const;
 
   return (
     <div className="mx-auto w-full max-w-6xl px-4 py-10">
@@ -103,9 +85,7 @@ export default async function ProcessPage({
 
                   {/* Текстовый блок растягиваем, чтобы уравнять высоту */}
                   <div className="mt-3 grow">
-                    <h3 className="text-base font-semibold leading-tight">
-                      {s.title}
-                    </h3>
+                    <h3 className="text-base font-semibold leading-tight">{s.title}</h3>
                     <p className="mt-2 text-sm text-slate-700">{s.desc}</p>
                   </div>
 

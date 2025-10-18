@@ -26,8 +26,8 @@ const bgSvg = `
   <ellipse cx="260" cy="560" rx="420" ry="220" fill="#D4AF37" opacity="0.16"/>
   <!-- тонкая рамка -->
   <rect x="10" y="10" width="${WIDTH - 20}" height="${
-  HEIGHT - 20
-}" fill="none" stroke="#E2E8F0" stroke-width="2" rx="24"/>
+    HEIGHT - 20
+  }" fill="none" stroke="#E2E8F0" stroke-width="2" rx="24"/>
 </svg>
 `;
 
@@ -36,9 +36,7 @@ async function main() {
   try {
     await fs.access(IN);
   } catch {
-    console.error(
-      "❌ Не найден public/logo.png — положи логотип сюда и повтори."
-    );
+    console.error("❌ Не найден public/logo.png — положи логотип сюда и повтори.");
     process.exit(1);
   }
 

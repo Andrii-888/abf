@@ -129,18 +129,15 @@ const SERVICES_META = {
   },
   de: {
     title: "Leistungen | Alpine Bridge Finance",
-    description:
-      "Krypto ↔ Fiat & Gold, OTC, Bank/Bar, KYC/AML, Schweizer Partner.",
+    description: "Krypto ↔ Fiat & Gold, OTC, Bank/Bar, KYC/AML, Schweizer Partner.",
   },
   fr: {
     title: "Services | Alpine Bridge Finance",
-    description:
-      "Échange crypto ↔ fiat & or, OTC, banque/espèces, KYC/AML, partenaires suisses.",
+    description: "Échange crypto ↔ fiat & or, OTC, banque/espèces, KYC/AML, partenaires suisses.",
   },
   it: {
     title: "Servizi | Alpine Bridge Finance",
-    description:
-      "Cambio crypto ↔ fiat & oro, OTC, banca/contanti, KYC/AML, partner svizzeri.",
+    description: "Cambio crypto ↔ fiat & oro, OTC, banca/contanti, KYC/AML, partner svizzeri.",
   },
   ru: {
     title: "Услуги | Alpine Bridge Finance",
@@ -156,28 +153,23 @@ const SERVICES_META = {
 const PROCESS_META = {
   en: {
     title: "How It Works | Alpine Bridge Finance",
-    description:
-      "Step-by-step process: inquiry, KYC/AML, quote, settlement (bank/cash), closing.",
+    description: "Step-by-step process: inquiry, KYC/AML, quote, settlement (bank/cash), closing.",
   },
   de: {
     title: "Ablauf | Alpine Bridge Finance",
-    description:
-      "Schritt für Schritt: Anfrage, KYC/AML, Quote, Abwicklung (Bank/Bar), Closing.",
+    description: "Schritt für Schritt: Anfrage, KYC/AML, Quote, Abwicklung (Bank/Bar), Closing.",
   },
   fr: {
     title: "Processus | Alpine Bridge Finance",
-    description:
-      "Étapes: demande, KYC/AML, devis, règlement (banque/espèces), clôture.",
+    description: "Étapes: demande, KYC/AML, devis, règlement (banque/espèces), clôture.",
   },
   it: {
     title: "Processo | Alpine Bridge Finance",
-    description:
-      "Passi: richiesta, KYC/AML, quotazione, regolamento (banca/contanti), chiusura.",
+    description: "Passi: richiesta, KYC/AML, quotazione, regolamento (banca/contanti), chiusura.",
   },
   ru: {
     title: "Как это работает | Alpine Bridge Finance",
-    description:
-      "Шаги: запрос, KYC/AML, оффер, расчёт (банк/наличные), закрытие.",
+    description: "Шаги: запрос, KYC/AML, оффер, расчёт (банк/наличные), закрытие.",
   },
   zh: {
     title: "流程 | Alpine Bridge Finance",
@@ -188,18 +180,15 @@ const PROCESS_META = {
 const PARTNERS_META = {
   en: {
     title: "Partners | Alpine Bridge Finance",
-    description:
-      "Swiss-regulated partners: banks, fiduciaries, notaries. Become a partner.",
+    description: "Swiss-regulated partners: banks, fiduciaries, notaries. Become a partner.",
   },
   de: {
     title: "Partner | Alpine Bridge Finance",
-    description:
-      "Schweizer Partner: Banken, Treuhänder, Notare. Werden Sie Partner.",
+    description: "Schweizer Partner: Banken, Treuhänder, Notare. Werden Sie Partner.",
   },
   fr: {
     title: "Partenaires | Alpine Bridge Finance",
-    description:
-      "Partenaires en Suisse: banques, fiduciaires, notaires. Devenez partenaire.",
+    description: "Partenaires en Suisse: banques, fiduciaires, notaires. Devenez partenaire.",
   },
   it: {
     title: "Partner | Alpine Bridge Finance",
@@ -207,8 +196,7 @@ const PARTNERS_META = {
   },
   ru: {
     title: "Партнёры | Alpine Bridge Finance",
-    description:
-      "Швейцарские партнёры: банки, фидуциарии, нотариусы. Станьте партнёром.",
+    description: "Швейцарские партнёры: банки, фидуциарии, нотариусы. Станьте партнёром.",
   },
   zh: {
     title: "合作伙伴 | Alpine Bridge Finance",

@@ -85,13 +85,7 @@ export default function ServicesPage() {
               {badges.map((id) => {
                 const label = t(`hero.badges.${id}`);
                 const Icon =
-                  id === "b1"
-                    ? ShieldCheck
-                    : id === "b2"
-                    ? Lock
-                    : id === "b3"
-                    ? Handshake
-                    : Clock;
+                  id === "b1" ? ShieldCheck : id === "b2" ? Lock : id === "b3" ? Handshake : Clock;
                 return (
                   <li
                     key={id}
@@ -111,9 +105,7 @@ export default function ServicesPage() {
 
       {/* VALUE PROPS */}
       <section className="mt-10">
-        <h2 className="text-xl sm:text-2xl font-semibold">
-          {t("value.title")}
-        </h2>
+        <h2 className="text-xl sm:text-2xl font-semibold">{t("value.title")}</h2>
         <p className="mt-2 text-slate-700">{t("value.subtitle")}</p>
 
         <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -129,9 +121,7 @@ export default function ServicesPage() {
                     {t(`value.cards.${key}.title`)}
                   </h3>
                 </div>
-                <p className="mt-3 text-sm text-slate-700">
-                  {t(`value.cards.${key}.text`)}
-                </p>
+                <p className="mt-3 text-sm text-slate-700">{t(`value.cards.${key}.text`)}</p>
               </div>
             </div>
           ))}

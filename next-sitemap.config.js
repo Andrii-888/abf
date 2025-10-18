@@ -1,48 +1,76 @@
 /** @type {import('next-sitemap').IConfig} */
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
+// Локали и страницы
+const LOCALES = ["en", "de", "fr", "it", "ru", "zh"];
+const PATHS = [
+  "/", // главная
+  "/services",
+  "/process",
+  "/partners",
+  "/contact",
+  "/legal/privacy",
+  "/legal/terms",
+];
+
+// Сформировать hreflang-альтернативы для относительного пути (без локали)
+function makeAlternates(rest) {
+  const href = (l) => `${siteUrl}/${l}${rest}`;
+  return [
+    { hreflang: "en", href: href("en") },
+    { hreflang: "de", href: href("de") },
+    { hreflang: "fr", href: href("fr") },
+    { hreflang: "it", href: href("it") },
+    { hreflang: "ru", href: href("ru") },
+    { hreflang: "zh-Hans", href: href("zh") },
+    { hreflang: "x-default", href: href("en") },
+  ];
+}
+
 module.exports = {
   siteUrl,
-  generateRobotsTxt: true, // создаст robots.txt автоматически
-  sitemapSize: 7000, // стандартно: до 7k URL на файл
+  generateRobotsTxt: true,
+  // один файл карты (удобнее)
+  generateIndexSitemap: false,
+  sitemapSize: 7000,
 
-  exclude: [
-    "/open", // dev/demo зона
-    "/(.*)/language", // выбор языка — не индексируем
-  ],
+  // исключаем корень без локали и страницу выбора языка
+  exclude: ["/", "/open", "/(.*)/language"],
 
-  alternateRefs: [
-    { hrefLang: "en", href: `${siteUrl}/en` },
-    { hrefLang: "de", href: `${siteUrl}/de` },
-    { hrefLang: "fr", href: `${siteUrl}/fr` },
-    { hrefLang: "it", href: `${siteUrl}/it` },
-    { hrefLang: "ru", href: `${siteUrl}/ru` },
-    { hrefLang: "zh-Hans", href: `${siteUrl}/zh` },
-    { hrefLang: "x-default", href: `${siteUrl}/en` },
-  ],
-
-  // Генерация hreflang для всех страниц
+  // Автогенерация для найденных роутов (пропускаем корень без локали)
   transform: async (config, path) => {
-    if (path === "/") return null; // пропускаем корень без локали
+    if (path === "/") return null;
 
     const segs = path.split("/").filter(Boolean);
-    const rest = "/" + segs.slice(1).join("/");
-
-    const alternateRefs = [
-      { hrefLang: "en", href: `${siteUrl}/en${rest}` },
-      { hrefLang: "de", href: `${siteUrl}/de${rest}` },
-      { hrefLang: "fr", href: `${siteUrl}/fr${rest}` },
-      { hrefLang: "it", href: `${siteUrl}/it${rest}` },
-      { hrefLang: "ru", href: `${siteUrl}/ru${rest}` },
-      { hrefLang: "zh-Hans", href: `${siteUrl}/zh${rest}` },
-      { hrefLang: "x-default", href: `${siteUrl}/en${rest}` },
-    ];
+    // rest = часть пути без первой секции (локали)
+    const rest = "/" + segs.slice(1).join("/"); // '/' либо '/services' и т.п.
+    const normalizedRest = rest === "/" ? "" : rest;
 
     return {
       loc: `${siteUrl}${path}`,
       changefreq: "weekly",
       priority: 0.8,
-      alternateRefs,
+      alternateRefs: makeAlternates(normalizedRest),
     };
+  },
+
+  // Явно добавляем все локали для всех страниц
+  additionalPaths: async () => {
+    const entries = [];
+
+    for (const rest of PATHS) {
+      const normalizedRest = rest === "/" ? "" : rest;
+
+      for (const l of LOCALES) {
+        entries.push({
+          loc: `${siteUrl}/${l}${normalizedRest}`,
+          changefreq: "weekly",
+          priority: rest === "/" ? 0.9 : 0.8,
+          alternateRefs: makeAlternates(normalizedRest),
+        });
+      }
+    }
+
+    return entries;
   },
 };

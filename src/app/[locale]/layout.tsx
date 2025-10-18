@@ -16,9 +16,7 @@ export default async function LocaleLayout({
   };
 
   const locale =
-    typeof resolved.locale === "string" && resolved.locale.trim() !== ""
-      ? resolved.locale
-      : "en";
+    typeof resolved.locale === "string" && resolved.locale.trim() !== "" ? resolved.locale : "en";
 
   // --- 2. Устанавливаем текущую локаль для SSR
   setRequestLocale(locale);
@@ -31,9 +29,7 @@ export default async function LocaleLayout({
     });
     messages = config.messages;
   } catch {
-    console.warn(
-      `⚠️ Missing translation for locale "${locale}", fallback → en`
-    );
+    console.warn(`⚠️ Missing translation for locale "${locale}", fallback → en`);
     const fallback = await getRequestConfig({
       requestLocale: Promise.resolve("en"),
     });

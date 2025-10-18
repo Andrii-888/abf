@@ -65,9 +65,7 @@ export default function SiteHeader() {
           <Link
             href="/"
             aria-label="AlpineBridgeFinance — Home"
-            className={`${
-              open ? "hidden" : "flex"
-            } md:flex items-center space-x-2`}
+            className={`${open ? "hidden" : "flex"} md:flex items-center space-x-2`}
           >
             <Image
               src="/logo.png"
@@ -83,11 +81,7 @@ export default function SiteHeader() {
           {/* Меню (desktop) */}
           <nav className="pointer-events-none md:pointer-events-auto absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 items-center gap-6 text-sm text-gray-700 md:flex">
             {NAV_LINKS.map((i) => (
-              <Link
-                key={i.href}
-                href={i.href}
-                className="hover:text-gray-900 transition-colors"
-              >
+              <Link key={i.href} href={i.href} className="hover:text-gray-900 transition-colors">
                 {safeT(hrefToKey[i.href]) || i.label}
               </Link>
             ))}

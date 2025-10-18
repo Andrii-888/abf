@@ -29,9 +29,7 @@ export default function FeatureCard({ Icon, title, text, color }: Props) {
           <Icon className={`h-6 w-6 ${color}`} />
           <h3 className="text-sm sm:text-base font-semibold">{title}</h3>
         </div>
-        <p className="mt-2 text-xs sm:text-sm text-slate-700 leading-snug">
-          {text}
-        </p>
+        <p className="mt-2 text-xs sm:text-sm text-slate-700 leading-snug">{text}</p>
       </div>
     </section>
   );

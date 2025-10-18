@@ -6,8 +6,7 @@ type Props = { url?: string };
 
 export default function QrSimple({ url }: Props) {
   const baseUrl = (process.env.NEXT_PUBLIC_SITE_URL || "").trim();
-  const qrTarget =
-    url || (baseUrl ? `${baseUrl}/open` : "https://abf-blfh.vercel.app/open");
+  const qrTarget = url || (baseUrl ? `${baseUrl}/open` : "https://abf-blfh.vercel.app/open");
 
   return (
     <div
@@ -31,9 +30,7 @@ export default function QrSimple({ url }: Props) {
         />
       </div>
 
-      <p className="mt-2 text-[10px] sm:text-[9px] font-medium text-slate-600">
-        Open on mobile
-      </p>
+      <p className="mt-2 text-[10px] sm:text-[9px] font-medium text-slate-600">Open on mobile</p>
     </div>
   );
 }

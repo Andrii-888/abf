@@ -61,11 +61,7 @@ const iconMap = {
   Mail,
 } as const;
 
-export default async function PartnersPage({
-  params,
-}: {
-  params: Promise<{ locale: string }>;
-}) {
+export default async function PartnersPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   const dict = await loadDict(locale || "en");
 
@@ -86,8 +82,7 @@ export default async function PartnersPage({
         <section className="mb-10">
           <ol className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 items-stretch auto-rows-fr">
             {dict.highlights.map((h, i) => {
-              const Icon =
-                iconMap[(h.icon as keyof typeof iconMap) ?? "BadgeCheck"];
+              const Icon = iconMap[(h.icon as keyof typeof iconMap) ?? "BadgeCheck"];
               return (
                 <li key={i} className="h-full">
                   <div className="h-full rounded-2xl p-[1px] bg-gradient-to-r from-[var(--color-fiat)] via-[var(--color-crypto)] to-[var(--color-gold)] shadow-lg">
@@ -99,9 +94,7 @@ export default async function PartnersPage({
                         <Icon className="h-5 w-5 text-[var(--color-gold)] opacity-90" />
                       </div>
                       <div className="mt-3 grow">
-                        <h3 className="text-base font-semibold leading-tight">
-                          {h.title}
-                        </h3>
+                        <h3 className="text-base font-semibold leading-tight">{h.title}</h3>
                         <p className="mt-2 text-sm text-slate-700">{h.desc}</p>
                       </div>
                     </div>
@@ -124,9 +117,7 @@ export default async function PartnersPage({
                 className="h-full rounded-2xl p-[1px] bg-gradient-to-r from-[var(--color-fiat)] via-[var(--color-crypto)] to-[var(--color-gold)]"
               >
                 <div className="h-full rounded-2xl bg-white/85 backdrop-blur p-5 border border-slate-200/70">
-                  <h3 className="text-base font-semibold leading-tight">
-                    {c.title}
-                  </h3>
+                  <h3 className="text-base font-semibold leading-tight">{c.title}</h3>
                   <p className="mt-2 text-sm text-slate-700">{c.desc}</p>
                 </div>
               </div>
@@ -151,9 +142,7 @@ export default async function PartnersPage({
                       <UserPlus className="h-5 w-5 text-[var(--color-gold)] opacity-90" />
                     </div>
                     <div className="mt-3 grow">
-                      <h3 className="text-base font-semibold leading-tight">
-                        {s.title}
-                      </h3>
+                      <h3 className="text-base font-semibold leading-tight">{s.title}</h3>
                       <p className="mt-2 text-sm text-slate-700">{s.desc}</p>
                     </div>
                   </div>
@@ -166,9 +155,7 @@ export default async function PartnersPage({
 
       {/* CTA */}
       <section className="text-center mt-14">
-        <h3 className="text-lg sm:text-xl font-semibold text-slate-800 mb-5">
-          {dict.cta.title}
-        </h3>
+        <h3 className="text-lg sm:text-xl font-semibold text-slate-800 mb-5">{dict.cta.title}</h3>
 
         <div className="flex justify-center">
           <Link
@@ -194,9 +181,7 @@ export default async function PartnersPage({
         </div>
 
         {dict.cta.contactNote && (
-          <p className="mt-4 text-xs sm:text-sm text-slate-600">
-            {dict.cta.contactNote}
-          </p>
+          <p className="mt-4 text-xs sm:text-sm text-slate-600">{dict.cta.contactNote}</p>
         )}
       </section>
 
