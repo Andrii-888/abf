@@ -5,7 +5,8 @@ import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Globe, TextAlignJustify, X } from "lucide-react";
 import { NAV_LINKS } from "@/config/nav";
-import { Link, usePathname } from "@/i18n/navigation";
+import { usePathname } from "@/i18n/navigation";
+import { Link } from "@/i18n/routing";
 
 export default function SiteHeader() {
   const [open, setOpen] = useState(false);

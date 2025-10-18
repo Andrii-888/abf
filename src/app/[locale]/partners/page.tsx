@@ -3,7 +3,7 @@ export const runtime = "nodejs";
 
 import { promises as fs } from "node:fs";
 import path from "node:path";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import {
   Handshake,
   ShieldCheck,
