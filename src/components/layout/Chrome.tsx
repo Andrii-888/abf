@@ -6,15 +6,18 @@ import SiteFooter from "@/components/layout/SiteFooter";
 
 /**
  * Обёртка хрома приложения.
- * На /language скрывает Header/Footer. На остальных — sticky footer.
+ * На /language и /{locale}/language скрывает Header/Footer. На остальных — sticky footer.
  */
 export default function Chrome({ children }: { children: React.ReactNode }) {
   const pathname = usePathname() || "/";
   const segments = pathname.split("/").filter(Boolean);
-  const isLanguagePage = segments[0] === "language";
+
+  // пример: "/en/language" -> ["en","language"], "/language" -> ["language"]
+  const isLanguagePage =
+    segments[0] === "language" || segments[1] === "language";
 
   if (isLanguagePage) {
-    // Без хедера/футера (например, для селектора языка)
+    // Без хедера/футера (например, селектор языка)
     return <>{children}</>;
   }
 

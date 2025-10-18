@@ -1,5 +1,6 @@
 import { Link } from "@/i18n/routing";
 import { useTranslations } from "next-intl";
+
 import {
   ShieldCheck,
   Handshake,
@@ -11,6 +12,10 @@ import {
   ChevronRight,
   type LucideIcon,
 } from "lucide-react";
+
+import { makePageMetadata } from "@/seo/factory";
+import { getProcessMeta } from "@/seo/meta";
+export const generateMetadata = makePageMetadata("/process", getProcessMeta);
 
 // ---- типы ключей для i18n (только то, что реально используется)
 type BadgeId = "b1" | "b2" | "b3" | "b4";

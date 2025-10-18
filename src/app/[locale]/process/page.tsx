@@ -13,6 +13,10 @@ import {
   RefreshCcw,
 } from "lucide-react";
 
+import { makePageMetadata } from "@/seo/factory";
+import { getProcessMeta } from "@/seo/meta";
+export const generateMetadata = makePageMetadata("/process", getProcessMeta);
+
 type Dict = {
   title: string;
   subtitle: string;

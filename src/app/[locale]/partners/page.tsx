@@ -14,6 +14,10 @@ import {
   Mail,
 } from "lucide-react";
 
+import { makePageMetadata } from "@/seo/factory";
+import { getPartnersMeta } from "@/seo/meta";
+export const generateMetadata = makePageMetadata("/partners", getPartnersMeta);
+
 type Dict = {
   title: string;
   subtitle: string;
