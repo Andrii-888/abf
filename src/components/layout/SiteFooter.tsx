@@ -1,6 +1,6 @@
 "use client";
 
-import { useTranslations } from "next-intl";
+import { useTranslations, useMessages } from "next-intl";
 import { Shield, FileText, Mail } from "lucide-react";
 import { Link } from "@/i18n/routing";
 
@@ -32,9 +32,53 @@ function SwissFlagIcon({ size = 18 }: { size?: number }) {
   );
 }
 
+type FooterMsgs = {
+  copyright?: string;
+  links?: {
+    privacy?: string;
+    terms?: string;
+    contact?: string;
+  };
+};
+
 export default function SiteFooter() {
+  // 👇 хуки вызываем всегда, без условий/внутренних функций
   const t = useTranslations("footer");
-  const year = String(new Date().getFullYear()); // строка, чтобы избежать Intl-ошибки
+  const messages = (useMessages() ?? {}) as Record<string, unknown>;
+  const footerMsgs = (messages["footer"] ?? undefined) as
+    | FooterMsgs
+    | undefined;
+
+  const year = String(new Date().getFullYear());
+
+  // 🔒 безопасный копирайт
+  let copyright = `© ${year} ABF. All rights reserved.`;
+  if (footerMsgs?.copyright) {
+    const raw = footerMsgs.copyright;
+    copyright = raw.includes("{year}") ? raw.replace("{year}", year) : raw;
+  } else {
+    try {
+      copyright = t("copyright", { year });
+    } catch {
+      // остаётся дефолт на EN
+    }
+  }
+
+  // 🔒 безопасные подписи ссылок
+  let labels = {
+    privacy: footerMsgs?.links?.privacy ?? "Privacy Policy",
+    terms: footerMsgs?.links?.terms ?? "Terms of Use",
+    contact: footerMsgs?.links?.contact ?? "Contact",
+  };
+  try {
+    labels = {
+      privacy: t("links.privacy"),
+      terms: t("links.terms"),
+      contact: t("links.contact"),
+    };
+  } catch {
+    // оставляем из footerMsgs/дефолты
+  }
 
   return (
     <footer
@@ -45,7 +89,7 @@ export default function SiteFooter() {
         {/* Копирайт */}
         <p className="flex items-center gap-2 text-center text-gray-500 md:text-left">
           <SwissFlagIcon />
-          {t("copyright", { year })}
+          {copyright}
         </p>
 
         {/* Навигация: мобайл = иконки, десктоп = текст */}
@@ -54,22 +98,22 @@ export default function SiteFooter() {
           <div className="flex items-center justify-center gap-6 text-gray-600 md:hidden">
             <Link
               href="/legal/privacy"
-              aria-label={t("links.privacy")}
-              title={t("links.privacy")}
+              aria-label={labels.privacy}
+              title={labels.privacy}
             >
               <Shield className="h-5 w-5" />
             </Link>
             <Link
               href="/legal/terms"
-              aria-label={t("links.terms")}
-              title={t("links.terms")}
+              aria-label={labels.terms}
+              title={labels.terms}
             >
               <FileText className="h-5 w-5" />
             </Link>
             <Link
               href="/contact"
-              aria-label={t("links.contact")}
-              title={t("links.contact")}
+              aria-label={labels.contact}
+              title={labels.contact}
             >
               <Mail className="h-5 w-5" />
             </Link>
@@ -78,13 +122,13 @@ export default function SiteFooter() {
           {/* Десктоп: текстовые ссылки */}
           <div className="hidden gap-4 text-gray-600 md:flex">
             <Link href="/legal/privacy" className="hover:underline">
-              {t("links.privacy")}
+              {labels.privacy}
             </Link>
             <Link href="/legal/terms" className="hover:underline">
-              {t("links.terms")}
+              {labels.terms}
             </Link>
             <Link href="/contact" className="hover:underline">
-              {t("links.contact")}
+              {labels.contact}
             </Link>
           </div>
         </nav>
