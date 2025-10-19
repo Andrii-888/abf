@@ -7,13 +7,28 @@ import { useState } from "react";
 
 export default function ContactInfo() {
   const email = "info.alpinebf@mail.ch";
+
+  // WhatsApp
+  const phonePretty = "+41 76 475 74 08";
+  const phoneRaw = "41764757408";
+  const waText = encodeURIComponent(
+    "Hello! I'd like to get in touch (partnership / compliance / support).",
+  );
+  const waLink = `https://wa.me/${phoneRaw}?text=${waText}`;
+
+  // Telegram
+  const tgHandle = "andrii_tsq";
+  const tgLink = `https://t.me/${tgHandle}`;
+
+  // Email
   const subject = encodeURIComponent("Запрос с сайта (AlpineBF)");
   const mailto = `mailto:${email}?subject=${subject}`;
+
   const [toastOpen, setToastOpen] = useState(false);
 
-  async function handleCopy() {
+  async function copy(text: string) {
     try {
-      await navigator.clipboard.writeText(email);
+      await navigator.clipboard.writeText(text);
       setToastOpen(true);
     } catch (err) {
       console.warn("Clipboard copy failed:", err);
@@ -30,46 +45,82 @@ export default function ContactInfo() {
       <div className="flex items-center gap-2">
         <a
           href={mailto}
-          className="flex items-center gap-2 text-crypto hover:text-emerald-600 transition"
+          className="flex items-center gap-2 text-gray-800 hover:text-gray-900 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-300 rounded"
+          title={email}
         >
           <Mail className="w-5 h-5" />
           <span>{email}</span>
         </a>
         <button
           type="button"
-          onClick={handleCopy}
-          className="text-gray-400 hover:text-crypto transition"
+          onClick={() => copy(email)}
+          className="inline-flex items-center justify-center p-1.5 rounded text-gray-400 hover:text-gray-600 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-300"
           aria-label="Copy email"
+          title="Copy email"
         >
           <Copy className="w-4 h-4" />
         </button>
       </div>
 
-      {/* WhatsApp */}
-      <a
-        href="https://wa.me/41764757408"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="flex items-center gap-3 text-crypto hover:text-emerald-600 transition"
-      >
-        <FaWhatsapp className="w-5 h-5" />
-        <span>WhatsApp: +41 76 475 74 08</span>
-      </a>
+      {/* WhatsApp (иконка — фирменный зелёный) */}
+      <div className="flex items-center gap-2">
+        <a
+          href={waLink}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center gap-3 text-gray-800 hover:text-gray-900 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-300 rounded"
+          title={`WhatsApp: ${phonePretty}`}
+        >
+          <FaWhatsapp
+            className="w-6 h-6 drop-shadow-[0_1px_1px_rgba(0,0,0,0.15)]"
+            // фирменный #25D366
+            color="#25D366"
+            aria-hidden
+          />
+          <span>WhatsApp: {phonePretty}</span>
+        </a>
+        <button
+          type="button"
+          onClick={() => copy(phonePretty)}
+          className="inline-flex items-center justify-center p-1.5 rounded text-gray-400 hover:text-gray-600 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-300"
+          aria-label="Copy WhatsApp number"
+          title="Copy number"
+        >
+          <Copy className="w-4 h-4" />
+        </button>
+      </div>
 
-      {/* Telegram */}
-      <a
-        href="https://t.me/AlpineBridgeFinance"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="flex items-center gap-3 text-gold hover:text-yellow-500 transition"
-      >
-        <FaTelegramPlane className="w-5 h-5" />
-        <span>Telegram: +41 76 475 74 08</span>
-      </a>
+      {/* Telegram (иконка — фирменный голубой) */}
+      <div className="flex items-center gap-2">
+        <a
+          href={tgLink}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center gap-3 text-gray-800 hover:text-gray-900 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-300 rounded"
+          title={`Telegram: @${tgHandle}`}
+        >
+          <FaTelegramPlane
+            className="w-6 h-6 drop-shadow-[0_1px_1px_rgba(0,0,0,0.15)]"
+            // фирменный #229ED9
+            color="#229ED9"
+            aria-hidden
+          />
+          <span>Telegram: @{tgHandle}</span>
+        </a>
+        <button
+          type="button"
+          onClick={() => copy(`@${tgHandle}`)}
+          className="inline-flex items-center justify-center p-1.5 rounded text-gray-400 hover:text-gray-600 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-300"
+          aria-label="Copy Telegram handle"
+          title="Copy handle"
+        >
+          <Copy className="w-4 h-4" />
+        </button>
+      </div>
 
       {/* Address */}
-      <div className="flex items-center gap-3">
-        <MapPin className="text-fiat w-5 h-5" />
+      <div className="flex items-center gap-3 text-gray-800">
+        <MapPin className="w-5 h-5" />
         <span>Lugano, Ticino, Switzerland</span>
       </div>
 

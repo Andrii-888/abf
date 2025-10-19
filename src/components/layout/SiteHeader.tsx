@@ -2,16 +2,18 @@
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { Globe, TextAlignJustify, X } from "lucide-react";
 import { NAV_LINKS } from "@/config/nav";
 import { usePathname } from "@/i18n/navigation";
 import { Link } from "@/i18n/routing";
+import { LANGUAGES, Locale } from "@/config/languages";
 
 export default function SiteHeader() {
   const [open, setOpen] = useState(false);
   const t = useTranslations("nav");
   const pathname = usePathname();
+  const locale = (useLocale() as Locale) || "en";
 
   const hrefToKey: Record<string, string> = {
     "/": "home",
@@ -20,6 +22,31 @@ export default function SiteHeader() {
     "/partners": "partners",
     "/contact": "contact",
   };
+
+  // --- Active-state helpers ---
+  const localeRe = /^\/([a-z]{2}(?:-[A-Z]{2})?)\b/; // /it, /ru, /en, /en-US и т.п.
+
+  const normalizePath = (path: string) => {
+    if (!path) return "/";
+    const clean = path.split("#")[0].split("?")[0];
+    const withoutLocale = clean.replace(localeRe, "") || "/";
+    return withoutLocale !== "/" && withoutLocale.endsWith("/")
+      ? withoutLocale.slice(0, -1)
+      : withoutLocale;
+  };
+
+  const currentPath = normalizePath(pathname || "/");
+  const isActive = (href: string) => {
+    const target = normalizePath(href);
+    if (target === "/") return currentPath === "/";
+    return currentPath === target || currentPath.startsWith(target + "/");
+  };
+
+  // Текущий язык: код для бейджа и человекочитаемое имя
+  const shortCode = (locale || "en").split("-")[0].toUpperCase(); // EN / IT / RU
+  const langLabel =
+    LANGUAGES.find((l) => l.code === locale || l.code.toUpperCase() === shortCode)?.label ||
+    shortCode;
 
   // Безопасный перевод
   const safeT = (key?: string) => {
@@ -80,21 +107,42 @@ export default function SiteHeader() {
 
           {/* Меню (desktop) */}
           <nav className="pointer-events-none md:pointer-events-auto absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 items-center gap-6 text-sm text-gray-700 md:flex">
-            {NAV_LINKS.map((i) => (
-              <Link key={i.href} href={i.href} className="hover:text-gray-900 transition-colors">
-                {safeT(hrefToKey[i.href]) || i.label}
-              </Link>
-            ))}
+            {NAV_LINKS.map((i) => {
+              const active = isActive(i.href);
+              return (
+                <Link
+                  key={i.href}
+                  href={i.href}
+                  aria-current={active ? "page" : undefined}
+                  className={`relative pb-1 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-black/30 rounded
+                    ${
+                      active
+                        ? "text-gray-900 after:absolute after:left-0 after:right-0 after:-bottom-0.5 after:h-0.5 after:rounded-full after:bg-gray-900"
+                        : "text-gray-700 hover:text-gray-900"
+                    }`}
+                >
+                  {safeT(hrefToKey[i.href]) || i.label}
+                </Link>
+              );
+            })}
           </nav>
 
           {/* Правый блок */}
           <div className="flex items-center gap-2 relative z-[220] shrink-0">
+            {/* Кнопка выбора языка — Globe + бейдж кода */}
             <Link
               href="/language"
-              aria-label="Select language"
-              className="inline-flex items-center justify-center rounded-md hover:bg-black/5 focus:outline-none h-9 w-9 sm:h-10 sm:w-10"
+              aria-label={`Language: ${langLabel}`}
+              title={`Language: ${langLabel}`}
+              className="relative inline-flex items-center justify-center rounded-md hover:bg-black/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-black/30 h-9 w-9 sm:h-10 sm:w-10"
             >
               <Globe className="h-5 w-5 sm:h-5 sm:w-5 text-gray-800" />
+              <span
+                aria-hidden="true"
+                className="absolute -top-1 -right-1 select-none rounded-full px-1.5 py-[2px] text-[10px] font-semibold leading-none bg-black/80 text-white shadow-sm"
+              >
+                {shortCode}
+              </span>
             </Link>
 
             <button
@@ -102,7 +150,7 @@ export default function SiteHeader() {
               aria-label="Open menu"
               aria-expanded={open}
               onClick={() => setOpen(true)}
-              className="inline-flex md:hidden items-center justify-center p-2 text-gray-900 hover:opacity-80 focus:outline-none z-[300]"
+              className="inline-flex md:hidden items-center justify-center p-2 text-gray-900 hover:opacity-80 focus:outline-none focus-visible:ring-2 focus-visible:ring-black/30 z-[300]"
             >
               <TextAlignJustify className="h-6 w-6" />
             </button>
@@ -125,24 +173,29 @@ export default function SiteHeader() {
             type="button"
             aria-label="Close menu"
             onClick={() => setOpen(false)}
-            className="absolute right-5 top-4 z-[270] inline-flex items-center justify-center p-2 text-gray-900 hover:opacity-80 focus:outline-none"
+            className="absolute right-5 top-4 z-[270] inline-flex items-center justify-center p-2 text-gray-900 hover:opacity-80 focus:outline-none focus-visible:ring-2 focus-visible:ring-black/30"
           >
             <X className="h-6 w-6" />
           </button>
 
           {/* Ссылки */}
           <nav className="relative z-[265] mx-auto flex h-full w-full max-w-6xl flex-col items-center justify-center gap-6 px-6 text-2xl font-medium text-gray-800 md:text-3xl">
-            {NAV_LINKS.map((i, idx) => (
-              <Link
-                key={i.href}
-                href={i.href}
-                onClick={() => setOpen(false)}
-                className="hover:text-gray-600 transition-colors"
-                style={{ transitionDelay: `${idx * 40}ms` }}
-              >
-                {safeT(hrefToKey[i.href]) || i.label}
-              </Link>
-            ))}
+            {NAV_LINKS.map((i, idx) => {
+              const active = isActive(i.href);
+              return (
+                <Link
+                  key={i.href}
+                  href={i.href}
+                  onClick={() => setOpen(false)}
+                  aria-current={active ? "page" : undefined}
+                  className={`transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-black/20 rounded-full
+                    ${active ? "text-gray-900 bg-black/5 px-5 py-2" : "hover:text-gray-600"}`}
+                  style={{ transitionDelay: `${idx * 40}ms` }}
+                >
+                  {safeT(hrefToKey[i.href]) || i.label}
+                </Link>
+              );
+            })}
           </nav>
         </div>
       )}

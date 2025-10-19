@@ -153,30 +153,29 @@ export default async function PartnersPage({ params }: { params: Promise<{ local
         </section>
       )}
 
-      {/* CTA */}
+      {/* CTA — Apple style */}
       <section className="text-center mt-14">
-        <h3 className="text-lg sm:text-xl font-semibold text-slate-800 mb-5">{dict.cta.title}</h3>
+        <h3 className="text-lg sm:text-xl font-semibold text-slate-800 mb-6">{dict.cta.title}</h3>
 
         <div className="flex justify-center">
           <Link
-            href={`/${locale}/contact`}
+            href="/contact"
             className="
-              inline-flex items-center justify-center gap-2
-              px-6 py-3
-              rounded-xl
-              text-sm sm:text-base font-medium
-              text-white
-              bg-[var(--color-crypto)]
-              hover:bg-emerald-700
-              shadow-sm
-              hover:shadow-md
-              transition-all duration-300
-              active:scale-[0.97]
-              focus:outline-none focus:ring-2 focus:ring-[var(--color-crypto)] focus:ring-offset-1
-            "
+        group relative inline-flex items-center justify-center gap-2
+        px-6 py-3 sm:px-7 sm:py-3.5
+        rounded-full
+        border border-black/10 bg-white
+        text-sm sm:text-base font-medium text-black
+        shadow-[0_1px_3px_rgba(0,0,0,0.08)]
+        transition-all duration-300 ease-out
+        hover:shadow-[0_4px_12px_rgba(0,0,0,0.12)]
+        hover:-translate-y-[1px]
+        active:translate-y-0 active:opacity-90
+        focus:outline-none focus:ring-2 focus:ring-[#007AFF]/40
+      "
           >
-            <Mail className="h-5 w-5 text-white opacity-90" />
-            <span>{dict.cta.buttonText}</span>
+            <Mail className="h-4 w-4 text-[#007AFF] transition group-hover:scale-110" />
+            <span className="text-[#007AFF] group-hover:text-[#005FCC]">{dict.cta.buttonText}</span>
           </Link>
         </div>
 

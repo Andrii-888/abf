@@ -1,18 +1,23 @@
 "use client";
 
 import { useCallback, useMemo, useState } from "react";
+import { useRouter } from "@/i18n/navigation";
+import { contactSchema } from "@/utils/validation/contact.schema";
 
 type State = "idle" | "submitting" | "success" | "error";
+const MESSAGE_MAX = 1000;
 
 export default function ContactForm() {
+  const router = useRouter();
+
   const [state, setState] = useState<State>("idle");
-  const [errors, setErrors] = useState<Record<string, string>>({});
   const [values, setValues] = useState({
     name: "",
-    email: "",
+    fromEmail: "",
     message: "",
+    company: "", // honeypot
   });
-
+  const [errors, setErrors] = useState<Record<string, string>>({});
   const isBusy = state === "submitting";
 
   const onChange = useCallback(
@@ -20,11 +25,8 @@ export default function ContactForm() {
       const { name, value } = e.target;
       setValues((v) => ({ ...v, [name]: value }));
       if (errors[name]) {
-        setErrors((prev) => {
-          const next = { ...prev };
-          delete next[name];
-          return next;
-        });
+        const { [name]: _omit, ...rest } = errors;
+        setErrors(rest);
       }
     },
     [errors],
@@ -37,26 +39,9 @@ export default function ContactForm() {
     return "Send message";
   }, [state]);
 
-  async function validate(data: typeof values) {
-    // 💡 Динамически грузим zod ТОЛЬКО при сабмите (не попадает в initial bundle)
-    const { z } = await import("zod");
-
-    const schema = z.object({
-      name: z.string().min(2, "Name is too short"),
-      email: z.string().email("Invalid email"),
-      message: z.string().min(5, "Message is too short"),
-    });
-
-    const parsed = schema.safeParse(data);
-    if (!parsed.success) {
-      const fieldErrors: Record<string, string> = {};
-      for (const issue of parsed.error.issues) {
-        const path = issue.path[0] as string;
-        if (path && !fieldErrors[path]) fieldErrors[path] = issue.message;
-      }
-      throw fieldErrors;
-    }
-  }
+  const onKeyDown = useCallback((e: React.KeyboardEvent<HTMLFormElement>) => {
+    if ((e.metaKey || e.ctrlKey) && e.key === "Enter") e.currentTarget.requestSubmit?.();
+  }, []);
 
   const onSubmit = useCallback(
     async (e: React.FormEvent<HTMLFormElement>) => {
@@ -66,41 +51,72 @@ export default function ContactForm() {
       setState("submitting");
       setErrors({});
 
-      try {
-        await validate(values);
+      // 1) Клиентская валидация той же схемой
+      const parsed = contactSchema.safeParse(values);
+      if (!parsed.success) {
+        const flat = parsed.error.flatten().fieldErrors;
+        // Типобезопасно преобразуем в Record<string, string>
+        const fieldErrors: Record<string, string> = {};
+        (Object.keys(flat) as Array<keyof typeof flat>).forEach((key) => {
+          const msg = flat[key]?.[0];
+          if (msg) fieldErrors[String(key)] = msg;
+        });
+        setErrors(fieldErrors);
+        setState("error");
+        return;
+      }
 
+      // 2) Отправка на API
+      try {
         const res = await fetch("/api/contact", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(values),
         });
 
-        if (!res.ok) {
-          throw new Error("Request failed");
+        const data: { ok?: boolean; errors?: Record<string, string[] | string> } = await res
+          .json()
+          .catch(() => ({}));
+
+        if (!res.ok || !data?.ok) {
+          const incoming = (data?.errors ?? {}) as Record<string, string[] | string>;
+          const normalized: Record<string, string> = {};
+          Object.entries(incoming).forEach(([k, v]) => {
+            normalized[k] = Array.isArray(v) ? (v[0] ?? "Invalid") : (v ?? "Invalid");
+          });
+          setErrors(
+            Object.keys(normalized).length
+              ? normalized
+              : { _form: "Something went wrong, please try again." },
+          );
+          setState("error");
+          return;
         }
 
         setState("success");
-        // по желанию — очистить поля после успешной отправки:
-        // setValues({ name: '', email: '', message: '' });
-      } catch (err) {
-        if (err && typeof err === "object") {
-          // Валидационные ошибки из validate()
-          setErrors(err as Record<string, string>);
-        } else {
-          // Сетевые/прочие ошибки
-          setErrors({ _form: "Something went wrong, please try again." });
-        }
+        router.push("/contact/sent");
+      } catch {
+        setErrors({ _form: "Network error, please try again." });
         setState("error");
-      } finally {
-        // лёгкая задержка — чтобы не "мигало"
-        setTimeout(() => setState((s) => (s === "success" ? s : "idle")), 400);
       }
     },
-    [isBusy, values],
+    [isBusy, values, router],
   );
 
   return (
-    <form onSubmit={onSubmit} className="space-y-4">
+    <form onSubmit={onSubmit} onKeyDown={onKeyDown} className="space-y-4">
+      {/* Honeypot */}
+      <div className="hidden">
+        <label htmlFor="company">Company</label>
+        <input
+          id="company"
+          name="company"
+          value={values.company}
+          onChange={onChange}
+          autoComplete="off"
+        />
+      </div>
+
       {/* Name */}
       <div>
         <label htmlFor="name" className="mb-1 block text-sm font-medium">
@@ -113,34 +129,55 @@ export default function ContactForm() {
           onChange={onChange}
           disabled={isBusy}
           placeholder="Your name"
-          className="w-full rounded-xl border border-gray-300/70 bg-white px-3 py-2 text-sm outline-none ring-0 transition focus:border-gray-400"
+          autoComplete="name"
+          required
+          aria-invalid={!!errors.name}
+          aria-describedby={errors.name ? "name-error" : undefined}
+          className="input-apple"
         />
-        {errors.name && <p className="mt-1 text-xs text-red-600">{errors.name}</p>}
+        {errors.name && (
+          <p id="name-error" className="mt-1 text-xs text-red-600">
+            {errors.name}
+          </p>
+        )}
       </div>
 
-      {/* Email */}
+      {/* Email (fromEmail) */}
       <div>
-        <label htmlFor="email" className="mb-1 block text-sm font-medium">
+        <label htmlFor="fromEmail" className="mb-1 block text-sm font-medium">
           Email
         </label>
         <input
-          id="email"
-          name="email"
+          id="fromEmail"
+          name="fromEmail"
           type="email"
-          value={values.email}
+          value={values.fromEmail}
           onChange={onChange}
           disabled={isBusy}
           placeholder="you@example.com"
-          className="w-full rounded-xl border border-gray-300/70 bg-white px-3 py-2 text-sm outline-none ring-0 transition focus:border-gray-400"
+          autoComplete="email"
+          required
+          aria-invalid={!!errors.fromEmail}
+          aria-describedby={errors.fromEmail ? "fromEmail-error" : undefined}
+          className="input-apple"
         />
-        {errors.email && <p className="mt-1 text-xs text-red-600">{errors.email}</p>}
+        {errors.fromEmail && (
+          <p id="fromEmail-error" className="mt-1 text-xs text-red-600">
+            {errors.fromEmail}
+          </p>
+        )}
       </div>
 
       {/* Message */}
       <div>
-        <label htmlFor="message" className="mb-1 block text-sm font-medium">
-          Message
-        </label>
+        <div className="flex items-center justify-between">
+          <label htmlFor="message" className="mb-1 block text-sm font-medium">
+            Message
+          </label>
+          <span className="text-[11px] text-gray-500">
+            {values.message.length}/{MESSAGE_MAX}
+          </span>
+        </div>
         <textarea
           id="message"
           name="message"
@@ -149,14 +186,25 @@ export default function ContactForm() {
           onChange={onChange}
           disabled={isBusy}
           placeholder="How can we help?"
-          className="w-full rounded-xl border border-gray-300/70 bg-white px-3 py-2 text-sm outline-none ring-0 transition focus:border-gray-400"
+          maxLength={MESSAGE_MAX}
+          required
+          aria-invalid={!!errors.message}
+          aria-describedby={errors.message ? "message-error" : undefined}
+          className="input-apple resize-none"
         />
-        {errors.message && <p className="mt-1 text-xs text-red-600">{errors.message}</p>}
+        {errors.message && (
+          <p id="message-error" className="mt-1 text-xs text-red-600">
+            {errors.message}
+          </p>
+        )}
       </div>
 
       {/* Form error */}
       {errors._form && (
-        <div className="rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-xs text-red-700">
+        <div
+          role="alert"
+          className="rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-xs text-red-700"
+        >
           {errors._form}
         </div>
       )}
@@ -164,7 +212,7 @@ export default function ContactForm() {
       <button
         type="submit"
         disabled={isBusy}
-        className="inline-flex items-center justify-center rounded-xl border border-gray-900 bg-gray-900 px-4 py-2 text-sm font-medium text-white transition hover:opacity-90 disabled:opacity-60"
+        className="inline-flex min-w-[10rem] items-center justify-center rounded-xl border border-gray-900 bg-gray-900 px-4 py-2 text-sm font-medium text-white transition hover:opacity-90 disabled:opacity-60"
       >
         {buttonText}
       </button>

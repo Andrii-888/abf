@@ -102,3 +102,12 @@ body {
   -webkit-mask-repeat: no-repeat;
   -webkit-mask-size: 100% 100%;
 }
+
+/* ===== Apple-style input (System Blue focus) ===== */
+.input-apple {
+  @apply w-full rounded-xl border border-gray-300/70 bg-white px-3 py-2 text-sm outline-none transition;
+}
+
+.input-apple:focus {
+  @apply border-[#007AFF] ring-2 ring-[#007AFF]/20;
+}
