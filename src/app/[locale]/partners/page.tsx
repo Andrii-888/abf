@@ -159,7 +159,7 @@ export default async function PartnersPage({ params }: { params: Promise<{ local
 
         <div className="flex justify-center">
           <Link
-            href="/contact"
+            href="/contact#feedback"
             className="
         group relative inline-flex items-center justify-center gap-2
         px-6 py-3 sm:px-7 sm:py-3.5

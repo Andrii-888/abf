@@ -54,51 +54,137 @@ Each folder contains JSON dictionaries: home.json, services.json, footer.json, e
 They are combined via an index.ts file exporting all translations per locale.
 
 📂 Project Structure
-abf/
-├─ messages/
-│ ├─ en/
-│ │ ├─ home.json
-│ │ ├─ services.json
-│ │ └─ ...
-│ ├─ it/
-│ ├─ de/
-│ ├─ fr/
-│ ├─ ru/
-│ └─ zh/
-│
-├─ public/ # Static files (logos, icons, etc.)
-├─ src/
-│ ├─ app/
-│ │ ├─ layout.tsx # Root layout with <html>/<body>
-│ │ └─ [locale]/
-│ │ ├─ layout.tsx # Locale provider (NextIntlClientProvider + Chrome)
-│ │ ├─ page.tsx # Home
-│ │ ├─ services/page.tsx
-│ │ ├─ contact/page.tsx
-│ │ └─ ...
-│ │
-│ ├─ components/
-│ │ ├─ layout/
-│ │ │ ├─ SiteHeader.tsx
-│ │ │ └─ SiteFooter.tsx
-│ │ ├─ home/
-│ │ └─ ui/
-│ │
-│ ├─ config/
-│ │ └─ nav.ts
-│ │
-│ ├─ i18n/
-│ │ ├─ routing.ts
-│ │ ├─ request.ts
-│ │ └─ navigation.ts
-│ │
-│ └─ styles/
-│ └─ globals.css
-│
-├─ src/middleware.ts # Locale redirect / → /en
-├─ next.config.mjs # next-intl plugin
-├─ package.json
-└─ tsconfig.json
+.
+├── eslint.config.mjs
+├── messages
+│ ├── de
+│ │ ├── contact.json
+│ │ ├── footer.json
+│ │ ├── header.json
+│ │ ├── home.json
+│ │ ├── index.ts
+│ │ ├── language.json
+│ │ ├── nav.json
+│ │ ├── partners.json
+│ │ ├── privacy.json
+│ │ ├── process.json
+│ │ ├── services.json
+│ │ └── terms.json
+│ ├── en
+│ │ ├── contact.json
+│ │ ├── footer.json
+│ │ ├── header.json
+│ │ ├── home.json
+│ │ ├── index.ts
+│ │ ├── language.json
+│ │ ├── nav.json
+│ │ ├── partners.json
+│ │ ├── privacy.json
+│ │ ├── process.json
+│ │ ├── services.json
+│ │ └── terms.json
+│ ├── fr
+│ │ ├── contact.json
+│ │ ├── footer.json
+│ │ ├── header.json
+│ │ ├── home.json
+│ │ ├── index.ts
+│ │ ├── language.json
+│ │ ├── nav.json
+│ │ ├── partners.json
+│ │ ├── privacy.json
+│ │ ├── process.json
+│ │ ├── services.json
+│ │ └── terms.json
+│ ├── it
+│ │ ├── contact.json
+│ │ ├── footer.json
+│ │ ├── header.json
+│ │ ├── home.json
+│ │ ├── index.ts
+│ │ ├── language.json
+│ │ ├── nav.json
+│ │ ├── partners.json
+│ │ ├── privacy.json
+│ │ ├── process.json
+│ │ ├── services.json
+│ │ └── terms.json
+│ ├── ru
+│ │ ├── contact.json
+│ │ ├── footer.json
+│ │ ├── header.json
+│ │ ├── home.json
+│ │ ├── index.ts
+│ │ ├── language.json
+│ │ ├── nav.json
+│ │ ├── partners.json
+│ │ ├── privacy.json
+│ │ ├── process.json
+│ │ ├── services.json
+│ │ └── terms.json
+│ └── zh
+│ ├── contact.json
+│ ├── footer.json
+│ ├── header.json
+│ ├── home.json
+│ ├── index.ts
+│ ├── language.json
+│ ├── nav.json
+│ ├── partners.json
+│ ├── privacy.json
+│ ├── process.json
+│ ├── services.json
+│ └── terms.json
+├── next-env.d.ts
+├── next-sitemap.config.js
+├── next.config.mjs
+├── package-lock.json
+├── package.json
+├── postcss.config.mjs
+├── public
+│ ├── favicon.ico
+│ ├── images
+│ │ └── showcase
+│ ├── logo.png
+│ ├── og.png
+│ ├── robots.txt
+│ └── sitemap.xml
+├── README.md
+├── scripts
+│ └── generate-og.mjs
+├── src
+│ ├── app
+│ │ ├── [locale]
+│ │ ├── api
+│ │ ├── globals.css
+│ │ ├── layout.tsx
+│ │ ├── open
+│ │ └── page.tsx
+│ ├── components
+│ │ ├── ClickShield.tsx
+│ │ ├── home
+│ │ ├── layout
+│ │ ├── qr
+│ │ └── ui
+│ ├── config
+│ │ ├── features.ts
+│ │ ├── languages.ts
+│ │ └── nav.ts
+│ ├── i18n
+│ │ ├── navigation.ts
+│ │ ├── request.ts
+│ │ └── routing.ts
+│ ├── middleware.ts
+│ ├── seo
+│ │ ├── factory.ts
+│ │ ├── helpers.ts
+│ │ └── meta.ts
+│ └── utils
+│ └── validation
+├── tsconfig.json
+└── tsconfig.tsbuildinfo
+
+27 directories, 102 files
 
 🧱 Development Commands
 Command Description

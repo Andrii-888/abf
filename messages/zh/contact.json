@@ -1,1 +1,46 @@
-{}
+{
+  "page": {
+    "title": "联系",
+    "feedbackTitle": "反馈"
+  },
+  "form": {
+    "labels": {
+      "name": "姓名",
+      "email": "邮箱",
+      "message": "留言"
+    },
+    "placeholders": {
+      "name": "您的姓名",
+      "email": "you@example.com",
+      "message": "我们能为您做什么？"
+    },
+    "buttons": {
+      "send": "发送消息",
+      "sending": "发送中…",
+      "sent": "已发送 ✓",
+      "retry": "重试"
+    },
+    "alerts": {
+      "success": "感谢！您的消息已发送，我们会尽快回复。",
+      "errorGeneric": "出现问题，请重试。",
+      "errorNetwork": "网络错误，请重试。"
+    },
+    "a11y": {
+      "statusSending": "正在发送",
+      "statusSuccess": "消息已成功发送",
+      "statusError": "发生错误"
+    }
+  },
+  "info": {
+    "lead": "如需合作、合规或客户支持，请联系团队。",
+    "whatsapp": "WhatsApp",
+    "telegram": "Telegram",
+    "copyEmail": "复制邮箱",
+    "copyNumber": "复制号码",
+    "copyHandle": "复制用户名",
+    "address": "瑞士，提契诺，卢加诺",
+    "toastCopied": "已复制！",
+    "waText": "你好！我想联系你（合作 / 合规 / 支持）。",
+    "emailSubject": "网站咨询（AlpineBF）"
+  }
+}

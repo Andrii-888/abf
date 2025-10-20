@@ -1,1 +1,46 @@
-{}
+{
+  "page": {
+    "title": "Contatti",
+    "feedbackTitle": "Feedback"
+  },
+  "form": {
+    "labels": {
+      "name": "Nome",
+      "email": "Email",
+      "message": "Messaggio"
+    },
+    "placeholders": {
+      "name": "Il tuo nome",
+      "email": "you@example.com",
+      "message": "Come possiamo aiutarti?"
+    },
+    "buttons": {
+      "send": "Invia messaggio",
+      "sending": "Invio…",
+      "sent": "Inviato ✓",
+      "retry": "Riprova"
+    },
+    "alerts": {
+      "success": "Grazie! Il tuo messaggio è stato inviato. Ti risponderemo al più presto.",
+      "errorGeneric": "Qualcosa è andato storto. Riprova.",
+      "errorNetwork": "Errore di rete. Riprova."
+    },
+    "a11y": {
+      "statusSending": "Invio in corso",
+      "statusSuccess": "Messaggio inviato con successo",
+      "statusError": "Si è verificato un errore"
+    }
+  },
+  "info": {
+    "lead": "Contatta il nostro team per partnership, compliance o assistenza clienti.",
+    "whatsapp": "WhatsApp",
+    "telegram": "Telegram",
+    "copyEmail": "Copia e-mail",
+    "copyNumber": "Copia numero",
+    "copyHandle": "Copia handle",
+    "address": "Lugano, Ticino, Svizzera",
+    "toastCopied": "Copiato!",
+    "waText": "Ciao! Vorrei mettermi in contatto (partnership / compliance / supporto).",
+    "emailSubject": "Richiesta dal sito (AlpineBF)"
+  }
+}
