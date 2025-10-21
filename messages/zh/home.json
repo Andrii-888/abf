@@ -28,5 +28,61 @@
       "title": "专业解决方案生态系统",
       "text": "为资产和房地产交易提供可靠支持。"
     }
+  },
+
+  "industries": {
+    "title": "合作行业",
+    "subtitle": "我们与受监管的合作伙伴在关键领域开展合作。",
+    "items": [
+      {
+        "id": "banks",
+        "title": "银行与电子货币机构（EMI）",
+        "desc": "与瑞士及欧洲经济区金融机构进行 On/Off-Ramp 连接。",
+        "icon": "Landmark",
+        "tag": "Fiat"
+      },
+      {
+        "id": "auto",
+        "title": "汽车经销商",
+        "desc": "为车辆交易提供合规的加密货币兑法币结算服务。",
+        "icon": "Car",
+        "tag": "Retail"
+      },
+      {
+        "id": "realestate",
+        "title": "房地产",
+        "desc": "为房地产领域提供高端的加密货币与法币交易解决方案。",
+        "icon": "Building2",
+        "tag": "Assets"
+      },
+      {
+        "id": "family",
+        "title": "家族办公室",
+        "desc": "在合规框架下提供定制化资产管理方案。",
+        "icon": "Briefcase",
+        "tag": "Wealth"
+      },
+      {
+        "id": "law",
+        "title": "律师事务所",
+        "desc": "提供符合 KYC/AML 标准的托管与文件服务。",
+        "icon": "Scale",
+        "tag": "Legal"
+      },
+      {
+        "id": "metals",
+        "title": "贵金属",
+        "desc": "为实物黄金提供合规的数字支付与结算。",
+        "icon": "Coins",
+        "tag": "Gold"
+      },
+      {
+        "id": "exch",
+        "title": "加密货币交易所",
+        "desc": "提供流动性路由与运营支持。",
+        "icon": "ShieldCheck",
+        "tag": "Ops"
+      }
+    ]
   }
 }

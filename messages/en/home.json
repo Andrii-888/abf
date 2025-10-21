@@ -28,5 +28,60 @@
       "title": "Professional Ecosystem",
       "text": "Reliable support for asset and real-estate transactions."
     }
+  },
+  "industries": {
+    "title": "Industries we work with",
+    "subtitle": "We collaborate with regulated partners across key verticals.",
+    "items": [
+      {
+        "id": "banks",
+        "title": "Banks & EMIs",
+        "desc": "On/Off-ramp with Swiss and EEA financial institutions.",
+        "icon": "Landmark",
+        "tag": "Fiat"
+      },
+      {
+        "id": "auto",
+        "title": "Auto Dealers",
+        "desc": "Regulated crypto-fiat settlements for vehicle purchases.",
+        "icon": "Car",
+        "tag": "Retail"
+      },
+      {
+        "id": "realestate",
+        "title": "Real Estate",
+        "desc": "A premium approach to crypto-fiat transactions in property deals.",
+        "icon": "Building2",
+        "tag": "Assets"
+      },
+      {
+        "id": "family",
+        "title": "Family Offices",
+        "desc": "Tailored investment scenarios under full compliance.",
+        "icon": "Briefcase",
+        "tag": "Wealth"
+      },
+      {
+        "id": "law",
+        "title": "Law Firms",
+        "desc": "Escrow and documentation aligned with KYC/AML standards.",
+        "icon": "Scale",
+        "tag": "Legal"
+      },
+      {
+        "id": "metals",
+        "title": "Precious Metals",
+        "desc": "Digital settlements for physical gold under compliance.",
+        "icon": "Coins",
+        "tag": "Gold"
+      },
+      {
+        "id": "exch",
+        "title": "Crypto Exchanges",
+        "desc": "Liquidity routing and operational support solutions.",
+        "icon": "ShieldCheck",
+        "tag": "Ops"
+      }
+    ]
   }
 }

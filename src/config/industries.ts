@@ -1,4 +1,4 @@
-// src/data/industries.ts
+// src/config/industries.ts
 import {
   Landmark,
   Building2,
@@ -29,6 +29,34 @@ export type Industry = {
   tag?: string;
 };
 
+/**
+ * Нормализует входящий JSON из переводов или API в Industry[]
+ */
+export function normalizeIndustries(jsonItems: Array<Partial<Industry>> | undefined): Industry[] {
+  return (jsonItems ?? []).map((it) => {
+    const iconKey = (it?.icon ?? "Landmark") as keyof typeof iconMap;
+    const validIcon = iconKey in iconMap ? iconKey : "Landmark";
+
+    return {
+      id: String(it?.id ?? cryptoRandom()),
+      title: String(it?.title ?? ""),
+      desc: String(it?.desc ?? ""),
+      icon: validIcon,
+      tag: it?.tag ? String(it.tag) : undefined,
+    };
+  });
+}
+
+/**
+ * Короткий ID без зависимостей
+ */
+function cryptoRandom(): string {
+  return Math.random().toString(36).slice(2, 10);
+}
+
+/**
+ * Базовый набор индустрий (английская версия по умолчанию)
+ */
 export const defaultIndustries: Industry[] = [
   {
     id: "banks",

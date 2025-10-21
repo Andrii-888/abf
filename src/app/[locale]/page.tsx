@@ -6,6 +6,11 @@ import IndustriesCarousel from "@/components/home/IndustriesCarousel";
 import { languagesAlternates, ogLocale, normalizeLocale } from "@/seo/helpers";
 import { getHomeMeta } from "@/seo/meta";
 
+// ⬇️ минимально: читаем JSON индустрий и нормализуем
+import { promises as fs } from "node:fs";
+import path from "node:path";
+import { normalizeIndustries } from "@/config/industries";
+
 // Next 15: params — асинхронные
 export async function generateMetadata({
   params,
@@ -41,7 +46,49 @@ export async function generateMetadata({
   };
 }
 
-export default function HomePage() {
+async function readIfExists(p: string) {
+  try {
+    return await fs.readFile(p, "utf-8");
+  } catch {
+    return null;
+  }
+}
+
+// Загружаем блок industries из messages/<locale>/home.json (с fallback на en)
+async function loadIndustriesDict(locale: string) {
+  const root = process.cwd();
+  const candidates = [
+    path.join(root, "messages", locale, "home.json"),
+    path.join(root, "src", "messages", locale, "home.json"),
+    path.join(root, "messages", "en", "home.json"),
+    path.join(root, "src", "messages", "en", "home.json"),
+  ];
+  for (const p of candidates) {
+    const raw = await readIfExists(p);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      const block = parsed?.industries ?? {};
+      return {
+        title: String(block?.title ?? "Industries we work with"),
+        subtitle: String(
+          block?.subtitle ?? "We cooperate with regulated partners across key verticals.",
+        ),
+        items: normalizeIndustries(block?.items ?? []),
+      };
+    }
+  }
+  return {
+    title: "Industries we work with",
+    subtitle: "We cooperate with regulated partners across key verticals.",
+    items: normalizeIndustries([]),
+  };
+}
+
+export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
+  const loc = normalizeLocale(locale);
+  const industries = await loadIndustriesDict(loc);
+
   return (
     <main className="relative min-h-[85vh] flex flex-col overflow-x-hidden items-center bg-[linear-gradient(135deg,rgba(255,255,255,0)_0%,rgba(26,188,156,0.12)_45%,rgba(212,175,55,0.18)_100%),linear-gradient(#ffffff,#ffffff)] pt-14 md:pt-14 pb-16 md:pb-20">
       {/* Hero section */}
@@ -52,7 +99,12 @@ export default function HomePage() {
 
       {/* Industries Carousel section */}
       <div className="mt-14 w-full">
-        <IndustriesCarousel speed={38} />
+        <IndustriesCarousel
+          speed={38}
+          title={industries.title}
+          subtitle={industries.subtitle}
+          items={industries.items}
+        />
       </div>
     </main>
   );

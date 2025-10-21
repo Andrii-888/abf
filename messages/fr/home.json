@@ -28,5 +28,61 @@
       "title": "Écosystème de solutions professionnelles",
       "text": "Soutien fiable pour les transactions sur les actifs et l’immobilier."
     }
+  },
+
+  "industries": {
+    "title": "Secteurs d’activité",
+    "subtitle": "Nous collaborons avec des partenaires réglementés dans les secteurs clés.",
+    "items": [
+      {
+        "id": "banks",
+        "title": "Banques et EMI",
+        "desc": "On/Off-ramp avec des institutions financières suisses et européennes.",
+        "icon": "Landmark",
+        "tag": "Fiat"
+      },
+      {
+        "id": "auto",
+        "title": "Concessionnaires automobiles",
+        "desc": "Transactions crypto-fiat réglementées pour l’achat de véhicules.",
+        "icon": "Car",
+        "tag": "Retail"
+      },
+      {
+        "id": "realestate",
+        "title": "Immobilier",
+        "desc": "Une approche premium des transactions crypto-fiat dans l’immobilier.",
+        "icon": "Building2",
+        "tag": "Assets"
+      },
+      {
+        "id": "family",
+        "title": "Family Offices",
+        "desc": "Solutions personnalisées dans le respect total de la conformité.",
+        "icon": "Briefcase",
+        "tag": "Wealth"
+      },
+      {
+        "id": "law",
+        "title": "Cabinets d’avocats",
+        "desc": "Services d’escrow et documentation conformes aux normes KYC/AML.",
+        "icon": "Scale",
+        "tag": "Legal"
+      },
+      {
+        "id": "metals",
+        "title": "Métaux précieux",
+        "desc": "Règlements numériques pour l’or physique dans le cadre de la conformité.",
+        "icon": "Coins",
+        "tag": "Gold"
+      },
+      {
+        "id": "exch",
+        "title": "Crypto-Échanges",
+        "desc": "Acheminement de la liquidité et support opérationnel.",
+        "icon": "ShieldCheck",
+        "tag": "Ops"
+      }
+    ]
   }
 }

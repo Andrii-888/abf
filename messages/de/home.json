@@ -28,5 +28,61 @@
       "title": "Ökosystem professioneller Lösungen",
       "text": "Zuverlässige Unterstützung bei Transaktionen mit Vermögenswerten und Immobilien."
     }
+  },
+
+  "industries": {
+    "title": "Branchen, mit denen wir arbeiten",
+    "subtitle": "Wir kooperieren mit regulierten Partnern in wichtigen Branchen.",
+    "items": [
+      {
+        "id": "banks",
+        "title": "Banken & EMI",
+        "desc": "On/Off-Ramp mit Schweizer und EWR-Finanzinstituten.",
+        "icon": "Landmark",
+        "tag": "Fiat"
+      },
+      {
+        "id": "auto",
+        "title": "Autohändler",
+        "desc": "Regulierte Krypto-Fiat-Transaktionen für Fahrzeugkäufe.",
+        "icon": "Car",
+        "tag": "Retail"
+      },
+      {
+        "id": "realestate",
+        "title": "Immobilien",
+        "desc": "Premium-Ansatz für Krypto-Fiat-Transaktionen im Immobiliensektor.",
+        "icon": "Building2",
+        "tag": "Assets"
+      },
+      {
+        "id": "family",
+        "title": "Family Offices",
+        "desc": "Massgeschneiderte Lösungen im Rahmen der Compliance.",
+        "icon": "Briefcase",
+        "tag": "Wealth"
+      },
+      {
+        "id": "law",
+        "title": "Anwaltskanzleien",
+        "desc": "Treuhand- und Dokumentationsdienste gemäss KYC/AML-Standards.",
+        "icon": "Scale",
+        "tag": "Legal"
+      },
+      {
+        "id": "metals",
+        "title": "Edelmetalle",
+        "desc": "Digitale Zahlungen für physisches Gold unter Einhaltung der Vorschriften.",
+        "icon": "Coins",
+        "tag": "Gold"
+      },
+      {
+        "id": "exch",
+        "title": "Krypto-Börsen",
+        "desc": "Liquiditätsrouting und operative Unterstützung.",
+        "icon": "ShieldCheck",
+        "tag": "Ops"
+      }
+    ]
   }
 }
