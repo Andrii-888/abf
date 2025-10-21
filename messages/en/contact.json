@@ -29,6 +29,22 @@
       "statusSending": "Sending",
       "statusSuccess": "Message sent successfully",
       "statusError": "There was an error"
+    },
+    "validation": {
+      "name": {
+        "min": "Name is too short",
+        "max": "Name is too long"
+      },
+      "fromEmail": {
+        "email": "Invalid e-mail"
+      },
+      "message": {
+        "min": "Message is too short",
+        "max": "Message is too long (up to 2000 characters)"
+      },
+      "consent": {
+        "required": "Consent is required"
+      }
     }
   },
   "info": {

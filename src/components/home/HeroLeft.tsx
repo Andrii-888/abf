@@ -57,7 +57,7 @@ export default function HeroLeft() {
       {/* CTA + QR */}
       <div className="mt-3 w-full flex flex-col sm:flex-row sm:items-center sm:gap-4">
         <Link
-          href={`/${locale}/contact`}
+          href={`/${locale}/contact#feedback`}
           className="block w-full sm:w-[260px] text-center rounded-xl px-5 py-3 text-sm sm:text-base font-medium
                  bg-[var(--color-crypto)] text-white transition-transform duration-200 active:scale-[0.98]
                  hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-0

@@ -1,13 +1,23 @@
 import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
-import { contactSchema } from "@/utils/validation/contact.schema";
+import { makeContactSchema, type ValidationMessages } from "@/utils/validation/contact.schema";
+
+// === Создаём схему с дефолтными текстами ошибок (для API) ===
+const defaultValidation: ValidationMessages = {
+  name: { min: "Name is too short", max: "Name is too long" },
+  fromEmail: { email: "Invalid e-mail" },
+  message: { min: "Message is too short", max: "Message is too long (up to 2000 characters)" },
+  consent: { required: "Consent is required" },
+};
+
+const schema = makeContactSchema(defaultValidation);
 
 export async function POST(req: Request) {
   try {
     const json = await req.json();
 
-    // Валидация Zod
-    const parsed = contactSchema.safeParse(json);
+    // Валидация через Zod
+    const parsed = schema.safeParse(json);
 
     // honeypot: не раскрываемся ботам
     if (!parsed.success && parsed.error.flatten().fieldErrors.company?.[0] === "bot") {
@@ -25,14 +35,13 @@ export async function POST(req: Request) {
     const transporter = nodemailer.createTransport({
       host: process.env.SMTP_HOST || "smtp.mail.ch",
       port: Number(process.env.SMTP_PORT || 465),
-      secure: process.env.SMTP_SECURE === "true", // 465 -> true (implicit TLS)
+      secure: process.env.SMTP_SECURE === "true", // 465 → true
       authMethod: "LOGIN",
       auth: {
         user: mustEnv("SMTP_USER"),
         pass: mustEnv("SMTP_PASS"),
       },
       tls: { minVersion: "TLSv1.2" },
-      // при отладке включи:
       // logger: true,
       // debug: true,
     });
@@ -40,11 +49,10 @@ export async function POST(req: Request) {
     const site = process.env.SITE_NAME || "Website";
     const to = process.env.CONTACT_TO || mustEnv("SMTP_USER");
     const subject = `Запрос с сайта (${site})`;
-
     const html = renderHtml({ site, name, email: fromEmail, message });
 
     await transporter.sendMail({
-      from: `"${site}" <${mustEnv("SMTP_USER")}>`, // отправитель = логин SMTP
+      from: `"${site}" <${mustEnv("SMTP_USER")}>`,
       to,
       replyTo: fromEmail,
       subject,

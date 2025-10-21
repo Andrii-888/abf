@@ -29,6 +29,22 @@
       "statusSending": "Wird gesendet",
       "statusSuccess": "Nachricht erfolgreich gesendet",
       "statusError": "Ein Fehler ist aufgetreten"
+    },
+    "validation": {
+      "name": {
+        "min": "Der Name ist zu kurz",
+        "max": "Der Name ist zu lang"
+      },
+      "fromEmail": {
+        "email": "Ungültige E-Mail-Adresse"
+      },
+      "message": {
+        "min": "Die Nachricht ist zu kurz",
+        "max": "Die Nachricht ist zu lang (bis zu 2000 Zeichen)"
+      },
+      "consent": {
+        "required": "Zustimmung zur Datenverarbeitung ist erforderlich"
+      }
     }
   },
   "info": {

@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { contactSchema } from "@/utils/validation/contact.schema";
+import { makeContactSchema, type ValidationMessages } from "@/utils/validation/contact.schema";
 
 export type FormState = "idle" | "submitting" | "success" | "error";
 export const MESSAGE_MAX = 1000;
@@ -15,19 +15,33 @@ type Values = {
 
 type Errors = Record<string, string>;
 
-function validateAll(values: Values): Errors {
-  const parsed = contactSchema.safeParse(values);
-  if (parsed.success) return {};
-  const flat = parsed.error.flatten().fieldErrors;
-  const next: Errors = {};
-  (Object.keys(flat) as Array<keyof typeof flat>).forEach((key) => {
-    const msg = flat[key]?.[0];
-    if (msg) next[String(key)] = msg;
-  });
-  return next;
-}
+type UseContactFormOpts = {
+  /** Переводы сообщений валидации для текущей локали (из contact.json -> form.validation) */
+  validation: ValidationMessages;
+  /** Тексты для кнопки и общих ошибок (из contact.json -> form.buttons + form.alerts) */
+  texts?: {
+    send: string;
+    sending: string;
+    sent: string;
+    retry: string;
+    errorGeneric: string;
+    errorNetwork: string;
+  };
+};
 
-export function useContactForm() {
+export function useContactForm(opts: UseContactFormOpts) {
+  const t = {
+    send: opts.texts?.send ?? "Send message",
+    sending: opts.texts?.sending ?? "Sending…",
+    sent: opts.texts?.sent ?? "Sent ✓",
+    retry: opts.texts?.retry ?? "Try again",
+    errorGeneric: opts.texts?.errorGeneric ?? "Something went wrong. Please try again.",
+    errorNetwork: opts.texts?.errorNetwork ?? "Network error. Please try again.",
+  };
+
+  // Схема с локализованными сообщениями
+  const schema = useMemo(() => makeContactSchema(opts.validation), [opts.validation]);
+
   const [state, setState] = useState<FormState>("idle");
   const [values, setValues] = useState<Values>({
     name: "",
@@ -46,11 +60,11 @@ export function useContactForm() {
 
   // Полевые схемы для точечной валидации
   const fieldSchemas = useMemo(() => {
-    const Name = contactSchema.pick({ name: true });
-    const Email = contactSchema.pick({ fromEmail: true });
-    const Message = contactSchema.pick({ message: true });
+    const Name = schema.pick({ name: true });
+    const Email = schema.pick({ fromEmail: true });
+    const Message = schema.pick({ message: true });
     return { Name, Email, Message };
-  }, []);
+  }, [schema]);
 
   const validateField = useCallback(
     (name: keyof Values, value: string): string => {
@@ -76,6 +90,21 @@ export function useContactForm() {
       }
     },
     [fieldSchemas],
+  );
+
+  const validateAll = useCallback(
+    (vals: Values): Errors => {
+      const parsed = schema.safeParse(vals);
+      if (parsed.success) return {};
+      const flat = parsed.error.flatten().fieldErrors;
+      const next: Errors = {};
+      (Object.keys(flat) as Array<keyof typeof flat>).forEach((key) => {
+        const msg = flat[key]?.[0];
+        if (msg) next[String(key)] = msg;
+      });
+      return next;
+    },
+    [schema],
   );
 
   const onChange = useCallback(
@@ -117,11 +146,11 @@ export function useContactForm() {
   );
 
   const buttonText = useMemo(() => {
-    if (state === "success") return "Sent ✓";
-    if (state === "error") return "Try again";
-    if (state === "submitting") return "Sending…";
-    return "Send message";
-  }, [state]);
+    if (state === "success") return t.sent;
+    if (state === "error") return t.retry;
+    if (state === "submitting") return t.sending;
+    return t.send;
+  }, [state, t.send, t.sending, t.sent, t.retry]);
 
   const onKeyDown = useCallback((e: React.KeyboardEvent<HTMLFormElement>) => {
     if ((e.metaKey || e.ctrlKey) && e.key === "Enter") e.currentTarget.requestSubmit?.();
@@ -171,7 +200,7 @@ export function useContactForm() {
 
     // honeypot
     if (values.company) {
-      setErrors({ _form: "Something went wrong. Please try again." });
+      setErrors({ _form: t.errorGeneric });
       setState("error");
       return;
     }
@@ -193,11 +222,7 @@ export function useContactForm() {
         Object.entries(incoming).forEach(([k, v]) => {
           normalized[k] = Array.isArray(v) ? (v[0] ?? "Invalid") : (v ?? "Invalid");
         });
-        setErrors(
-          Object.keys(normalized).length
-            ? normalized
-            : { _form: "Something went wrong. Please try again." },
-        );
+        setErrors(Object.keys(normalized).length ? normalized : { _form: t.errorGeneric });
         setState("error");
         return;
       }
@@ -207,10 +232,10 @@ export function useContactForm() {
       setTouched({});
       setState("success");
     } catch {
-      setErrors({ _form: "Network error. Please try again." });
+      setErrors({ _form: t.errorNetwork });
       setState("error");
     }
-  }, [isBusy, values]);
+  }, [isBusy, values, validateAll, t.errorGeneric, t.errorNetwork]);
 
   return {
     // state

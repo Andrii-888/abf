@@ -1,30 +1,39 @@
 import { z } from "zod";
 
 /**
- * Схема валидации формы контактов (клиент + сервер).
+ * Тип переводов сообщений валидации (из contact.json)
  */
-export const contactSchema = z.object({
-  name: z.string().trim().min(2, "Слишком короткое имя").max(80, "Слишком длинное имя"),
-  fromEmail: z.string().trim().email("Некорректный e-mail"),
-  message: z
-    .string()
-    .trim()
-    .min(10, "Сообщение слишком короткое")
-    .max(2000, "Слишком длинное сообщение (до 2000 символов)"),
-  // было: z.literal(true, { errorMap: ... }) — так нельзя
-  consent: z.boolean().refine((v) => v === true, {
-    message: "Нужно согласие на обработку данных",
-  }),
-  // honeypot: поле должно быть пустым; если не пустое — "bot"
-  company: z
-    .string()
-    .optional()
-    .refine((v) => !v || v.trim() === "", { message: "bot" }),
-});
+export type ValidationMessages = {
+  name: { min: string; max: string };
+  fromEmail: { email: string };
+  message: { min: string; max: string };
+  consent: { required: string };
+};
 
-export type ContactFormInput = z.infer<typeof contactSchema>;
+/**
+ * Фабрика схемы — создаёт contactSchema с сообщениями текущего языка
+ */
+export function makeContactSchema(msg: ValidationMessages) {
+  return z.object({
+    name: z.string().trim().min(2, msg.name.min).max(80, msg.name.max),
+    fromEmail: z.string().trim().email(msg.fromEmail.email),
+    message: z.string().trim().min(10, msg.message.min).max(2000, msg.message.max),
+    consent: z.boolean().refine((v) => v === true, { message: msg.consent.required }),
+    company: z
+      .string()
+      .optional()
+      .refine((v) => !v || v.trim() === "", { message: "bot" }), // honeypot
+  });
+}
 
-/** Преобразование ошибок Zod в плоский словарь для state */
+/**
+ * Тип данных формы для автокомплита
+ */
+export type ContactFormInput = z.infer<ReturnType<typeof makeContactSchema>>;
+
+/**
+ * Преобразование ошибок Zod в плоский объект для React state
+ */
 export function zodErrorsToRecord(err: z.ZodError): Record<string, string> {
   const flat = err.flatten().fieldErrors;
   const out: Record<string, string> = {};

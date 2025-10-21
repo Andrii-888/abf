@@ -29,6 +29,22 @@
       "statusSending": "Envoi en cours",
       "statusSuccess": "Message envoyé avec succès",
       "statusError": "Une erreur s’est produite"
+    },
+    "validation": {
+      "name": {
+        "min": "Le nom est trop court",
+        "max": "Le nom est trop long"
+      },
+      "fromEmail": {
+        "email": "Adresse e-mail invalide"
+      },
+      "message": {
+        "min": "Le message est trop court",
+        "max": "Le message est trop long (jusqu’à 2000 caractères)"
+      },
+      "consent": {
+        "required": "Le consentement au traitement des données est requis"
+      }
     }
   },
   "info": {

@@ -21,26 +21,42 @@
       "retry": "Riprova"
     },
     "alerts": {
-      "success": "Grazie! Il tuo messaggio è stato inviato. Ti risponderemo al più presto.",
-      "errorGeneric": "Qualcosa è andato storto. Riprova.",
-      "errorNetwork": "Errore di rete. Riprova."
+      "success": "Grazie! Il tuo messaggio è stato inviato. Ti ricontatteremo presto.",
+      "errorGeneric": "Si è verificato un errore. Riprova per favore.",
+      "errorNetwork": "Errore di rete. Riprova per favore."
     },
     "a11y": {
       "statusSending": "Invio in corso",
       "statusSuccess": "Messaggio inviato con successo",
       "statusError": "Si è verificato un errore"
+    },
+    "validation": {
+      "name": {
+        "min": "Il nome è troppo corto",
+        "max": "Il nome è troppo lungo"
+      },
+      "fromEmail": {
+        "email": "Indirizzo email non valido"
+      },
+      "message": {
+        "min": "Il messaggio è troppo corto",
+        "max": "Il messaggio è troppo lungo (fino a 2000 caratteri)"
+      },
+      "consent": {
+        "required": "È necessario il consenso al trattamento dei dati"
+      }
     }
   },
   "info": {
-    "lead": "Contatta il nostro team per partnership, compliance o assistenza clienti.",
+    "lead": "Contatta il nostro team per partnership, conformità o assistenza clienti.",
     "whatsapp": "WhatsApp",
     "telegram": "Telegram",
-    "copyEmail": "Copia e-mail",
+    "copyEmail": "Copia email",
     "copyNumber": "Copia numero",
-    "copyHandle": "Copia handle",
+    "copyHandle": "Copia contatto",
     "address": "Lugano, Ticino, Svizzera",
     "toastCopied": "Copiato!",
-    "waText": "Ciao! Vorrei mettermi in contatto (partnership / compliance / supporto).",
+    "waText": "Ciao! Vorrei mettermi in contatto (partnership / conformità / supporto).",
     "emailSubject": "Richiesta dal sito (AlpineBF)"
   }
 }

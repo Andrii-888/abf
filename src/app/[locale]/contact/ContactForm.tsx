@@ -1,8 +1,8 @@
 // src/app/[locale]/contact/ContactForm.tsx
 "use client";
 
-import { useContactForm } from "./useContactForm";
 import clsx from "clsx";
+import { useContactForm } from "./useContactForm";
 
 type FormDict = {
   labels: { name: string; email: string; message: string };
@@ -10,6 +10,12 @@ type FormDict = {
   buttons: { send: string; sending: string; sent: string; retry: string };
   alerts: { success: string; errorGeneric: string; errorNetwork: string };
   a11y: { statusSending: string; statusSuccess: string; statusError: string };
+  validation: {
+    name: { min: string; max: string };
+    fromEmail: { email: string };
+    message: { min: string; max: string };
+    consent: { required: string };
+  };
 };
 
 export default function ContactForm({ dict }: { dict: FormDict }) {
@@ -27,16 +33,18 @@ export default function ContactForm({ dict }: { dict: FormDict }) {
     msgRef,
     messageCountTone,
     MESSAGE_MAX,
-  } = useContactForm();
-
-  const btnText =
-    state === "success"
-      ? dict.buttons.sent
-      : state === "error"
-        ? dict.buttons.retry
-        : state === "submitting"
-          ? dict.buttons.sending
-          : dict.buttons.send;
+    buttonText,
+  } = useContactForm({
+    validation: dict.validation,
+    texts: {
+      send: dict.buttons.send,
+      sending: dict.buttons.sending,
+      sent: dict.buttons.sent,
+      retry: dict.buttons.retry,
+      errorGeneric: dict.alerts.errorGeneric,
+      errorNetwork: dict.alerts.errorNetwork,
+    },
+  });
 
   return (
     <form
@@ -71,7 +79,7 @@ export default function ContactForm({ dict }: { dict: FormDict }) {
           role="alert"
           className="rounded-xl border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700"
         >
-          {errors._form || dict.alerts.errorGeneric}
+          {errors._form}
         </div>
       )}
 
@@ -187,7 +195,7 @@ export default function ContactForm({ dict }: { dict: FormDict }) {
           "hover:opacity-90 disabled:opacity-60",
         )}
       >
-        {btnText}
+        {buttonText}
       </button>
     </form>
   );

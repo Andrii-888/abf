@@ -226,3 +226,14 @@ next-intl Docs
 Tailwind CSS Docs
 
 Vercel Deployment Guide
+////////////////////////////////////////////////////////////
+Категория Компания Сайт
+🇨🇭 Крипто-лицензия Mt Pelerin SA mtpelerin.com
+
+🇨🇭 SRO VQF Bity SA bity.com
+
+🇨🇭 FINMA licensed Bitcoin Suisse AG bitcoinsuisse.com
+
+🇨🇭 Crypto-bank Sygnum Bank AG sygnum.com
+
+🇨🇭 Финтех-провайдер SwissBorg SA swissborg.com

@@ -20,6 +20,13 @@ type ContactDict = {
     buttons: { send: string; sending: string; sent: string; retry: string };
     alerts: { success: string; errorGeneric: string; errorNetwork: string };
     a11y: { statusSending: string; statusSuccess: string; statusError: string };
+    /** 👇 добавили блок валидации, которого не хватало */
+    validation: {
+      name: { min: string; max: string };
+      fromEmail: { email: string };
+      message: { min: string; max: string };
+      consent: { required: string };
+    };
   };
   info: {
     lead: string;
@@ -67,19 +74,29 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
   const dict = await loadContactDict(locale || "en");
 
   return (
-    <section className="mx-auto w-full max-w-6xl px-4 py-10 lg:py-14">
+    <section className="mx-auto w-full max-w-6xl px-4 py-10 lg:py-14 overflow-x-hidden">
       <h1 className="mb-2 text-2xl font-semibold tracking-tight lg:text-3xl">{dict.page.title}</h1>
       {/* Чтобы не дублировать смысл с левым блоком на десктопе, показываем подзаголовок только на мобиле */}
       <p className="mb-6 text-sm text-gray-600 lg:hidden">{dict.page.subtitle}</p>
 
-      <div className="grid gap-8 lg:grid-cols-2">
+      <div
+        className="
+          grid gap-6 sm:gap-8
+          lg:grid-cols-2
+          w-full
+          overflow-hidden
+        "
+      >
         {/* Левая колонка — контактная информация */}
-        <div className="rounded-2xl border border-gray-200/60 p-5 shadow-sm">
+        <div className="rounded-2xl border border-gray-200/60 p-5 shadow-sm w-full max-w-full overflow-hidden">
           <ContactInfo dict={dict.info} />
         </div>
 
         {/* Правая колонка — форма обратной связи (якорь для CTA) */}
-        <div id="feedback" className="rounded-2xl border border-gray-200/60 p-5 shadow-sm">
+        <div
+          id="feedback"
+          className="rounded-2xl border border-gray-200/60 p-5 shadow-sm w-full max-w-full overflow-hidden"
+        >
           <h2 className="mb-3 text-lg font-semibold">{dict.page.feedbackTitle}</h2>
           {/* Если хочешь, чтобы справа текст был только на мобиле, раскомментируй строку ниже:
               <p className="mb-5 text-sm text-gray-600 lg:hidden">{dict.page.feedbackSubtitle}</p>

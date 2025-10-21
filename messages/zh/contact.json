@@ -29,6 +29,22 @@
       "statusSending": "正在发送",
       "statusSuccess": "消息已成功发送",
       "statusError": "发生错误"
+    },
+    "validation": {
+      "name": {
+        "min": "姓名太短",
+        "max": "姓名太长"
+      },
+      "fromEmail": {
+        "email": "电子邮箱地址无效"
+      },
+      "message": {
+        "min": "留言太短",
+        "max": "留言太长（最多 2000 个字符）"
+      },
+      "consent": {
+        "required": "需要同意数据处理条款"
+      }
     }
   },
   "info": {
