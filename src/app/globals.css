@@ -11,6 +11,10 @@ body {
   --foreground: #171717;
 }
 
+/* .page-bg-contact {
+  background: linear-gradient(180deg, #edf2ef 0%, #e5ebe8 40%, #dde2e0 70%, #d3d8d6 100%);
+} */
+
 @theme inline {
   /* базовые токены */
   --color-background: var(--background);

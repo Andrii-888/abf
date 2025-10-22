@@ -1,24 +1,35 @@
+// src/app/[locale]/contact/useContactForm.ts
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { makeContactSchema, type ValidationMessages } from "@/utils/validation/contact.schema";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { useContactValidation, type Errors } from "./useContactValidation";
+import { submitContact } from "./useSubmitContact";
+import { useDebouncedFieldValidation } from "./useDebouncedFieldValidation";
+import { useMessageCountTone } from "./useMessageCountTone";
 
 export type FormState = "idle" | "submitting" | "success" | "error";
 export const MESSAGE_MAX = 1000;
+
+/** Имена текстовых полей формы */
+type TextFieldName = "name" | "fromEmail" | "message";
+/** Все валидируемые поля формы */
+type FieldName = TextFieldName | "consent";
+
+const isTextFieldName = (n: string): n is TextFieldName =>
+  n === "name" || n === "fromEmail" || n === "message";
+
+const isFieldName = (n: string): n is FieldName => isTextFieldName(n) || n === "consent";
 
 type Values = {
   name: string;
   fromEmail: string;
   message: string;
-  company: string; // honeypot
+  company: string; // honeypot, не вводится руками
+  consent: boolean;
 };
 
-type Errors = Record<string, string>;
-
 type UseContactFormOpts = {
-  /** Переводы сообщений валидации для текущей локали (из contact.json -> form.validation) */
-  validation: ValidationMessages;
-  /** Тексты для кнопки и общих ошибок (из contact.json -> form.buttons + form.alerts) */
+  validation: Parameters<typeof useContactValidation>[0];
   texts?: {
     send: string;
     sending: string;
@@ -27,6 +38,7 @@ type UseContactFormOpts = {
     errorGeneric: string;
     errorNetwork: string;
   };
+  autoFocusOnError?: boolean;
 };
 
 export function useContactForm(opts: UseContactFormOpts) {
@@ -38,204 +50,174 @@ export function useContactForm(opts: UseContactFormOpts) {
     errorGeneric: opts.texts?.errorGeneric ?? "Something went wrong. Please try again.",
     errorNetwork: opts.texts?.errorNetwork ?? "Network error. Please try again.",
   };
+  const autoFocusOnError = opts.autoFocusOnError ?? true;
 
-  // Схема с локализованными сообщениями
-  const schema = useMemo(() => makeContactSchema(opts.validation), [opts.validation]);
+  // Валидация (ожидаем строго FieldName/TextFieldName)
+  const { validateField, validateAll } = useContactValidation(opts.validation);
 
+  // Состояние формы
   const [state, setState] = useState<FormState>("idle");
   const [values, setValues] = useState<Values>({
     name: "",
     fromEmail: "",
     message: "",
     company: "",
+    consent: false,
   });
   const [errors, setErrors] = useState<Errors>({});
-  const [touched, setTouched] = useState<Record<string, boolean>>({});
+  const [touched, setTouched] = useState<Partial<Record<FieldName, boolean>>>({});
   const isBusy = state === "submitting";
 
-  // refs для автофокуса на первом невалидном поле
+  // Refs для автофокуса
   const nameRef = useRef<HTMLInputElement | null>(null);
   const emailRef = useRef<HTMLInputElement | null>(null);
   const msgRef = useRef<HTMLTextAreaElement | null>(null);
 
-  // Полевые схемы для точечной валидации
-  const fieldSchemas = useMemo(() => {
-    const Name = schema.pick({ name: true });
-    const Email = schema.pick({ fromEmail: true });
-    const Message = schema.pick({ message: true });
-    return { Name, Email, Message };
-  }, [schema]);
+  // Debounced-валидация только для текстовых полей
+  const debounce = useDebouncedFieldValidation(validateField, (updater) => setErrors(updater), 250);
 
-  const validateField = useCallback(
-    (name: keyof Values, value: string): string => {
-      try {
-        switch (name) {
-          case "name": {
-            const r = fieldSchemas.Name.safeParse({ name: value });
-            return r.success ? "" : (r.error.flatten().fieldErrors.name?.[0] ?? "Invalid");
-          }
-          case "fromEmail": {
-            const r = fieldSchemas.Email.safeParse({ fromEmail: value });
-            return r.success ? "" : (r.error.flatten().fieldErrors.fromEmail?.[0] ?? "Invalid");
-          }
-          case "message": {
-            const r = fieldSchemas.Message.safeParse({ message: value });
-            return r.success ? "" : (r.error.flatten().fieldErrors.message?.[0] ?? "Invalid");
-          }
-          default:
-            return "";
-        }
-      } catch {
-        return "";
-      }
-    },
-    [fieldSchemas],
-  );
-
-  const validateAll = useCallback(
-    (vals: Values): Errors => {
-      const parsed = schema.safeParse(vals);
-      if (parsed.success) return {};
-      const flat = parsed.error.flatten().fieldErrors;
-      const next: Errors = {};
-      (Object.keys(flat) as Array<keyof typeof flat>).forEach((key) => {
-        const msg = flat[key]?.[0];
-        if (msg) next[String(key)] = msg;
-      });
-      return next;
-    },
-    [schema],
-  );
-
+  // onChange — поддержка input/textarea/checkbox без any
   const onChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-      const { name, value } = e.target;
-      setValues((v) => ({ ...v, [name]: value }));
+      const { name } = e.target;
+      const isCheckbox = (e.target as HTMLInputElement).type === "checkbox";
 
+      if (isCheckbox && name === "consent") {
+        const checked = (e.target as HTMLInputElement).checked;
+        setValues((v) => ({ ...v, consent: checked }));
+      } else if (isTextFieldName(name)) {
+        const value = (e.target as HTMLInputElement | HTMLTextAreaElement).value;
+        // Обновляем соответствующее поле без any
+        setValues((v) =>
+          name === "name"
+            ? { ...v, name: value }
+            : name === "fromEmail"
+              ? { ...v, fromEmail: value }
+              : { ...v, message: value },
+        );
+      }
+
+      // Сбрасываем form-level ошибку при вводе
       if (errors._form) {
         const { _form: _omit, ...rest } = errors;
         setErrors(rest);
       }
-      if (touched[name]) {
-        const msg = validateField(name as keyof Values, value);
+
+      // Если поле было уже тронуто — валидируем
+      if (touched[name as FieldName]) {
+        if (isCheckbox && name === "consent") {
+          const msg = validateField(
+            "consent" as Parameters<typeof validateField>[0],
+            String((e.target as HTMLInputElement).checked),
+          );
+
+          setErrors((prev) => {
+            const next = { ...prev };
+            if (msg) next.consent = msg;
+            else delete next.consent;
+            return next;
+          });
+        } else if (isTextFieldName(name)) {
+          const value = (e.target as HTMLInputElement | HTMLTextAreaElement).value;
+          debounce.schedule(name, value);
+        }
+      }
+
+      // Любое изменение после success возвращает форму в idle
+      if (state === "success") setState("idle");
+    },
+    [errors, touched, state, debounce, validateField],
+  );
+
+  // onBlur — строгая проверка, без any
+  const onBlur = useCallback(
+    (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      const { name } = e.target;
+      const isCheckbox = (e.target as HTMLInputElement).type === "checkbox";
+
+      // помечаем поле как touched
+      if (isFieldName(name)) {
+        setTouched((t) => ({ ...t, [name]: true }));
+      }
+
+      let field: FieldName | null = null;
+      let valueForCheck = "";
+
+      if (isCheckbox && name === "consent") {
+        field = "consent";
+        valueForCheck = String((e.target as HTMLInputElement).checked);
+      } else if (isTextFieldName(name)) {
+        field = name;
+        valueForCheck = (e.target as HTMLInputElement | HTMLTextAreaElement).value;
+      }
+
+      if (field) {
+        const msg = validateField(field as Parameters<typeof validateField>[0], valueForCheck);
+
         setErrors((prev) => {
           const next = { ...prev };
-          if (msg) next[name] = msg;
-          else delete next[name];
+          if (msg) next[field!] = msg;
+          else delete next[field!];
           return next;
         });
       }
-      if (state === "success") setState("idle");
-    },
-    [errors, touched, state, validateField],
-  );
-
-  const onBlur = useCallback(
-    (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-      const { name, value } = e.target;
-      setTouched((t) => ({ ...t, [name]: true }));
-      const msg = validateField(name as keyof Values, value);
-      setErrors((prev) => {
-        const next = { ...prev };
-        if (msg) next[name] = msg;
-        else delete next[name];
-        return next;
-      });
     },
     [validateField],
   );
-
-  const buttonText = useMemo(() => {
-    if (state === "success") return t.sent;
-    if (state === "error") return t.retry;
-    if (state === "submitting") return t.sending;
-    return t.send;
-  }, [state, t.send, t.sending, t.sent, t.retry]);
 
   const onKeyDown = useCallback((e: React.KeyboardEvent<HTMLFormElement>) => {
     if ((e.metaKey || e.ctrlKey) && e.key === "Enter") e.currentTarget.requestSubmit?.();
   }, []);
 
-  const focusFirstInvalid = useCallback(() => {
-    if (errors.name) {
-      nameRef.current?.focus();
-      return;
-    }
-    if (errors.fromEmail) {
-      emailRef.current?.focus();
-      return;
-    }
-    if (errors.message) {
-      msgRef.current?.focus();
-    }
-  }, [errors]);
+  // Подпись на кнопке
+  const buttonText =
+    state === "success"
+      ? t.sent
+      : state === "error"
+        ? t.retry
+        : state === "submitting"
+          ? t.sending
+          : t.send;
 
-  useEffect(() => {
-    if (state === "error") {
-      const id = setTimeout(focusFirstInvalid, 0);
-      return () => clearTimeout(id);
-    }
-  }, [state, focusFirstInvalid]);
-
-  const messageCountTone = useMemo<"neutral" | "warn" | "danger">(() => {
-    const len = values.message.length;
-    if (len > MESSAGE_MAX * 0.95) return "danger";
-    if (len > MESSAGE_MAX * 0.8) return "warn";
-    return "neutral";
-  }, [values.message.length]);
-
+  // Сабмит — через вынесенную функцию
   const onSubmit = useCallback(async () => {
     if (isBusy) return;
+    await submitContact({
+      values,
+      setValues,
+      setTouched,
+      setErrors,
+      setState,
+      validateAll,
+      autoFocusOnError,
+      t: { errorGeneric: t.errorGeneric, errorNetwork: t.errorNetwork },
+      nameRef,
+      emailRef,
+      msgRef,
+    });
+  }, [
+    isBusy,
+    values,
+    setValues,
+    setTouched,
+    setErrors,
+    setState,
+    validateAll,
+    autoFocusOnError,
+    t.errorGeneric,
+    t.errorNetwork,
+  ]);
 
-    setState("submitting");
-    setErrors({});
+  // Тон для счётчика символов
+  const messageCountTone = useMessageCountTone(values.message, MESSAGE_MAX);
 
-    // Полная клиентская валидация
-    const fieldErrors = validateAll(values);
-    if (Object.keys(fieldErrors).length) {
-      setErrors(fieldErrors);
-      setState("error");
-      return;
+  // Автовозврат в idle после успешной отправки (через 4 сек)
+  useEffect(() => {
+    if (state === "success") {
+      const id = setTimeout(() => setState("idle"), 4000);
+      return () => clearTimeout(id);
     }
-
-    // honeypot
-    if (values.company) {
-      setErrors({ _form: t.errorGeneric });
-      setState("error");
-      return;
-    }
-
-    try {
-      const res = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(values),
-      });
-
-      const data: { ok?: boolean; errors?: Record<string, string[] | string> } = await res
-        .json()
-        .catch(() => ({}));
-
-      if (!res.ok || !data?.ok) {
-        const incoming = (data?.errors ?? {}) as Record<string, string[] | string>;
-        const normalized: Errors = {};
-        Object.entries(incoming).forEach(([k, v]) => {
-          normalized[k] = Array.isArray(v) ? (v[0] ?? "Invalid") : (v ?? "Invalid");
-        });
-        setErrors(Object.keys(normalized).length ? normalized : { _form: t.errorGeneric });
-        setState("error");
-        return;
-      }
-
-      // Успех
-      setValues({ name: "", fromEmail: "", message: "", company: "" });
-      setTouched({});
-      setState("success");
-    } catch {
-      setErrors({ _form: t.errorNetwork });
-      setState("error");
-    }
-  }, [isBusy, values, validateAll, t.errorGeneric, t.errorNetwork]);
+  }, [state]);
 
   return {
     // state

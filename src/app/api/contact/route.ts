@@ -1,105 +1,112 @@
-import { NextResponse } from "next/server";
+// src/app/api/contact/route.ts
+import { NextRequest } from "next/server";
 import nodemailer from "nodemailer";
-import { makeContactSchema, type ValidationMessages } from "@/utils/validation/contact.schema";
 
-// === Создаём схему с дефолтными текстами ошибок (для API) ===
-const defaultValidation: ValidationMessages = {
-  name: { min: "Name is too short", max: "Name is too long" },
-  fromEmail: { email: "Invalid e-mail" },
-  message: { min: "Message is too short", max: "Message is too long (up to 2000 characters)" },
-  consent: { required: "Consent is required" },
+export const runtime = "nodejs";
+
+type Payload = {
+  name?: string;
+  fromEmail?: string;
+  message?: string;
+  company?: string; // honeypot
 };
 
-const schema = makeContactSchema(defaultValidation);
+const bool = (v?: string | null) => String(v).toLowerCase() === "true";
+const json = (data: unknown, status = 200) =>
+  new Response(JSON.stringify(data), { status, headers: { "Content-Type": "application/json" } });
 
-export async function POST(req: Request) {
-  try {
-    const json = await req.json();
+// простейший in-memory rate limit (для одного инстанса)
+const WINDOW_MS = 60_000;
+const LIMIT = 5;
+const ipMap = new Map<string, { count: number; resetAt: number }>();
 
-    // Валидация через Zod
-    const parsed = schema.safeParse(json);
+export async function POST(req: NextRequest) {
+  // IP
+  const ipHeader = req.headers.get("x-forwarded-for");
+  const ip = ipHeader
+    ? ipHeader.split(",")[0].trim()
+    : process.env.NODE_ENV === "development"
+      ? "127.0.0.1"
+      : "unknown";
 
-    // honeypot: не раскрываемся ботам
-    if (!parsed.success && parsed.error.flatten().fieldErrors.company?.[0] === "bot") {
-      return NextResponse.json({ ok: true });
+  // rate-limit
+  const now = Date.now();
+  const slot = ipMap.get(ip);
+  if (!slot || slot.resetAt < now) {
+    ipMap.set(ip, { count: 1, resetAt: now + WINDOW_MS });
+  } else {
+    slot.count++;
+    if (slot.count > LIMIT) {
+      return json({ ok: false, errors: { _form: "Too many requests. Try again later." } }, 429);
     }
-
-    if (!parsed.success) {
-      const errors = parsed.error.flatten().fieldErrors;
-      return NextResponse.json({ ok: false, errors }, { status: 400 });
-    }
-
-    const { name, fromEmail, message } = parsed.data;
-
-    // === SMTP mail.ch ===
-    const transporter = nodemailer.createTransport({
-      host: process.env.SMTP_HOST || "smtp.mail.ch",
-      port: Number(process.env.SMTP_PORT || 465),
-      secure: process.env.SMTP_SECURE === "true", // 465 → true
-      authMethod: "LOGIN",
-      auth: {
-        user: mustEnv("SMTP_USER"),
-        pass: mustEnv("SMTP_PASS"),
-      },
-      tls: { minVersion: "TLSv1.2" },
-      // logger: true,
-      // debug: true,
-    });
-
-    const site = process.env.SITE_NAME || "Website";
-    const to = process.env.CONTACT_TO || mustEnv("SMTP_USER");
-    const subject = `Запрос с сайта (${site})`;
-    const html = renderHtml({ site, name, email: fromEmail, message });
-
-    await transporter.sendMail({
-      from: `"${site}" <${mustEnv("SMTP_USER")}>`,
-      to,
-      replyTo: fromEmail,
-      subject,
-      html,
-    });
-
-    return NextResponse.json({ ok: true });
-  } catch (err) {
-    console.error("Mailer error:", err);
-    return new NextResponse("Mailer error", { status: 500 });
   }
-}
 
-/* === helpers === */
+  // body
+  let body: Payload = {};
+  try {
+    body = (await req.json()) as Payload;
+  } catch {
+    return json({ ok: false, errors: { _form: "Invalid JSON" } }, 400);
+  }
 
-function mustEnv(key: string): string {
-  const v = process.env[key];
-  if (!v) throw new Error(`Missing env: ${key}`);
-  return v;
-}
+  // honeypot
+  if (body.company && body.company.trim().length > 0) {
+    return json({ ok: false, errors: { _form: "Spam detected" } }, 400);
+  }
 
-function escapeHtml(str: string) {
-  return String(str).replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
-}
+  // валидация
+  const errors: Record<string, string> = {};
+  if (!body.name || body.name.trim().length < 2) errors.name = "Invalid name";
+  if (!body.fromEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(body.fromEmail))
+    errors.fromEmail = "Invalid email";
+  if (!body.message || body.message.trim().length < 3) errors.message = "Message is too short";
+  if (Object.keys(errors).length) return json({ ok: false, errors }, 400);
 
-function renderHtml({
-  site,
-  name,
-  email,
-  message,
-}: {
-  site: string;
-  name: string;
-  email: string;
-  message: string;
-}) {
-  return `
-  <div style="font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;line-height:1.6">
-    <h2 style="margin:0 0 12px 0">Новый запрос с сайта</h2>
-    <p><strong>Имя:</strong> ${escapeHtml(name)}</p>
-    <p><strong>Email:</strong> ${escapeHtml(email)}</p>
-    <p><strong>Сообщение:</strong></p>
-    <pre style="white-space:pre-wrap;background:#f7f7f7;padding:12px;border-radius:8px">${escapeHtml(
-      message,
-    )}</pre>
-    <hr/>
-    <p style="color:#666">Отправлено автоматически с ${escapeHtml(site)}</p>
-  </div>
-  `;
+  // SMTP
+  const host = process.env.SMTP_HOST;
+  const port = Number(process.env.SMTP_PORT ?? "465");
+  const secure = bool(process.env.SMTP_SECURE ?? (port === 465 ? "true" : "false"));
+  const user = process.env.SMTP_USER;
+  const pass = process.env.SMTP_PASS;
+  const site = process.env.SITE_NAME ?? "Website";
+  const to = process.env.CONTACT_TO ?? user;
+
+  if (!host || !user || !pass) {
+    return json({ ok: false, errors: { _form: "Email transport not configured" } }, 500);
+  }
+
+  const transporter = nodemailer.createTransport({
+    host,
+    port,
+    secure, // 465 → SSL, 587 → STARTTLS
+    auth: { user, pass },
+    connectionTimeout: 15_000,
+    greetingTimeout: 10_000,
+    socketTimeout: 20_000,
+  });
+
+  const subject = `[${site}] New contact message`;
+  const text = [
+    `📨 New contact form submission from ${site}`,
+    ``,
+    `Name: ${body.name}`,
+    `Email: ${body.fromEmail}`,
+    `IP: ${ip}`,
+    ``,
+    `Message:`,
+    body.message,
+  ].join("\n");
+
+  try {
+    await transporter.sendMail({
+      from: `${site} <${user}>`,
+      to,
+      replyTo: body.fromEmail,
+      subject,
+      text,
+    });
+    return json({ ok: true }, 200);
+  } catch {
+    return json({ ok: false, errors: { _form: "Email send failed" } }, 500);
+  }
 }
