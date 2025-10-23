@@ -1,3 +1,4 @@
+// app/[locale]/partners/page.tsx
 import "server-only";
 export const runtime = "nodejs";
 
@@ -21,6 +22,9 @@ export const generateMetadata = makePageMetadata("/partners", getPartnersMeta);
 type Dict = {
   title: string;
   subtitle: string;
+  // необязательные заголовки секций — если их нет в JSON, просто не показываем
+  partnerCategoriesTitle?: string;
+  howToTitle?: string;
   highlights: { title: string; desc: string; icon?: string }[];
   partnerCategories: { title: string; desc: string }[];
   howTo: { n?: number; title: string; desc: string }[];
@@ -48,7 +52,8 @@ async function loadDict(locale: string): Promise<Dict> {
     const raw = await readIfExists(p);
     if (raw) return JSON.parse(raw) as Dict;
   }
-  throw new Error("Не найден partners.json в messages/<locale>.");
+  // Сообщение об ошибке — только для консоли, в UI не попадает
+  throw new Error("partners.json not found in messages/<locale> or src/messages/<locale>.");
 }
 
 const iconMap = {
@@ -62,12 +67,12 @@ const iconMap = {
 } as const;
 
 export default async function PartnersPage({ params }: { params: Promise<{ locale: string }> }) {
-  const { locale } = await params;
+  const { locale } = await params; // <-- обязательно await
   const dict = await loadDict(locale || "en");
 
   return (
     <div className="mx-auto w-full max-w-6xl px-4 py-10">
-      {/* Заголовок */}
+      {/* Header */}
       <header className="mb-8 text-center">
         <h1 className="text-2xl sm:text-4xl font-bold tracking-tight bg-gradient-to-r from-[var(--color-fiat)] via-[var(--color-crypto)] to-[var(--color-gold)] bg-clip-text text-transparent">
           {dict.title}
@@ -77,12 +82,12 @@ export default async function PartnersPage({ params }: { params: Promise<{ local
         </p>
       </header>
 
-      {/* Ключевые преимущества */}
-      {dict.highlights?.length > 0 && (
+      {/* Highlights */}
+      {!!dict.highlights?.length && (
         <section className="mb-10">
           <ol className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 items-stretch auto-rows-fr">
             {dict.highlights.map((h, i) => {
-              const Icon = iconMap[(h.icon as keyof typeof iconMap) ?? "BadgeCheck"];
+              const Icon = iconMap[(h.icon as keyof typeof iconMap) ?? "BadgeCheck"] ?? BadgeCheck;
               return (
                 <li key={i} className="h-full">
                   <div className="h-full rounded-2xl p-[1px] bg-gradient-to-r from-[var(--color-fiat)] via-[var(--color-crypto)] to-[var(--color-gold)] shadow-lg">
@@ -106,10 +111,12 @@ export default async function PartnersPage({ params }: { params: Promise<{ local
         </section>
       )}
 
-      {/* Кого ищем / категории партнёров */}
-      {dict.partnerCategories?.length > 0 && (
+      {/* Partner categories */}
+      {!!dict.partnerCategories?.length && (
         <section className="mb-10">
-          <h2 className="text-lg font-semibold mb-4">Категории партнёров</h2>
+          {dict.partnerCategoriesTitle && (
+            <h2 className="text-lg font-semibold mb-4">{dict.partnerCategoriesTitle}</h2>
+          )}
           <div className="grid gap-4 sm:grid-cols-2 items-stretch auto-rows-fr">
             {dict.partnerCategories.map((c, i) => (
               <div
@@ -126,10 +133,10 @@ export default async function PartnersPage({ params }: { params: Promise<{ local
         </section>
       )}
 
-      {/* Как стать партнёром */}
-      {dict.howTo?.length > 0 && (
+      {/* How to become a partner */}
+      {!!dict.howTo?.length && (
         <section className="mb-10">
-          <h2 className="text-lg font-semibold mb-4">Как стать партнёром</h2>
+          {dict.howToTitle && <h2 className="text-lg font-semibold mb-4">{dict.howToTitle}</h2>}
           <ol className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 items-stretch auto-rows-fr">
             {dict.howTo.map((s, i) => (
               <li key={i} className="h-full">
@@ -153,26 +160,14 @@ export default async function PartnersPage({ params }: { params: Promise<{ local
         </section>
       )}
 
-      {/* CTA — Apple style */}
+      {/* CTA */}
       <section className="text-center mt-14">
         <h3 className="text-lg sm:text-xl font-semibold text-slate-800 mb-6">{dict.cta.title}</h3>
 
         <div className="flex justify-center">
           <Link
             href="/contact#feedback"
-            className="
-        group relative inline-flex items-center justify-center gap-2
-        px-6 py-3 sm:px-7 sm:py-3.5
-        rounded-full
-        border border-black/10 bg-white
-        text-sm sm:text-base font-medium text-black
-        shadow-[0_1px_3px_rgba(0,0,0,0.08)]
-        transition-all duration-300 ease-out
-        hover:shadow-[0_4px_12px_rgba(0,0,0,0.12)]
-        hover:-translate-y-[1px]
-        active:translate-y-0 active:opacity-90
-        focus:outline-none focus:ring-2 focus:ring-[#007AFF]/40
-      "
+            className="group relative inline-flex items-center justify-center gap-2 px-6 py-3 sm:px-7 sm:py-3.5 rounded-full border border-black/10 bg-white text-sm sm:text-base font-medium text-black shadow-[0_1px_3px_rgba(0,0,0,0.08)] transition-all duration-300 ease-out hover:shadow-[0_4px_12px_rgba(0,0,0,0.12)] hover:-translate-y-[1px] active:translate-y-0 active:opacity-90 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/40"
           >
             <Mail className="h-4 w-4 text-[#007AFF] transition group-hover:scale-110" />
             <span className="text-[#007AFF] group-hover:text-[#005FCC]">{dict.cta.buttonText}</span>
@@ -184,7 +179,7 @@ export default async function PartnersPage({ params }: { params: Promise<{ local
         )}
       </section>
 
-      {/* Юр. примечание */}
+      {/* Legal note */}
       {dict.legalNote && (
         <div className="mt-10 text-center text-slate-600 text-xs max-w-3xl mx-auto">
           {dict.legalNote}
