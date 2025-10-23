@@ -166,7 +166,7 @@ export default async function PartnersPage({ params }: { params: Promise<{ local
 
         <div className="flex justify-center">
           <Link
-            href="/contact#feedback"
+            href="/contact"
             className="group relative inline-flex items-center justify-center gap-2 px-6 py-3 sm:px-7 sm:py-3.5 rounded-full border border-black/10 bg-white text-sm sm:text-base font-medium text-black shadow-[0_1px_3px_rgba(0,0,0,0.08)] transition-all duration-300 ease-out hover:shadow-[0_4px_12px_rgba(0,0,0,0.12)] hover:-translate-y-[1px] active:translate-y-0 active:opacity-90 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/40"
           >
             <Mail className="h-4 w-4 text-[#007AFF] transition group-hover:scale-110" />

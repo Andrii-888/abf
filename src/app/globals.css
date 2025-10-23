@@ -11,16 +11,20 @@ body {
   --foreground: #171717;
 }
 
-/* .page-bg-contact {
-  background: linear-gradient(180deg, #edf2ef 0%, #e5ebe8 40%, #dde2e0 70%, #d3d8d6 100%);
-} */
-
 @theme inline {
   /* базовые токены */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+
+  /* ✅ системный стек а-ля Apple (SF / Segoe / Roboto ...) */
+  --font-sans:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans",
+    "Apple Color Emoji", "Segoe UI Emoji", sans-serif;
+
+  /* ✅ системный моно-стек */
+  --font-mono:
+    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New",
+    monospace;
 
   /* 🔶 фирменные акценты */
   --color-gold: #d4af37; /* Gold */
@@ -47,10 +51,15 @@ body {
   }
 }
 
+/* ✅ применяем системный стек + сглаживание */
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+  font-synthesis-weight: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 /* ===== Тонкий скроллбар (подключай классом .scroll-thin) ===== */
@@ -111,7 +120,6 @@ body {
 .input-apple {
   @apply w-full rounded-xl border border-gray-300/70 bg-white px-3 py-2 text-sm outline-none transition;
 }
-
 .input-apple:focus {
   @apply border-[#007AFF] ring-2 ring-[#007AFF]/20;
 }

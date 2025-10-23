@@ -2,7 +2,7 @@
 import type { Metadata } from "next";
 import HeroLeft from "@/components/home/HeroLeft";
 import HeroRight from "@/components/home/HeroRight";
-import IndustriesCarousel from "@/components/home/IndustriesCarousel";
+import IndustriesCarousel from "@/components/home/IndustriesCarousel.client";
 import { languagesAlternates, ogLocale, normalizeLocale } from "@/seo/helpers";
 import { getHomeMeta } from "@/seo/meta";
 

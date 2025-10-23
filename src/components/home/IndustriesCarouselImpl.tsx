@@ -34,9 +34,7 @@ export default function IndustriesCarousel({
         <div className="relative overflow-hidden" style={maskStyle}>
           <div
             className="abf-track flex w-max gap-4 will-change-transform"
-            style={{
-              animation: `abf-scroll ${speed}s linear infinite`,
-            }}
+            style={{ animation: `abf-scroll ${speed}s linear infinite` }}
           >
             {track.map((it, i) => {
               const Icon = it.icon ? iconMap[it.icon] : iconMap.Landmark;
@@ -71,16 +69,10 @@ export default function IndustriesCarousel({
             })}
           </div>
 
-          {/* Перенесли keyframes в <style> без атрибута global */}
           <style>{`
-            @keyframes abf-scroll {
-              from { transform: translateX(0); }
-              to { transform: translateX(-50%); }
-            }
+            @keyframes abf-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
             .abf-track:hover { animation-play-state: paused; }
-            @media (prefers-reduced-motion: reduce) {
-              .abf-track { animation: none !important; }
-            }
+            @media (prefers-reduced-motion: reduce) { .abf-track { animation: none !important; } }
           `}</style>
         </div>
       </div>

@@ -28,7 +28,7 @@ export const metadata = {
       "Your trusted Swiss bridge between crypto, fiat, and gold — secure, transparent, and compliant.",
     url: "/", // будет резолвиться относительно metadataBase
     siteName: "AlpineBridgeFinance",
-    images: ["/og.png"], // положи /public/og.png (1200×630)
+    images: ["/og.png"], 
     locale: "en_US",
     type: "website",
   },
@@ -52,7 +52,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="icon" type="image/png" href="/favicon-16.png?v=4" sizes="16x16" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=4" />
       </head>
-      <body>{children}</body>
+      <body className="font-sans">{children}</body>
     </html>
   );
 }

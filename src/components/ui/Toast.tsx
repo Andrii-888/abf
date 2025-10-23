@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { LazyMotion, domAnimation, m, AnimatePresence } from "framer-motion";
 
 type ToastProps = {
   open: boolean;
@@ -35,26 +35,24 @@ export default function Toast({
 
   return (
     <div className={`pointer-events-none fixed z-[9999] ${posMap[position]}`}>
-      <AnimatePresence>
-        {open && (
-          <motion.div
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 8 }}
-            transition={{
-              type: "spring",
-              stiffness: 300,
-              damping: 24,
-              duration: 0.18,
-            }}
-            className="pointer-events-auto select-none rounded-md bg-emerald-500 px-3 py-2 text-sm font-medium text-white shadow-lg"
-            role="status"
-            aria-live="polite"
-          >
-            {message}
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <LazyMotion features={domAnimation}>
+        <AnimatePresence>
+          {open && (
+            <m.div
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 8 }}
+              transition={{ duration: 0.18, ease: "easeOut" }}
+              className="pointer-events-auto select-none rounded-md bg-emerald-500 px-3 py-2 text-sm font-medium text-white shadow-lg"
+              role="status"
+              aria-live="polite"
+              aria-atomic="true"
+            >
+              {message}
+            </m.div>
+          )}
+        </AnimatePresence>
+      </LazyMotion>
     </div>
   );
 }
