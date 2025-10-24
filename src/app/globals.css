@@ -6,9 +6,13 @@ body {
 }
 
 :root {
-  /* ⚪ фон — не стерильный белый */
-  --background: #f8f9fb;
-  --foreground: #171717;
+  /* 🌤 фон — чуть теплее белый, не холодный серый */
+  --background: #fafafa;
+  /* 🖤 текст — глубокий графит, близко к #000 */
+  --foreground: #0d0d0d;
+
+  /* системное оформление */
+  color-scheme: light dark;
 }
 
 @theme inline {
@@ -16,20 +20,20 @@ body {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
 
-  /* ✅ системный стек а-ля Apple (SF / Segoe / Roboto ...) */
+  /* ✅ системный шрифт */
   --font-sans:
     -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans",
     "Apple Color Emoji", "Segoe UI Emoji", sans-serif;
 
-  /* ✅ системный моно-стек */
+  /* ✅ моно */
   --font-mono:
     ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New",
     monospace;
 
   /* 🔶 фирменные акценты */
-  --color-gold: #d4af37; /* Gold */
-  --color-crypto: #1abc9c; /* Emerald / Crypto */
-  --color-fiat: #c0392b; /* Wine / Fiat */
+  --color-gold: #d4af37;
+  --color-crypto: #1abc9c;
+  --color-fiat: #c0392b;
 
   /* 🌈 брендовый градиент */
   --gradient-brand: linear-gradient(
@@ -41,28 +45,74 @@ body {
 
   /* 💎 форма и тени */
   --radius-xl: 14px;
-  --shadow-card: 0 8px 24px rgba(0, 0, 0, 0.06);
+  --shadow-card: 0 8px 24px rgba(0, 0, 0, 0.07);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
-    --foreground: #ededed;
+    --foreground: #f1f1f1;
   }
 }
 
-/* ✅ применяем системный стек + сглаживание */
+/* ✅ Главная типографика */
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans);
-  font-synthesis-weight: none;
+  font-weight: 450;
+  line-height: 1.65;
+  letter-spacing: -0.015em;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* === iOS Safari: не зумить инпуты при фокусе === */
+/* === Контрастные заголовки === */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--foreground);
+  font-weight: 650;
+  letter-spacing: -0.025em;
+  line-height: 1.25;
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+}
+
+/* === Основной текст === */
+p,
+li {
+  color: #111; /* принудительно насыщенный текст */
+}
+
+/* Вторичный текст */
+small,
+.muted {
+  color: #555;
+}
+
+/* === Placeholder — серо-графитовый, не блеклый === */
+::placeholder {
+  color: #777;
+  opacity: 1;
+}
+
+/* === Лейблы и мелкие подписи === */
+label,
+.helper-text {
+  color: #333;
+}
+
+/* === Убираем сероватый вид текста в Safari === */
+* {
+  text-shadow: rgba(0, 0, 0, 0.01) 0 0 1px;
+}
+
+/* === iOS Safari: не зумить инпуты === */
 @media (max-width: 640px) {
   input,
   textarea,
@@ -72,55 +122,29 @@ body {
   }
 }
 
-/* ===== Тонкий скроллбар (подключай классом .scroll-thin) ===== */
+/* ===== Тонкий скроллбар ===== */
 .scroll-thin {
   scrollbar-width: thin;
-  scrollbar-color: rgba(0, 0, 0, 0.15) transparent;
+  scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
 }
 .scroll-thin::-webkit-scrollbar {
   height: 6px;
 }
-.scroll-thin::-webkit-scrollbar-track {
-  background: transparent;
-}
 .scroll-thin::-webkit-scrollbar-thumb {
-  background-color: rgba(0, 0, 0, 0.15);
+  background-color: rgba(0, 0, 0, 0.25);
   border-radius: 3px;
 }
 .scroll-thin::-webkit-scrollbar-thumb:hover {
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: rgba(0, 0, 0, 0.4);
 }
 
-/* ===== Полностью скрыть скроллбар (скролл остаётся) ===== */
+/* ===== Полностью скрыть скроллбар ===== */
 .no-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
 .no-scrollbar::-webkit-scrollbar {
   display: none;
-}
-
-/* ===== Плавное затухание краёв у горизонтальной ленты ===== */
-.scroll-fade-x {
-  mask-image: linear-gradient(
-    to right,
-    transparent 0,
-    black 24px,
-    black calc(100% - 24px),
-    transparent 100%
-  );
-  mask-repeat: no-repeat;
-  mask-size: 100% 100%;
-
-  -webkit-mask-image: linear-gradient(
-    to right,
-    transparent 0,
-    black 24px,
-    black calc(100% - 24px),
-    transparent 100%
-  );
-  -webkit-mask-repeat: no-repeat;
-  -webkit-mask-size: 100% 100%;
 }
 
 /* ===== Apple-style input (System Blue focus) ===== */
@@ -131,7 +155,6 @@ body {
   @apply border-[#007AFF] ring-2 ring-[#007AFF]/20;
 }
 
-/* iOS-friendly версия для мобильных устройств */
 .input-apple {
   font-size: 16px;
 }
