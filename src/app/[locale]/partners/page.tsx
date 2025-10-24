@@ -2,9 +2,12 @@
 import "server-only";
 export const runtime = "nodejs";
 
+import { Suspense } from "react";
 import { promises as fs } from "node:fs";
 import path from "node:path";
 import { Link } from "@/i18n/routing";
+import PartnersBelowFold from "@/components/partners/PartnersBelowFold.client";
+
 import {
   Handshake,
   ShieldCheck,
@@ -22,7 +25,6 @@ export const generateMetadata = makePageMetadata("/partners", getPartnersMeta);
 type Dict = {
   title: string;
   subtitle: string;
-  // необязательные заголовки секций — если их нет в JSON, просто не показываем
   partnerCategoriesTitle?: string;
   howToTitle?: string;
   highlights: { title: string; desc: string; icon?: string }[];
@@ -52,7 +54,6 @@ async function loadDict(locale: string): Promise<Dict> {
     const raw = await readIfExists(p);
     if (raw) return JSON.parse(raw) as Dict;
   }
-  // Сообщение об ошибке — только для консоли, в UI не попадает
   throw new Error("partners.json not found in messages/<locale> or src/messages/<locale>.");
 }
 
@@ -67,7 +68,7 @@ const iconMap = {
 } as const;
 
 export default async function PartnersPage({ params }: { params: Promise<{ locale: string }> }) {
-  const { locale } = await params; // <-- обязательно await
+  const { locale } = await params;
   const dict = await loadDict(locale || "en");
 
   return (
@@ -82,7 +83,7 @@ export default async function PartnersPage({ params }: { params: Promise<{ local
         </p>
       </header>
 
-      {/* Highlights */}
+      {/* Highlights — оставляем на сервере для быстрого LCP */}
       {!!dict.highlights?.length && (
         <section className="mb-10">
           <ol className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 items-stretch auto-rows-fr">
@@ -111,54 +112,17 @@ export default async function PartnersPage({ params }: { params: Promise<{ local
         </section>
       )}
 
-      {/* Partner categories */}
-      {!!dict.partnerCategories?.length && (
-        <section className="mb-10">
-          {dict.partnerCategoriesTitle && (
-            <h2 className="text-lg font-semibold mb-4">{dict.partnerCategoriesTitle}</h2>
-          )}
-          <div className="grid gap-4 sm:grid-cols-2 items-stretch auto-rows-fr">
-            {dict.partnerCategories.map((c, i) => (
-              <div
-                key={i}
-                className="h-full rounded-2xl p-[1px] bg-gradient-to-r from-[var(--color-fiat)] via-[var(--color-crypto)] to-[var(--color-gold)]"
-              >
-                <div className="h-full rounded-2xl bg-white/85 backdrop-blur p-5 border border-slate-200/70">
-                  <h3 className="text-base font-semibold leading-tight">{c.title}</h3>
-                  <p className="mt-2 text-sm text-slate-700">{c.desc}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-      )}
-
-      {/* How to become a partner */}
-      {!!dict.howTo?.length && (
-        <section className="mb-10">
-          {dict.howToTitle && <h2 className="text-lg font-semibold mb-4">{dict.howToTitle}</h2>}
-          <ol className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 items-stretch auto-rows-fr">
-            {dict.howTo.map((s, i) => (
-              <li key={i} className="h-full">
-                <div className="h-full rounded-2xl p-[1px] bg-gradient-to-r from-[var(--color-fiat)] via-[var(--color-crypto)] to-[var(--color-gold)]">
-                  <div className="h-full rounded-2xl bg-white/85 backdrop-blur p-5 border border-slate-200/70 flex flex-col">
-                    <div className="flex items-center justify-between">
-                      <span className="inline-flex h-7 w-7 items-center justify-center rounded-full text-white text-xs font-semibold bg-[var(--color-crypto)]">
-                        {s.n ?? i + 1}
-                      </span>
-                      <UserPlus className="h-5 w-5 text-[var(--color-gold)] opacity-90" />
-                    </div>
-                    <div className="mt-3 grow">
-                      <h3 className="text-base font-semibold leading-tight">{s.title}</h3>
-                      <p className="mt-2 text-sm text-slate-700">{s.desc}</p>
-                    </div>
-                  </div>
-                </div>
-              </li>
-            ))}
-          </ol>
-        </section>
-      )}
+      {/* ↓ Ниже фолда — лениво + безопасный плейсхолдер, чтобы не было CLS */}
+      <div className="min-h-[420px]">
+        <Suspense fallback={null}>
+          <PartnersBelowFold
+            partnerCategoriesTitle={dict.partnerCategoriesTitle}
+            partnerCategories={dict.partnerCategories}
+            howToTitle={dict.howToTitle}
+            howTo={dict.howTo}
+          />
+        </Suspense>
+      </div>
 
       {/* CTA */}
       <section className="text-center mt-14">
