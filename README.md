@@ -237,3 +237,5 @@ Vercel Deployment Guide
 🇨🇭 Crypto-bank Sygnum Bank AG sygnum.com
 
 🇨🇭 Финтех-провайдер SwissBorg SA swissborg.com
+
+tree -L 3 ./src/app/\[locale\]/contact

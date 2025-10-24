@@ -62,14 +62,23 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* === iOS Safari: не зумить инпуты при фокусе === */
+@media (max-width: 640px) {
+  input,
+  textarea,
+  select {
+    font-size: 16px !important;
+    line-height: 1.4;
+  }
+}
+
 /* ===== Тонкий скроллбар (подключай классом .scroll-thin) ===== */
 .scroll-thin {
-  /* Firefox */
   scrollbar-width: thin;
   scrollbar-color: rgba(0, 0, 0, 0.15) transparent;
 }
 .scroll-thin::-webkit-scrollbar {
-  height: 6px; /* только горизонтальные ленты */
+  height: 6px;
 }
 .scroll-thin::-webkit-scrollbar-track {
   background: transparent;
@@ -84,16 +93,15 @@ body {
 
 /* ===== Полностью скрыть скроллбар (скролл остаётся) ===== */
 .no-scrollbar {
-  -ms-overflow-style: none; /* IE/Edge Legacy */
-  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 .no-scrollbar::-webkit-scrollbar {
-  display: none; /* Chrome/Safari */
+  display: none;
 }
 
 /* ===== Плавное затухание краёв у горизонтальной ленты ===== */
 .scroll-fade-x {
-  /* стандарт */
   mask-image: linear-gradient(
     to right,
     transparent 0,
@@ -104,7 +112,6 @@ body {
   mask-repeat: no-repeat;
   mask-size: 100% 100%;
 
-  /* Safari/iOS */
   -webkit-mask-image: linear-gradient(
     to right,
     transparent 0,
@@ -122,4 +129,14 @@ body {
 }
 .input-apple:focus {
   @apply border-[#007AFF] ring-2 ring-[#007AFF]/20;
+}
+
+/* iOS-friendly версия для мобильных устройств */
+.input-apple {
+  font-size: 16px;
+}
+@media (min-width: 640px) {
+  .input-apple {
+    font-size: 14px;
+  }
 }

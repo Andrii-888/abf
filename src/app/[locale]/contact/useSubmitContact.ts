@@ -1,29 +1,62 @@
 // src/app/[locale]/contact/useSubmitContact.ts
 "use client";
 
-import type { MutableRefObject } from "react";
-import type { Errors } from "./useContactValidation";
+import type { Dispatch, SetStateAction, RefObject } from "react";
+import type { FormState } from "./useContactForm";
 
-export type SubmitDeps = {
-  values: {
-    name: string;
-    fromEmail: string;
-    message: string;
-    company: string;
-    consent: boolean;
-  };
-  setValues: (v: SubmitDeps["values"]) => void;
-  setTouched: (t: Record<string, boolean>) => void;
-  setErrors: (e: Errors) => void;
-  setState: (s: "idle" | "submitting" | "success" | "error") => void;
-  validateAll: (vals: SubmitDeps["values"]) => Errors;
-  autoFocusOnError: boolean;
-  t: { errorGeneric: string; errorNetwork: string };
-  nameRef: MutableRefObject<HTMLInputElement | null>;
-  emailRef: MutableRefObject<HTMLInputElement | null>;
-  msgRef: MutableRefObject<HTMLTextAreaElement | null>;
+// Совпадает по ключам с формой, но локально объявляем,
+// чтобы не плодить импортов типов
+type Values = {
+  name: string;
+  fromEmail: string;
+  message: string;
+  company: string; // honeypot
+  consent: boolean;
 };
 
+// Совместимо с useContactForm: Partial<Record<FieldName, boolean>>
+type Touched = Partial<Record<"name" | "fromEmail" | "message" | "consent", boolean>>;
+
+// validateAll ожидает минимум эти поля:
+type MinimalForValidation = {
+  name: string;
+  fromEmail: string;
+  message: string;
+  company?: string;
+};
+
+type SubmitContactArgs = {
+  values: Values;
+  setValues: Dispatch<SetStateAction<Values>>;
+  setTouched: Dispatch<SetStateAction<Touched>>;
+  setErrors: Dispatch<SetStateAction<Record<string, string>>>;
+  setState: Dispatch<SetStateAction<FormState>>;
+  validateAll: (values: MinimalForValidation) => Record<string, string>;
+  autoFocusOnError: boolean;
+  t: { errorGeneric: string; errorNetwork: string };
+  // допускаем null внутри RefObject, чтобы совпасть с useRef<HTMLInputElement | null>(null)
+  nameRef: RefObject<HTMLInputElement | null>;
+  emailRef: RefObject<HTMLInputElement | null>;
+  msgRef: RefObject<HTMLTextAreaElement | null>;
+};
+
+type ApiResponse = {
+  ok?: boolean;
+  errors?: Record<string, string>;
+};
+
+function isStringRecord(x: unknown): x is Record<string, string> {
+  if (typeof x !== "object" || x === null) return false;
+  for (const v of Object.values(x as Record<string, unknown>)) {
+    if (typeof v !== "string") return false;
+  }
+  return true;
+}
+
+/**
+ * Универсальная функция отправки формы контакта.
+ * Используется внутри useContactForm().
+ */
 export async function submitContact({
   values,
   setValues,
@@ -36,57 +69,67 @@ export async function submitContact({
   nameRef,
   emailRef,
   msgRef,
-}: SubmitDeps) {
-  setState("submitting");
+}: SubmitContactArgs): Promise<void> {
+  // очистить ошибки и показать "submitting"
   setErrors({});
-
-  // honeypot
-  if (values.company) {
-    setErrors({ _form: "Spam detected." });
-    setState("error");
-    return;
-  }
-
-  // client validation
-  const fieldErrors = validateAll(values);
-  if (Object.keys(fieldErrors).length) {
-    setErrors(fieldErrors);
-    setState("error");
-    if (autoFocusOnError) {
-      if (fieldErrors.name && nameRef.current) nameRef.current.focus();
-      else if (fieldErrors.fromEmail && emailRef.current) emailRef.current.focus();
-      else if (fieldErrors.message && msgRef.current) msgRef.current.focus();
-    }
-    return;
-  }
+  setState("submitting");
 
   try {
-    const res = await fetch("/api/contact", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(values),
+    // 1) полная валидация перед сабмитом (валидируем только текстовые поля)
+    const validationErrors = validateAll({
+      name: values.name,
+      fromEmail: values.fromEmail,
+      message: values.message,
+      company: values.company || undefined,
     });
 
-    const data = await res.json();
-
-    if (!res.ok || !data?.ok) {
-      const normalized: Errors = {};
-      const incoming = (data?.errors ?? {}) as Record<string, string>;
-      for (const [k, v] of Object.entries(incoming)) normalized[k] = v || "Invalid";
-
-      normalized._form ||= t.errorGeneric;
-      setErrors(normalized);
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
       setState("error");
 
       if (autoFocusOnError) {
-        if (normalized.name && nameRef.current) nameRef.current.focus();
-        else if (normalized.fromEmail && emailRef.current) emailRef.current.focus();
-        else if (normalized.message && msgRef.current) msgRef.current.focus();
+        if (validationErrors.name) nameRef.current?.focus();
+        else if (validationErrors.fromEmail) emailRef.current?.focus();
+        else if (validationErrors.message) msgRef.current?.focus();
       }
       return;
     }
 
-    // success — clear fields
+    // 2) запрос к API (важно: абсолютный путь)
+    const res = await fetch("/api/contact", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name: values.name,
+        fromEmail: values.fromEmail,
+        message: values.message,
+        company: values.company ?? "",
+      }),
+    });
+
+    // Парсим ответ без any
+    let data: ApiResponse = {};
+    try {
+      const raw: unknown = await res.json();
+      if (typeof raw === "object" && raw !== null) {
+        const maybe = raw as { ok?: unknown; errors?: unknown };
+        data = {
+          ok: typeof maybe.ok === "boolean" ? maybe.ok : undefined,
+          errors: isStringRecord(maybe.errors) ? maybe.errors : undefined,
+        };
+      }
+    } catch {
+      data = {};
+    }
+
+    if (!res.ok || !data?.ok) {
+      setState("error");
+      setErrors(data?.errors ?? { _form: t.errorGeneric });
+      return;
+    }
+
+    // 3) успех: очистить форму
+    setState("success");
     setValues({
       name: "",
       fromEmail: "",
@@ -95,9 +138,10 @@ export async function submitContact({
       consent: false,
     });
     setTouched({});
-    setState("success");
   } catch {
-    setErrors({ _form: t.errorNetwork });
+    // eslint-disable-next-line no-console
+    console.error("Contact form submit failed");
     setState("error");
+    setErrors({ _form: t.errorNetwork });
   }
 }

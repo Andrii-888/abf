@@ -2,43 +2,27 @@
 "use client";
 
 import clsx from "clsx";
-import React, { forwardRef, type ForwardedRef } from "react";
+import * as React from "react";
 
-type Props = {
+type BaseProps = {
   id: string;
   name: string;
   label: string;
   value: string;
-  type?: React.HTMLInputTypeAttribute; // "text" | "email" | "tel" | ...
-  placeholder?: string;
-  disabled?: boolean;
-  required?: boolean;
-  autoComplete?: string;
-  inputMode?: React.HTMLAttributes<HTMLInputElement>["inputMode"];
-
   error?: string;
-
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onBlur: (e: React.FocusEvent<HTMLInputElement>) => void;
 };
 
-export const TextField = forwardRef(function TextField(
-  {
-    id,
-    name,
-    label,
-    value,
-    type = "text",
-    placeholder,
-    disabled,
-    required,
-    autoComplete,
-    inputMode,
-    error,
-    onChange,
-    onBlur,
-  }: Props,
-  ref: ForwardedRef<HTMLInputElement>,
+type Props = Omit<
+  React.InputHTMLAttributes<HTMLInputElement>,
+  "id" | "name" | "value" | "onChange" | "onBlur" | "children"
+> &
+  BaseProps;
+
+export const TextField = React.forwardRef<HTMLInputElement, Props>(function TextField(
+  { id, name, label, value, error, className, onChange, onBlur, ...rest },
+  ref,
 ) {
   const errId = `${id}-error`;
 
@@ -49,24 +33,20 @@ export const TextField = forwardRef(function TextField(
       </label>
 
       <input
-        ref={ref}
+        ref={ref} // ✅ принимает Ref<HTMLInputElement>
         id={id}
         name={name}
-        type={type}
         value={value}
         onChange={onChange}
         onBlur={onBlur}
-        disabled={disabled}
-        required={required}
-        placeholder={placeholder}
-        autoComplete={autoComplete}
-        inputMode={inputMode}
         aria-invalid={!!error}
         aria-describedby={errId}
         className={clsx(
           "input-apple",
           error && "ring-1 ring-red-500 focus:ring-red-600 focus:outline-none",
+          className,
         )}
+        {...rest} 
       />
 
       <span

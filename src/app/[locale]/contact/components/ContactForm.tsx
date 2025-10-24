@@ -22,7 +22,7 @@ export default function ContactForm({ dict }: { dict: FormDict }) {
     onKeyDown,
     nameRef,
     emailRef,
-    msgRef, // ← теперь используем
+    msgRef,
     MESSAGE_MAX,
     buttonText,
   } = useContactForm({
@@ -67,7 +67,29 @@ export default function ContactForm({ dict }: { dict: FormDict }) {
         formError={errors._form}
       />
 
+      {/* 🔒 Honeypot: скрыто от пользователя, но доступно для ботов */}
+      <div
+        aria-hidden="true"
+        style={{ position: "absolute", left: "-9999px", width: 1, height: 1, overflow: "hidden" }}
+      >
+        <label>
+          Company
+          <input
+            type="text"
+            name="company" /* сервер ждёт поле `company` */
+            tabIndex={-1}
+            autoComplete="off"
+            inputMode="none"
+            aria-hidden="true"
+            value={values.company}
+            onChange={onChange}
+            onBlur={onBlur}
+          />
+        </label>
+      </div>
+
       <div className="grid w-full gap-4 lg:grid-cols-2">
+        {/* Name */}
         <div className="lg:col-span-1">
           <TextField
             ref={nameRef}
@@ -80,12 +102,15 @@ export default function ContactForm({ dict }: { dict: FormDict }) {
             required
             autoComplete="name"
             inputMode="text"
+            autoCapitalize="words"
+            enterKeyHint="next"
             error={errors.name}
             onChange={onChange}
             onBlur={onBlur}
           />
         </div>
 
+        {/* Email (fromEmail — важно для API) */}
         <div className="lg:col-span-1">
           <TextField
             ref={emailRef}
@@ -99,12 +124,15 @@ export default function ContactForm({ dict }: { dict: FormDict }) {
             required
             autoComplete="email"
             inputMode="email"
+            autoCapitalize="none"
+            enterKeyHint="next"
             error={errors.fromEmail}
             onChange={onChange}
             onBlur={onBlur}
           />
         </div>
 
+        {/* Message */}
         <div className="lg:col-span-2">
           <TextareaField
             ref={msgRef}
@@ -118,12 +146,15 @@ export default function ContactForm({ dict }: { dict: FormDict }) {
             rows={5}
             maxLength={MESSAGE_MAX}
             counterText={`${values.message.length}/${MESSAGE_MAX}`}
+            autoComplete="off"
+            enterKeyHint="send"
             error={errors.message}
             onChange={onChange}
             onBlur={onBlur}
           />
         </div>
 
+        {/* Consent */}
         <div className="lg:col-span-2">
           <ConsentCheckbox
             label={dict.validation.consent.required}
@@ -136,10 +167,8 @@ export default function ContactForm({ dict }: { dict: FormDict }) {
         </div>
       </div>
 
-      {/* Блок отправки: запрещаем клик без согласия */}
       <SubmitBar disabled={isBusy || !values.consent} state={state} text={buttonText} />
-
-      {/* Тост «Sent ✓» */}
+      <button type="submit" className="hidden" aria-hidden="true" />
       <ToastSent active={state === "success"} />
     </form>
   );
