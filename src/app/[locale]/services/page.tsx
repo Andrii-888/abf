@@ -37,16 +37,24 @@ export default function ServicesPage() {
   const t = useTranslations("services");
 
   return (
-    <div className="mx-auto w-full max-w-6xl px-4 py-10">
+    <div className="mx-auto w-full max-w-6xl px-4 py-10 text-[var(--foreground)]">
       {/* HERO */}
       <section className="rounded-2xl bg-gradient-to-r from-[var(--color-fiat)] via-[var(--color-crypto)] to-[var(--color-gold)] p-[1px] shadow-lg">
         <div className="rounded-2xl bg-white/85 p-6 md:p-10 backdrop-blur">
           <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
             <div className="max-w-2xl">
-              <h1 className="text-3xl sm:text-4xl font-bold tracking-tight bg-gradient-to-r from-[var(--color-fiat)] via-[var(--color-crypto)] to-[var(--color-gold)] bg-clip-text text-transparent">
+              <h1
+                className="
+                  text-3xl sm:text-4xl font-bold tracking-tight
+                  bg-gradient-to-r from-[var(--color-fiat)] via-[var(--color-crypto)] to-[var(--color-gold)]
+                  bg-clip-text text-transparent
+                  text-center sm:text-left
+                "
+              >
                 {t("hero.title")}
               </h1>
-              <p className="mt-4 text-slate-700">
+
+              <p className="mt-4 text-[color:var(--foreground)]/80 text-center sm:text-left">
                 {t("hero.desc1")} <br />
                 <span className="font-medium">
                   <span style={{ color: "var(--color-fiat)" }}>Fiat</span>
@@ -63,17 +71,21 @@ export default function ServicesPage() {
                 {t("hero.desc4")}
               </p>
 
-              <div className="mt-6 flex flex-wrap items-center gap-3">
+              <div className="mt-6 flex flex-wrap items-center gap-3 justify-center sm:justify-start">
                 <Link
                   href="/contact"
-                  className="inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-semibold bg-black text-white hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-black"
+                  className="inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-semibold bg-black text-white hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-black/30"
                 >
                   {t("hero.ctaPrimary")}
                   <ChevronRight className="ml-1 h-4 w-4" />
                 </Link>
                 <Link
                   href="/process"
-                  className="inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-semibold bg-slate-100 text-slate-900 hover:bg-slate-200 focus:outline-none focus:ring-2 focus:ring-slate-300"
+                  className="
+                    inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-semibold
+                    bg-black/[0.05] hover:bg-black/[0.1] text-[var(--foreground)]
+                    focus:outline-none focus:ring-2 focus:ring-black/20
+                  "
                 >
                   {t("hero.ctaSecondary")}
                 </Link>
@@ -89,7 +101,7 @@ export default function ServicesPage() {
                 return (
                   <li
                     key={id}
-                    className="flex items-center gap-2 rounded-xl border border-slate-200 bg-white p-3 hover:shadow-sm transition-shadow min-w-0"
+                    className="flex items-center gap-2 rounded-xl border border-black/10 bg-white p-3 hover:shadow-sm transition-shadow min-w-0"
                   >
                     <Icon className="h-5 w-5 text-[var(--color-crypto)] shrink-0" />
                     <span className="text-sm font-medium leading-tight break-words whitespace-normal">
@@ -106,7 +118,7 @@ export default function ServicesPage() {
       {/* VALUE PROPS */}
       <section className="mt-10">
         <h2 className="text-xl sm:text-2xl font-semibold">{t("value.title")}</h2>
-        <p className="mt-2 text-slate-700">{t("value.subtitle")}</p>
+        <p className="mt-2 text-[color:var(--foreground)]/80">{t("value.subtitle")}</p>
 
         <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {valueCards.map(({ Icon, key }) => (
@@ -114,14 +126,16 @@ export default function ServicesPage() {
               key={key}
               className="group relative rounded-2xl p-[1px] bg-gradient-to-r from-transparent via-transparent to-transparent hover:from-[var(--color-fiat)]/20 hover:via-[var(--color-crypto)]/20 hover:to-[var(--color-gold)]/20 transition-colors"
             >
-              <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+              <div className="rounded-2xl border border-black/10 bg-white p-5 shadow-sm">
                 <div className="flex items-center gap-3 min-w-0">
                   <Icon className="h-6 w-6 text-[var(--color-gold)] shrink-0" />
                   <h3 className="text-base font-semibold leading-tight break-words whitespace-normal">
                     {t(`value.cards.${key}.title`)}
                   </h3>
                 </div>
-                <p className="mt-3 text-sm text-slate-700">{t(`value.cards.${key}.text`)}</p>
+                <p className="mt-3 text-sm text-[color:var(--foreground)]/80">
+                  {t(`value.cards.${key}.text`)}
+                </p>
               </div>
             </div>
           ))}
