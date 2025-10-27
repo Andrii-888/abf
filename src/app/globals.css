@@ -6,31 +6,13 @@ body {
 }
 
 :root {
-  /* 🌤 фон — чуть теплее белый, не холодный серый */
+  color-scheme: light;
+  /* 🌤 фон — мягкий белый */
   --background: #fafafa;
-  /* 🖤 текст — глубокий графит, близко к #000 */
+  /* 🖤 текст — глубокий графит */
   --foreground: #0d0d0d;
 
-  /* системное оформление */
-  color-scheme: light dark;
-}
-
-@theme inline {
-  /* базовые токены */
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-
-  /* ✅ системный шрифт */
-  --font-sans:
-    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans",
-    "Apple Color Emoji", "Segoe UI Emoji", sans-serif;
-
-  /* ✅ моно */
-  --font-mono:
-    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New",
-    monospace;
-
-  /* 🔶 фирменные акценты */
+  /* базовые цвета бренда */
   --color-gold: #d4af37;
   --color-crypto: #1abc9c;
   --color-fiat: #c0392b;
@@ -46,16 +28,31 @@ body {
   /* 💎 форма и тени */
   --radius-xl: 14px;
   --shadow-card: 0 8px 24px rgba(0, 0, 0, 0.07);
+
+  /* ✅ шрифты */
+  --font-sans:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans",
+    "Apple Color Emoji", "Segoe UI Emoji", sans-serif;
+  --font-mono:
+    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New",
+    monospace;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #f1f1f1;
-  }
+/* ===== Универсальный фон страницы (как на Home) ===== */
+.bg-gradient-page {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(26, 188, 156, 0.12) 45%,
+      rgba(212, 175, 55, 0.18) 100%
+    ),
+    linear-gradient(#ffffff, #ffffff);
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
-/* ✅ Главная типографика */
+/* === Главная типографика === */
 body {
   background: var(--background);
   color: var(--foreground);
@@ -86,7 +83,7 @@ h6 {
 /* === Основной текст === */
 p,
 li {
-  color: #111; /* принудительно насыщенный текст */
+  color: #111;
 }
 
 /* Вторичный текст */
@@ -95,7 +92,7 @@ small,
   color: #555;
 }
 
-/* === Placeholder — серо-графитовый, не блеклый === */
+/* === Placeholder — серо-графитовый === */
 ::placeholder {
   color: #777;
   opacity: 1;
