@@ -89,9 +89,9 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
           {/* Правая колонка — форма */}
           <div
             id="feedback"
-            className="w-full overflow-hidden rounded-2xl border border-black/10 bg-white/90 p-5 shadow-sm"
+            className="w-full overflow-hidden rounded-2xl border border-black/10 bg-white/90 pt-5 pb-5 px-5 shadow-sm"
           >
-            <h2 className="mb-3 text-lg font-semibold">{dict.page.feedbackTitle}</h2>
+            <h2 className="!mt-0 mb-2 text-lg font-semibold">{dict.page.feedbackTitle}</h2>
             <ContactForm dict={dict.form} />
           </div>
         </div>
