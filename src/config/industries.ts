@@ -21,12 +21,14 @@ export const iconMap = {
   Banknote,
 };
 
+// ✅ добавлено поле href для ссылки на сайт партнёра
 export type Industry = {
   id: string;
   title: string;
   desc: string;
   icon?: keyof typeof iconMap;
   tag?: string;
+  href?: string; // ← новое поле
 };
 
 /**
@@ -43,6 +45,7 @@ export function normalizeIndustries(jsonItems: Array<Partial<Industry>> | undefi
       desc: String(it?.desc ?? ""),
       icon: validIcon,
       tag: it?.tag ? String(it.tag) : undefined,
+      href: it?.href ? String(it.href) : undefined, // ← добавлено
     };
   });
 }
@@ -64,6 +67,7 @@ export const defaultIndustries: Industry[] = [
     desc: "On/Off-ramp with Swiss/EEA institutions.",
     icon: "Landmark",
     tag: "Fiat",
+    href: "https://example-bank.com", // ← добавлен сайт
   },
   {
     id: "auto",
@@ -71,6 +75,7 @@ export const defaultIndustries: Industry[] = [
     desc: "Crypto→Fiat settlements for vehicles.",
     icon: "Car",
     tag: "Retail",
+    href: "https://example-auto.com",
   },
   {
     id: "realestate",
@@ -78,6 +83,7 @@ export const defaultIndustries: Industry[] = [
     desc: "Structured payments for property.",
     icon: "Building2",
     tag: "Assets",
+    href: "https://example-realestate.com",
   },
   {
     id: "family",
@@ -85,6 +91,7 @@ export const defaultIndustries: Industry[] = [
     desc: "Tailored scenarios under compliance.",
     icon: "Briefcase",
     tag: "Wealth",
+    href: "https://example-familyoffice.com",
   },
   {
     id: "law",
@@ -92,6 +99,7 @@ export const defaultIndustries: Industry[] = [
     desc: "KYC/AML aligned escrow & docs.",
     icon: "Scale",
     tag: "Legal",
+    href: "https://example-law.com",
   },
   {
     id: "metals",
@@ -99,6 +107,7 @@ export const defaultIndustries: Industry[] = [
     desc: "Crypto settlement for bullion.",
     icon: "Coins",
     tag: "Gold",
+    href: "https://example-metals.com",
   },
   {
     id: "exch",
@@ -106,5 +115,6 @@ export const defaultIndustries: Industry[] = [
     desc: "Liquidity routing & operations.",
     icon: "ShieldCheck",
     tag: "Ops",
+    href: "https://example-exchange.com",
   },
 ];
