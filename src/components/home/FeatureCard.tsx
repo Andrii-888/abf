@@ -20,7 +20,7 @@ export default function FeatureCard({ Icon, title, text, color }: Props) {
     >
       <div
         className="
-          rounded-2xl bg-white/85 backdrop-blur
+          card-clean
           px-4 py-4 sm:px-5 sm:py-5 lg:px-6 lg:py-6
           flex flex-col justify-start h-auto
         "

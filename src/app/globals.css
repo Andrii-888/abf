@@ -38,7 +38,13 @@ body {
     monospace;
 }
 
-/* ===== Универсальный фон страницы (как на Home) ===== */
+/* ===== Универсальный светлый фон (основной стиль сайта) ===== */
+.bg-page-light {
+  background-color: #fafafa; /* мягкий нейтральный фон */
+  background-image: none;
+}
+
+/* ===== Универсальный фон страницы ===== */
 .bg-gradient-page {
   background:
     linear-gradient(
@@ -50,6 +56,33 @@ body {
     linear-gradient(#ffffff, #ffffff);
   background-repeat: no-repeat;
   background-size: cover;
+}
+
+/* ===== Универсальная карточка (Process-style) ===== */
+.card-clean {
+  @apply rounded-2xl bg-white border border-slate-200/70 shadow-sm;
+}
+
+/* ===== Универсальная кнопка действия (Apple-style, лёгкая, адаптивная) ===== */
+.btn-main {
+  @apply relative inline-flex items-center justify-center gap-2
+  px-6 py-3 sm:px-7 sm:py-3.5 rounded-full
+  border border-black/10 bg-white
+  text-sm sm:text-base font-medium text-black
+  shadow-[0_1px_3px_rgba(0,0,0,0.08)]
+  transition-all duration-300 ease-out
+  hover:shadow-[0_4px_12px_rgba(0,0,0,0.12)] hover:-translate-y-[1px]
+  active:translate-y-0 active:opacity-90
+  focus:outline-none focus:ring-2 focus:ring-[#007AFF]/40;
+}
+
+/* Цвет текста и иконки — синие, как в фирменной гамме */
+.btn-main span {
+  @apply text-[#007AFF] transition group-hover:text-[#005FCC];
+}
+
+.btn-main svg {
+  @apply h-4 w-4 text-[#007AFF] transition group-hover:scale-110;
 }
 
 /* === Главная типографика === */

@@ -4,6 +4,7 @@ import { useTranslations, useLocale } from "next-intl";
 import Link from "next/link";
 import ClickShield from "../ClickShield";
 import QRCodeCard from "../qr/QRCodeCard";
+import { Mail } from "lucide-react";
 
 const SITE_URL = (
   process.env.NEXT_PUBLIC_SITE_URL || "https://alpinebridgefinance.vercel.app"
@@ -55,15 +56,10 @@ export default function HeroLeft() {
       </ul>
 
       {/* CTA + QR */}
-      <div className="mt-3 w-full flex flex-col sm:flex-row sm:items-center sm:gap-4">
-        <Link
-          href={`/${locale}/contact`}
-          className="block w-full sm:w-[260px] text-center rounded-xl px-5 py-3 text-sm sm:text-base font-medium
-                 bg-[var(--color-crypto)] text-white transition-transform duration-200 active:scale-[0.98]
-                 hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-0
-                 focus-visible:ring-[var(--color-crypto)]"
-        >
-          {t("ctaPrimary")}
+      <div className="mt-3 w-full flex flex-col sm:flex-row sm:items-center sm:gap-4 justify-center">
+        <Link href={`/${locale}/contact`} className="btn-main group">
+          <Mail className="h-4 w-4 text-[#007AFF] transition group-hover:scale-110" />
+          <span className="text-[#007AFF] group-hover:text-[#005FCC]">{t("ctaPrimary")}</span>
         </Link>
 
         {/* QR-код виден только на десктопе */}

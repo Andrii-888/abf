@@ -90,7 +90,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
   const industries = await loadIndustriesDict(loc);
 
   return (
-    <main className="relative min-h-[85vh] flex flex-col overflow-x-hidden items-center bg-gradient-page pt-14 md:pt-14 pb-16 md:pb-20">
+    <main className="relative min-h-[85vh] flex flex-col overflow-x-hidden items-center bg-page-light pt-14 md:pt-14 pb-16 md:pb-20">
       {/* Hero section */}
       <div className="mx-auto max-w-6xl px-4 grid grid-cols-1 md:grid-cols-2 items-center gap-10">
         <HeroLeft />
