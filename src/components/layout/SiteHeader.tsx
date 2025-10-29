@@ -1,3 +1,4 @@
+// src/components/layout/SiteHeader.tsx
 "use client";
 
 import Image from "next/image";
@@ -42,13 +43,12 @@ export default function SiteHeader() {
     return currentPath === target || currentPath.startsWith(target + "/");
   };
 
-  // Текущий язык: код для бейджа и человекочитаемое имя
+  // Текущий язык
   const shortCode = (locale || "en").split("-")[0].toUpperCase(); // EN / IT / RU
   const langLabel =
     LANGUAGES.find((l) => l.code === locale || l.code.toUpperCase() === shortCode)?.label ||
     shortCode;
 
-  // Безопасный перевод
   const safeT = (key?: string) => {
     if (!key) return "";
     try {
@@ -58,7 +58,7 @@ export default function SiteHeader() {
     }
   };
 
-  // Блокируем скролл при открытом меню + ESC закрывает
+  // Блокировка скролла и ESC для меню
   useEffect(() => {
     const prev = document.documentElement.style.overflow;
     document.documentElement.style.overflow = open ? "hidden" : prev || "";
@@ -82,11 +82,8 @@ export default function SiteHeader() {
                    bg-[linear-gradient(90deg,#f5f5f7cc,#f3f6ffcc,#f5f5f7cc)] backdrop-blur-md"
       >
         <div
-          className="
-            relative mx-auto flex h-full max-w-6xl items-center
-            justify-between
-            px-4 sm:px-6 md:px-8 lg:px-10
-          "
+          className="relative mx-auto flex h-full max-w-6xl items-center justify-between
+                     px-4 sm:px-6 md:px-8 lg:px-10"
         >
           {/* Логотип */}
           <Link
@@ -106,7 +103,7 @@ export default function SiteHeader() {
           </Link>
 
           {/* Меню (desktop) */}
-          <nav className="pointer-events-none md:pointer-events-auto absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 items-center gap-6 text-sm text-gray-700 md:flex">
+          <nav className="pointer-events-none md:pointer-events-auto absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 items-center gap-7 md:flex">
             {NAV_LINKS.map((i) => {
               const active = isActive(i.href);
               return (
@@ -114,12 +111,13 @@ export default function SiteHeader() {
                   key={i.href}
                   href={i.href}
                   aria-current={active ? "page" : undefined}
-                  className={`relative pb-1 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-black/30 rounded
-                    ${
-                      active
-                        ? "text-gray-900 after:absolute after:left-0 after:right-0 after:-bottom-0.5 after:h-0.5 after:rounded-full after:bg-gray-900"
-                        : "text-gray-700 hover:text-gray-900"
-                    }`}
+                  className={[
+                    "relative pb-1.5 rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-black/30",
+                    "text-[15px] font-semibold transition-colors",
+                    active
+                      ? "text-black after:absolute after:left-0 after:right-0 after:-bottom-0.5 after:h-[2px] after:rounded-full after:bg-[linear-gradient(90deg,var(--color-fiat),var(--color-crypto),var(--color-gold))]"
+                      : "text-black/70 hover:text-black",
+                  ].join(" ")}
                 >
                   {safeT(hrefToKey[i.href]) || i.label}
                 </Link>
@@ -129,7 +127,7 @@ export default function SiteHeader() {
 
           {/* Правый блок */}
           <div className="flex items-center gap-2 relative z-[220] shrink-0">
-            {/* Кнопка выбора языка — Globe + бейдж кода */}
+            {/* Кнопка выбора языка */}
             <Link
               href="/language"
               aria-label={`Language: ${langLabel}`}
@@ -145,6 +143,7 @@ export default function SiteHeader() {
               </span>
             </Link>
 
+            {/* Меню бургер */}
             <button
               type="button"
               aria-label="Open menu"
@@ -189,7 +188,11 @@ export default function SiteHeader() {
                   onClick={() => setOpen(false)}
                   aria-current={active ? "page" : undefined}
                   className={`transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-black/20 rounded-full
-                    ${active ? "text-gray-900 bg-black/5 px-5 py-2" : "hover:text-gray-600"}`}
+                    ${
+                      active
+                        ? "text-black font-semibold bg-black/5 px-6 py-2"
+                        : "text-gray-700 hover:text-black"
+                    }`}
                   style={{ transitionDelay: `${idx * 40}ms` }}
                 >
                   {safeT(hrefToKey[i.href]) || i.label}

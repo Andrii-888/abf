@@ -1,3 +1,4 @@
+// src/app/[locale]/services/page.tsx
 import { Link } from "@/i18n/routing";
 import { useTranslations } from "next-intl";
 
@@ -17,11 +18,10 @@ import { makePageMetadata } from "@/seo/factory";
 import { getProcessMeta } from "@/seo/meta";
 export const generateMetadata = makePageMetadata("/process", getProcessMeta);
 
-// ---- типы ключей для i18n (только то, что реально используется)
+// ---- типы ключей для i18n
 type BadgeId = "b1" | "b2" | "b3" | "b4";
 type ValueCardKey = "c1" | "c2" | "c3" | "c4" | "c5" | "c6";
 
-// ---- данные (без any)
 const badges: BadgeId[] = ["b1", "b2", "b3", "b4"];
 
 const valueCards: { Icon: LucideIcon; key: ValueCardKey }[] = [
@@ -47,8 +47,7 @@ export default function ServicesPage() {
                 className="
                   text-3xl sm:text-4xl font-bold tracking-tight
                   bg-gradient-to-r from-[var(--color-fiat)] via-[var(--color-crypto)] to-[var(--color-gold)]
-                  bg-clip-text text-transparent
-                  text-center sm:text-left
+                  bg-clip-text text-transparent text-center sm:text-left
                 "
               >
                 {t("hero.title")}
@@ -71,22 +70,18 @@ export default function ServicesPage() {
                 {t("hero.desc4")}
               </p>
 
+              {/* CTA кнопки */}
               <div className="mt-6 flex flex-wrap items-center gap-3 justify-center sm:justify-start">
-                <Link
-                  href="/contact"
-                  className="inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-semibold bg-black text-white hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-black/30"
-                >
-                  {t("hero.ctaPrimary")}
-                  <ChevronRight className="ml-1 h-4 w-4" />
+                {/* Фирменная */}
+                <Link href="/contact" className="btn-main">
+                  <span className="inline-flex items-center gap-2">
+                    {t("hero.ctaPrimary")}
+                    <ChevronRight className="h-4 w-4" />
+                  </span>
                 </Link>
-                <Link
-                  href="/process"
-                  className="
-                    inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-semibold
-                    bg-black/[0.05] hover:bg-black/[0.1] text-[var(--foreground)]
-                    focus:outline-none focus:ring-2 focus:ring-black/20
-                  "
-                >
+
+                {/* Вторая — нейтральная */}
+                <Link href="/process" className="btn-secondary">
                   {t("hero.ctaSecondary")}
                 </Link>
               </div>

@@ -28,8 +28,14 @@ export function ConsentCheckbox({
   const errId = `${id}-error`;
 
   return (
-    <div>
-      <label className="flex items-start gap-2 text-sm">
+    <div className="select-none">
+      <label
+        htmlFor={id}
+        className={clsx(
+          "flex items-start gap-2 text-sm",
+          disabled ? "cursor-not-allowed opacity-70" : "cursor-pointer",
+        )}
+      >
         <input
           id={id}
           name={name}
@@ -41,13 +47,25 @@ export function ConsentCheckbox({
           aria-invalid={!!error}
           aria-describedby={errId}
           className={clsx(
-            "mt-[2px] h-4 w-4 rounded border border-gray-400 text-gray-900 focus:ring-0 focus-visible:outline-none active:ring-0 transition-colors",
-            error && "border-red-500",
+            // базовый вид
+            "mt-[2px] h-5 w-5 rounded border border-slate-300 bg-white",
+            // фирменный синий чек (поддерживается в современных браузерах)
+            "accent-[#007AFF]",
+            // focus-кольцо в фирменном стиле
+            "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#007AFF]/40 focus-visible:ring-offset-2",
+            // состояния
+            disabled && "border-slate-200 accent-slate-300",
+            error && "border-red-500 focus-visible:ring-red-300",
           )}
         />
-        <span className={clsx(disabled && "opacity-60")}>{label}</span>
+        <span className="leading-5">
+          {label}
+          {/* скрытая для зрения пометка, полезно для скринридеров */}
+          <span className="sr-only"> — required</span>
+        </span>
       </label>
 
+      {/* helper / ошибка */}
       <span
         id={errId}
         aria-live="polite"
