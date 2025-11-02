@@ -65,7 +65,7 @@ export default async function ProcessPage({ params }: { params: Promise<{ locale
 
   return (
     <div className="w-full bg-page-light">
-      <div className="mx-auto max-w-6xl px-4 py-14">
+      <div className="mx-auto max-w-6xl px-4 py-2">
         {/* Заголовок */}
         <header className="mb-10 text-center">
           <h1 className="text-2xl sm:text-4xl font-bold tracking-tight bg-gradient-to-r from-[var(--color-fiat)] via-[var(--color-crypto)] to-[var(--color-gold)] bg-clip-text text-transparent">

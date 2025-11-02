@@ -31,8 +31,7 @@
   },
 
   "industries": {
-    "title": "Secteurs d’activité",
-    "subtitle": "Nous collaborons avec des partenaires réglementés dans les secteurs clés.",
+    "title": "Nos domaines de coopération",
     "items": [
       {
         "id": "banks",

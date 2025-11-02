@@ -72,7 +72,7 @@ export default async function PartnersPage({ params }: { params: Promise<{ local
   const dict = await loadDict(locale || "en");
 
   return (
-    <div className="mx-auto w-full max-w-6xl px-4 py-10">
+    <div className="mx-auto w-full max-w-6xl px-4 py-1">
       {/* Header */}
       <header className="mb-8 text-center">
         <h1 className="text-2xl sm:text-4xl font-bold tracking-tight bg-gradient-to-r from-[var(--color-fiat)] via-[var(--color-crypto)] to-[var(--color-gold)] bg-clip-text text-transparent">

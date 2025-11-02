@@ -70,7 +70,7 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
 
   return (
     <main className="w-full bg-page-light overflow-x-hidden">
-      <div className="mx-auto w-full max-w-6xl px-4 pt-10 pb-16">
+      <div className="mx-auto w-full max-w-6xl px-4 pt-0 pb-12">
         {/* Заголовок */}
         <header className="text-center mb-8 sm:mb-10">
           <h1 className="text-2xl sm:text-4xl font-bold tracking-tight bg-gradient-to-r from-[var(--color-fiat)] via-[var(--color-crypto)] to-[var(--color-gold)] bg-clip-text text-transparent">

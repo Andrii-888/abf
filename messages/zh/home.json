@@ -31,8 +31,7 @@
   },
 
   "industries": {
-    "title": "合作行业",
-    "subtitle": "我们与受监管的合作伙伴在关键领域开展合作。",
+    "title": "我们的合作领域",
     "items": [
       {
         "id": "banks",

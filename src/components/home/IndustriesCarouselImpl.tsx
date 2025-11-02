@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useCallback } from "react";
+import { useEffect, useMemo, useRef, useCallback, type CSSProperties } from "react";
 import clsx from "clsx";
 import { iconMap, defaultIndustries, type Industry } from "@/config/industries";
 
@@ -8,16 +8,14 @@ type Props = {
   items?: Industry[];
   className?: string;
   title?: string;
-  subtitle?: string;
-  speed?: number; // сек на один цикл анимации
-  pauseMs?: number; // мс паузы при наведении
+  speed?: number;
+  pauseMs?: number;
 };
 
 export default function IndustriesCarouselImpl({
   items = defaultIndustries,
   className,
   title = "Industries we work with",
-  subtitle = "We cooperate with regulated partners across key verticals.",
   speed = 36,
   pauseMs = 1200,
 }: Props) {
@@ -25,7 +23,7 @@ export default function IndustriesCarouselImpl({
   const trackRef = useRef<HTMLDivElement | null>(null);
   const pauseTimerRef = useRef<number | null>(null);
 
-  const maskStyle: React.CSSProperties = {
+  const maskStyle: CSSProperties = {
     WebkitMaskImage: "linear-gradient(to right, transparent, black 8%, black 92%, transparent)",
     maskImage: "linear-gradient(to right, transparent, black 8%, black 92%, transparent)",
   };
@@ -57,9 +55,10 @@ export default function IndustriesCarouselImpl({
   return (
     <section className={clsx("w-full overflow-x-hidden", className)}>
       <div className="mx-auto max-w-6xl px-4">
-        <div className="mb-4">
-          <h2 className="text-xl font-semibold tracking-tight sm:text-2xl">{title}</h2>
-          <p className="mt-1 text-sm text-slate-600">{subtitle}</p>
+        <div className="mb-12 -mt-4 sm:mt-0">
+          <h2 className="text-xl font-semibold tracking-tight text-center sm:text-left sm:text-2xl">
+            {title}
+          </h2>
         </div>
 
         <div className="relative overflow-hidden" style={maskStyle}>
@@ -123,7 +122,7 @@ export default function IndustriesCarouselImpl({
                     <a
                       href={it.href}
                       target="_blank"
-                      rel="noopener noreferrer"
+                      rel="noopener noreferrer sponsored"
                       aria-label={`${it.title} — open partner website`}
                       onMouseEnter={onCardEnter}
                       onFocus={onCardEnter}
@@ -150,11 +149,9 @@ export default function IndustriesCarouselImpl({
               from { transform: translateX(0); } 
               to { transform: translateX(-50%); } 
             }
-
             @media (prefers-reduced-motion: reduce) {
               .abf-track { animation: none !important; }
             }
-
             .line-clamp-3 {
               display: -webkit-box;
               -webkit-line-clamp: 3;

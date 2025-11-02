@@ -63,23 +63,27 @@ async function loadIndustriesDict(locale: string) {
     path.join(root, "messages", "en", "home.json"),
     path.join(root, "src", "messages", "en", "home.json"),
   ];
+
   for (const p of candidates) {
     const raw = await readIfExists(p);
-    if (raw) {
+    if (!raw) continue;
+
+    // защищаемся от потенциально битого JSON
+    try {
       const parsed = JSON.parse(raw);
       const block = parsed?.industries ?? {};
       return {
         title: String(block?.title ?? "Industries we work with"),
-        subtitle: String(
-          block?.subtitle ?? "We cooperate with regulated partners across key verticals.",
-        ),
         items: normalizeIndustries(block?.items ?? []),
       };
+    } catch {
+      // если JSON битый — пробуем следующий кандидат
+      continue;
     }
   }
+
   return {
     title: "Industries we work with",
-    subtitle: "We cooperate with regulated partners across key verticals.",
     items: normalizeIndustries([]),
   };
 }
@@ -90,7 +94,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
   const industries = await loadIndustriesDict(loc);
 
   return (
-    <main className="relative min-h-[85vh] flex flex-col overflow-x-hidden items-center bg-page-light pt-14 md:pt-14 pb-16 md:pb-20">
+    <main className="relative min-h-[85vh] flex flex-col overflow-x-hidden items-center bg-page-light pt-6 md:pt-14 pb-16 md:pb-20">
       {/* Hero section */}
       <div className="mx-auto max-w-6xl px-4 grid grid-cols-1 md:grid-cols-2 items-center gap-10">
         <HeroLeft />
@@ -98,13 +102,8 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       </div>
 
       {/* Industries Carousel section */}
-      <div className="mt-14 w-full">
-        <IndustriesCarousel
-          speed={38}
-          title={industries.title}
-          subtitle={industries.subtitle}
-          items={industries.items}
-        />
+      <div className="mt-4 sm:mt-8 w-full">
+        <IndustriesCarousel speed={38} title={industries.title} items={industries.items} />
       </div>
     </main>
   );
