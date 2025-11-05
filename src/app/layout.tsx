@@ -1,5 +1,6 @@
 // src/app/layout.tsx
 import "./globals.css";
+import SplashScreen from "@/components/splashscreen/SplashScreen";
 
 // определяем базовый URL (prod → из ENV, иначе локальный)
 const siteUrl =
@@ -7,7 +8,7 @@ const siteUrl =
   (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000");
 
 export const metadata = {
-  metadataBase: new URL(siteUrl), // ← главное: база для OG/Twitter
+  metadataBase: new URL(siteUrl),
 
   title: "AlpineBridgeFinance",
   description:
@@ -26,9 +27,9 @@ export const metadata = {
     title: "AlpineBridgeFinance",
     description:
       "Your trusted Swiss bridge between crypto, fiat, and gold — secure, transparent, and compliant.",
-    url: "/", // будет резолвиться относительно metadataBase
+    url: "/",
     siteName: "AlpineBridgeFinance",
-    images: ["/og.png"], 
+    images: ["/og.png"],
     locale: "en_US",
     type: "website",
   },
@@ -38,7 +39,7 @@ export const metadata = {
     title: "AlpineBridgeFinance",
     description:
       "Your trusted bridge between crypto, fiat, and gold — secure Swiss-compliant exchanges.",
-    images: ["/og.png"], // тот же файл можно использовать
+    images: ["/og.png"],
   },
 };
 
@@ -46,13 +47,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" translate="no" suppressHydrationWarning>
       <head>
-        {/* дублируем фавиконки для надёжности и сброса кэша */}
         <link rel="icon" href="/favicon.ico?v=4" sizes="any" />
         <link rel="icon" type="image/png" href="/favicon-32.png?v=4" sizes="32x32" />
         <link rel="icon" type="image/png" href="/favicon-16.png?v=4" sizes="16x16" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=4" />
       </head>
-      <body className="font-sans">{children}</body>
+      <body className="font-sans">
+        <SplashScreen durationMs={3500} />
+        {children}
+      </body>
     </html>
   );
 }

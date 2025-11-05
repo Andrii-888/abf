@@ -2,7 +2,6 @@ import { NextIntlClientProvider } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import getRequestConfig from "@/i18n/request";
 import Chrome from "@/components/layout/Chrome";
-import SplashScreen from "@/components/splashscreen/SplashScreen";
 
 export default async function LocaleLayout({
   children,
@@ -40,7 +39,6 @@ export default async function LocaleLayout({
   // --- 4. Возвращаем разметку
   return (
     <NextIntlClientProvider key={locale} locale={locale} messages={messages}>
-      <SplashScreen durationMs={3500} />
       <Chrome>{children}</Chrome>
     </NextIntlClientProvider>
   );
