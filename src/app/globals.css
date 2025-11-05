@@ -17,6 +17,46 @@ body {
   --color-crypto: #1abc9c;
   --color-fiat: #c0392b;
 
+  /* ===== Brand gradient title (full-width, centered) ===== */
+  .brand-gradient-title {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+
+    /* типографика */
+    font-weight: 700; /* font-bold */
+    line-height: 1.18; /* leading-[1.18] */
+    letter-spacing: -0.01em; /* tracking-tight */
+    padding-bottom: 0.25rem; /* pb-1 */
+
+    /* размеры: text-3xl / lg:text-4xl */
+    font-size: 1.875rem; /* 30px */
+  }
+  @media (min-width: 1024px) {
+    .brand-gradient-title {
+      font-size: 2.25rem; /* 36px */
+    }
+  }
+
+  /* градиент из твоих переменных */
+  .brand-gradient-title {
+    background-image: var(--gradient-brand);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* опционально: утилита, если захочешь градиент на любом тексте */
+  .text-brand-gradient {
+    background-image: var(--gradient-brand);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+  }
+
   /* 🌈 брендовый градиент */
   --gradient-brand: linear-gradient(
     90deg,
@@ -56,6 +96,13 @@ body {
     linear-gradient(#ffffff, #ffffff);
   background-repeat: no-repeat;
   background-size: cover;
+}
+
+/* Disable motion for users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .splash-root {
+    transition: none !important;
+  }
 }
 
 /* ===== Универсальная карточка (Process-style) ===== */

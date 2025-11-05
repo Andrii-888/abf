@@ -17,20 +17,7 @@ export default function HeroLeft() {
   return (
     <div className="flex flex-col items-start gap-5 max-w-lg mt-[1rem] sm:mt-[-4rem]">
       {/* Brand */}
-      <h1
-        className="
-          block mx-auto
-          text-3xl sm:text-3xl lg:text-4xl font-bold tracking-tight leading-[1.18]
-          pb-1
-          bg-gradient-to-r from-[var(--color-fiat)] via-[var(--color-crypto)] to-[var(--color-gold)]
-          bg-clip-text text-transparent [-webkit-text-fill-color:transparent]
-          text-center
-          sm:mt-6
-          md:w-full md:text-center md:mt-10
-        "
-      >
-        AlpineBridgeFinance
-      </h1>
+      <h1 className="brand-gradient-title">AlpineBridgeFinance</h1>
 
       {/* Slogan */}
       <p className="text-base sm:text-lg md:text-xl text-gray-900">{t("slogan")}</p>
