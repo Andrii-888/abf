@@ -2,6 +2,7 @@ import { NextIntlClientProvider } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import getRequestConfig from "@/i18n/request";
 import Chrome from "@/components/layout/Chrome";
+import ClientRedirectOnReload from "@/components/ClientRedirectOnReload";
 
 export default async function LocaleLayout({
   children,
@@ -39,7 +40,14 @@ export default async function LocaleLayout({
   // --- 4. Возвращаем разметку
   return (
     <NextIntlClientProvider key={locale} locale={locale} messages={messages}>
-      <Chrome>{children}</Chrome>
+      <Chrome>
+        <ClientRedirectOnReload
+          homePath={`/${locale}`}
+          disableLocaleGuard
+          excludePrefixes={[`/${locale}/language`]}
+        />
+        {children}
+      </Chrome>
     </NextIntlClientProvider>
   );
 }

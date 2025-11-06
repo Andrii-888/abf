@@ -54,137 +54,67 @@ Each folder contains JSON dictionaries: home.json, services.json, footer.json, e
 They are combined via an index.ts file exporting all translations per locale.
 
 📂 Project Structure
-.
-├── eslint.config.mjs
-├── messages
-│ ├── de
-│ │ ├── contact.json
-│ │ ├── footer.json
-│ │ ├── header.json
-│ │ ├── home.json
-│ │ ├── index.ts
-│ │ ├── language.json
-│ │ ├── nav.json
-│ │ ├── partners.json
-│ │ ├── privacy.json
-│ │ ├── process.json
-│ │ ├── services.json
-│ │ └── terms.json
-│ ├── en
-│ │ ├── contact.json
-│ │ ├── footer.json
-│ │ ├── header.json
-│ │ ├── home.json
-│ │ ├── index.ts
-│ │ ├── language.json
-│ │ ├── nav.json
-│ │ ├── partners.json
-│ │ ├── privacy.json
-│ │ ├── process.json
-│ │ ├── services.json
-│ │ └── terms.json
-│ ├── fr
-│ │ ├── contact.json
-│ │ ├── footer.json
-│ │ ├── header.json
-│ │ ├── home.json
-│ │ ├── index.ts
-│ │ ├── language.json
-│ │ ├── nav.json
-│ │ ├── partners.json
-│ │ ├── privacy.json
-│ │ ├── process.json
-│ │ ├── services.json
-│ │ └── terms.json
-│ ├── it
-│ │ ├── contact.json
-│ │ ├── footer.json
-│ │ ├── header.json
-│ │ ├── home.json
-│ │ ├── index.ts
-│ │ ├── language.json
-│ │ ├── nav.json
-│ │ ├── partners.json
-│ │ ├── privacy.json
-│ │ ├── process.json
-│ │ ├── services.json
-│ │ └── terms.json
-│ ├── ru
-│ │ ├── contact.json
-│ │ ├── footer.json
-│ │ ├── header.json
-│ │ ├── home.json
-│ │ ├── index.ts
-│ │ ├── language.json
-│ │ ├── nav.json
-│ │ ├── partners.json
-│ │ ├── privacy.json
-│ │ ├── process.json
-│ │ ├── services.json
-│ │ └── terms.json
-│ └── zh
-│ ├── contact.json
-│ ├── footer.json
-│ ├── header.json
-│ ├── home.json
-│ ├── index.ts
-│ ├── language.json
-│ ├── nav.json
-│ ├── partners.json
-│ ├── privacy.json
-│ ├── process.json
-│ ├── services.json
-│ └── terms.json
-├── next-env.d.ts
-├── next-sitemap.config.js
-├── next.config.mjs
-├── package-lock.json
-├── package.json
-├── postcss.config.mjs
-├── public
-│ ├── favicon.ico
-│ ├── images
-│ │ └── showcase
-│ ├── logo.png
-│ ├── og.png
-│ ├── robots.txt
-│ └── sitemap.xml
-├── README.md
-├── scripts
-│ └── generate-og.mjs
-├── src
-│ ├── app
-│ │ ├── [locale]
-│ │ ├── api
-│ │ ├── globals.css
-│ │ ├── layout.tsx
-│ │ ├── open
-│ │ └── page.tsx
-│ ├── components
-│ │ ├── ClickShield.tsx
-│ │ ├── home
-│ │ ├── layout
-│ │ ├── qr
-│ │ └── ui
-│ ├── config
-│ │ ├── features.ts
-│ │ ├── languages.ts
-│ │ └── nav.ts
-│ ├── i18n
-│ │ ├── navigation.ts
-│ │ ├── request.ts
-│ │ └── routing.ts
-│ ├── middleware.ts
-│ ├── seo
-│ │ ├── factory.ts
-│ │ ├── helpers.ts
-│ │ └── meta.ts
-│ └── utils
-│ └── validation
-├── tsconfig.json
-└── tsconfig.tsbuildinfo
+andrei@MacBookAir abf % tree -L 3 src
 
-27 directories, 102 files
+src
+├── app
+│ ├── [locale]
+│ │ ├── contact
+│ │ ├── language
+│ │ ├── layout.tsx
+│ │ ├── legal
+│ │ ├── page.tsx
+│ │ ├── partners
+│ │ ├── process
+│ │ └── services
+│ ├── api
+│ │ └── contact
+│ ├── globals.css
+│ ├── layout.tsx
+│ ├── open
+│ │ ├── layout.tsx
+│ │ └── page.tsx
+│ └── page.tsx
+├── components
+│ ├── ClickShield.tsx
+│ ├── home
+│ │ ├── FeatureCard.tsx
+│ │ ├── HeroLeft.tsx
+│ │ ├── HeroRight.tsx
+│ │ ├── IndustriesCarousel.client.tsx
+│ │ └── IndustriesCarouselImpl.tsx
+│ ├── layout
+│ │ ├── Chrome.tsx
+│ │ ├── SiteFooter.tsx
+│ │ └── SiteHeader.tsx
+│ ├── partners
+│ │ ├── PartnersBelowFold.client.tsx
+│ │ └── PartnersBelowFoldImpl.tsx
+│ ├── qr
+│ │ └── QRCodeCard.tsx
+│ ├── splashscreen
+│ │ └── SplashScreen.tsx
+│ └── ui
+│ └── Toast.tsx
+├── config
+│ ├── features.ts
+│ ├── industries.ts
+│ ├── languages.ts
+│ └── nav.ts
+├── i18n
+│ ├── navigation.ts
+│ ├── request.ts
+│ └── routing.ts
+├── middleware.ts
+├── seo
+│ ├── factory.ts
+│ ├── helpers.ts
+│ └── meta.ts
+└── utils
+└── validation
+└── contact.schema.ts
+
+24 directories, 33 files
 
 🧱 Development Commands
 Command Description
