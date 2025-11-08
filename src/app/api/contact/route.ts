@@ -11,7 +11,6 @@ const Body = z.object({
   message: z.string().trim().min(10).max(2000),
   company: z.string().optional(), // honeypot
 });
-
 type BodyInput = z.infer<typeof Body>;
 
 function escapeHtml(s: string) {
@@ -29,7 +28,7 @@ function flattenZod(err: z.ZodError) {
 }
 
 async function sendViaSmtp(payload: BodyInput) {
-  // honeypot: если заполнено — удача, но не отправляем
+  // honeypot: если поле-ловушка заполнено — “успешно”, но не шлём
   if (payload.company && payload.company.trim() !== "") {
     return { ok: true as const, skipped: "honeypot" };
   }
@@ -40,7 +39,7 @@ async function sendViaSmtp(payload: BodyInput) {
   const user = process.env.SMTP_USER!;
   const pass = process.env.SMTP_PASS!;
   const to = process.env.CONTACT_TO!;
-  const from = process.env.MAIL_FROM || `Contact <${user}>`;
+  const from = process.env.MAIL_FROM || `Contact <${user}>`; // красивый “From”
 
   if (!host || !user || !pass || !to) {
     throw new Error("SMTP config missing: check SMTP_HOST/PORT/USER/PASS and CONTACT_TO");
@@ -50,11 +49,22 @@ async function sendViaSmtp(payload: BodyInput) {
   const transporter = nodemailer.createTransport({
     host,
     port,
-    secure, // 465 — true (SSL), 587 — false (STARTTLS)
+    secure, // 465 — SSL, 587 — STARTTLS
     auth: { user, pass },
-    // Иногда провайдеры требуют явного TLS
+    requireTLS: !secure, // на 587 обычно нужен STARTTLS
     tls: { minVersion: "TLSv1.2" },
+    connectionTimeout: 15_000,
+    greetingTimeout: 15_000,
+    socketTimeout: 20_000,
   });
+
+  // Явная проверка соединения/аутентификации — даст понятную ошибку
+  try {
+    await transporter.verify();
+  } catch (e: unknown) {
+    const err = e as { message?: string };
+    throw new Error(`SMTP connection failed: ${err.message ?? "verify() error"}`);
+  }
 
   const subject = `New contact message: ${payload.name}`;
   const html = `
@@ -68,7 +78,15 @@ async function sendViaSmtp(payload: BodyInput) {
   `;
   const text = `Site: ${process.env.SITE_NAME || "Website"}\nName: ${payload.name}\nEmail: ${payload.fromEmail}\n\n${payload.message}`;
 
+  // envelope.from = реальный аутентифицированный пользователь (Return-Path)
   const info = await transporter.sendMail({
+    envelope: {
+      from: user,
+      to: to
+        .split(",")
+        .map((s) => s.trim())
+        .filter(Boolean),
+    },
     from,
     to,
     subject,
@@ -82,7 +100,7 @@ async function sendViaSmtp(payload: BodyInput) {
 
 export async function POST(req: Request) {
   try {
-    const json = (await req.json()) as unknown;
+    const json = (await req.json()) as Record<string, unknown>;
     const parsed = Body.safeParse(json);
     if (!parsed.success) {
       return NextResponse.json({ ok: false, errors: flattenZod(parsed.error) }, { status: 400 });
@@ -90,11 +108,12 @@ export async function POST(req: Request) {
 
     const result = await sendViaSmtp(parsed.data);
     return NextResponse.json({ ok: true, meta: result }, { status: 200 });
-  } catch (e) {
+  } catch (e: unknown) {
+    const err = e as { message?: string };
     // eslint-disable-next-line no-console
-    console.error("contact api error:", e);
+    console.error("contact api error:", err.message ?? e);
     return NextResponse.json(
-      { ok: false, errors: { _form: "Email send failed" } },
+      { ok: false, errors: { _form: err.message ?? "Email send failed" } },
       { status: 500 },
     );
   }

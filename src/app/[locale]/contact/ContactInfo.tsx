@@ -1,8 +1,7 @@
-// src/app/[locale]/contact/ContactInfo.tsx
 "use client";
 
-import { Mail, MapPin, Copy, Clock, Globe, ExternalLink, IdCard } from "lucide-react";
-import { FaWhatsapp, FaTelegramPlane } from "react-icons/fa";
+import { MapPin, Copy, Clock, Globe, ExternalLink, IdCard } from "lucide-react";
+import { FaWhatsapp, FaTelegramPlane, FaEnvelope } from "react-icons/fa";
 import Toast from "@/components/ui/Toast";
 import { useState } from "react";
 
@@ -20,7 +19,10 @@ type InfoDict = {
 };
 
 export default function ContactInfo({ dict }: { dict: InfoDict }) {
-  const email = "info.alpinebf@mail.ch";
+  // Email
+  const email = "info@alpinebf.com";
+  const subject = encodeURIComponent(dict.emailSubject);
+  const mailto = `mailto:${email}?subject=${subject}`;
 
   // WhatsApp
   const phonePretty = "+41 76 475 74 08";
@@ -32,15 +34,11 @@ export default function ContactInfo({ dict }: { dict: InfoDict }) {
   const tgHandle = "andrii_tsq";
   const tgLink = `https://t.me/${tgHandle}`;
 
-  // Email
-  const subject = encodeURIComponent(dict.emailSubject);
-  const mailto = `mailto:${email}?subject=${subject}`;
-
-  // Карта (можно заменить на точный Google Maps URL)
+  // Карта
   const mapsLink =
     "https://www.google.com/maps/search/?api=1&query=Lugano%2C+Ticino%2C+Switzerland";
 
-  // vCard (если будет свой файл — положи в /public и поменяй href)
+  // vCard
   const vcardHref = "/contact.vcf";
 
   const [toastOpen, setToastOpen] = useState(false);
@@ -59,7 +57,7 @@ export default function ContactInfo({ dict }: { dict: InfoDict }) {
       {/* Лид */}
       <p className="text-center text-base sm:text-lg text-gray-600">{dict.lead}</p>
 
-      {/* Каналы связи — по центру */}
+      {/* Контакты */}
       <div className="flex flex-col items-center gap-4">
         {/* Email */}
         <div className="flex items-center gap-2">
@@ -68,7 +66,8 @@ export default function ContactInfo({ dict }: { dict: InfoDict }) {
             className="flex items-center gap-2 text-gray-800 hover:text-gray-900 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-300 rounded"
             title={email}
           >
-            <Mail className="w-5 h-5 text-[#007AFF]" />
+            {/* Красный конверт (в стиле Infomaniak) */}
+            <FaEnvelope className="w-5 h-5 text-[#F04438]" />
             <span>{email}</span>
           </a>
           <button
@@ -149,7 +148,7 @@ export default function ContactInfo({ dict }: { dict: InfoDict }) {
       {/* Разделитель */}
       <hr className="border-t border-black/10" />
 
-      {/* Инфоблоки: часы работы, SLA, языки */}
+      {/* Инфоблоки */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         {/* Часы работы */}
         <div className="rounded-xl border border-black/10 bg-white/90 p-4 text-center">
@@ -164,10 +163,10 @@ export default function ContactInfo({ dict }: { dict: InfoDict }) {
           </p>
         </div>
 
-        {/* Срок ответа */}
+        {/* Время ответа */}
         <div className="rounded-xl border border-black/10 bg-white/90 p-4 text-center">
           <div className="flex items-center justify-center gap-2 text-sm font-medium">
-            <Mail className="w-4 h-4 text-[#007AFF]" />
+            <FaEnvelope className="w-4 h-4 text-[#F04438]" />
             Response time
           </div>
           <p className="mt-2 text-sm text-gray-700">
