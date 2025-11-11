@@ -1,9 +1,8 @@
-# *
 User-agent: *
 Allow: /
 
 # Host
-Host: https://abf-blfh.vercel.app
+Host: https://alpinebf.com
 
-# Sitemaps
-Sitemap: https://abf-blfh.vercel.app/sitemap.xml
+# Sitemap
+Sitemap: https://alpinebf.com/sitemap.xml

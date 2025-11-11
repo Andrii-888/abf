@@ -27,69 +27,6 @@ function flattenZod(err: z.ZodError) {
   return out;
 }
 
-/** Брендовый HTML-шаблон письма администратору */
-function buildAdminHtml(params: { site: string; name: string; email: string; message: string }) {
-  const { site, name, email, message } = params;
-
-  // фирменные цвета ABF
-  const gold = "#d4af37";
-  const emerald = "#1abc9c";
-  const wine = "#c0392b";
-
-  return `
-  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f7f7f8;padding:24px;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif">
-    <tr>
-      <td align="center">
-        <table role="presentation" width="640" cellspacing="0" cellpadding="0" style="background:#ffffff;border-radius:14px;box-shadow:0 10px 30px rgba(0,0,0,0.06);overflow:hidden">
-          <!-- header -->
-          <tr>
-            <td style="padding:20px 24px;background:linear-gradient(135deg, ${gold}, ${emerald});color:#111;font-weight:600">
-              <div style="font-size:16px;letter-spacing:0.3px">Alpine Bridge Finance</div>
-              <div style="font-size:13px;opacity:.8">${escapeHtml(site)} — Contact form</div>
-            </td>
-          </tr>
-
-          <!-- body -->
-          <tr>
-            <td style="padding:24px">
-              <div style="font-size:18px;font-weight:600;margin-bottom:12px;color:#111">New message from website</div>
-
-              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="font-size:14px;color:#111">
-                <tr>
-                  <td style="width:120px;color:#555;padding:6px 0">Name:</td>
-                  <td style="padding:6px 0"><strong>${escapeHtml(name)}</strong></td>
-                </tr>
-                <tr>
-                  <td style="color:#555;padding:6px 0">Email:</td>
-                  <td style="padding:6px 0"><a href="mailto:${escapeHtml(email)}" style="color:${wine};text-decoration:none">${escapeHtml(email)}</a></td>
-                </tr>
-                <tr>
-                  <td style="color:#555;padding:10px 0;vertical-align:top">Message:</td>
-                  <td style="padding:10px 0">
-                    <div style="border-left:3px solid #eee;padding-left:12px;white-space:pre-wrap;line-height:1.6">
-                      ${escapeHtml(message)}
-                    </div>
-                  </td>
-                </tr>
-              </table>
-            </td>
-          </tr>
-
-          <!-- footer -->
-          <tr>
-            <td style="padding:16px 24px;background:#fafafa;border-top:1px solid #eee;color:#666;font-size:12px">
-              Sent securely via SMTP (Infomaniak). Replying to this email will reach the sender.
-            </td>
-          </tr>
-        </table>
-
-        <div style="font-size:11px;color:#9aa1a6;margin-top:12px">© ${new Date().getFullYear()} Alpine Bridge Finance, Lugano</div>
-      </td>
-    </tr>
-  </table>
-  `;
-}
-
 async function sendViaSmtp(payload: BodyInput) {
   // honeypot: если поле-ловушка заполнено — “успешно”, но не шлём
   if (payload.company && payload.company.trim() !== "") {
@@ -121,7 +58,7 @@ async function sendViaSmtp(payload: BodyInput) {
     socketTimeout: 20_000,
   });
 
-  // Явная проверка соединения/аутентификации — даст понятную ошибку
+  // Проверка соединения/аутентификации
   try {
     await transporter.verify();
   } catch (e: unknown) {
@@ -129,16 +66,44 @@ async function sendViaSmtp(payload: BodyInput) {
     throw new Error(`SMTP connection failed: ${err.message ?? "verify() error"}`);
   }
 
-  const subject = `ABF • Contact: ${payload.name}`;
-  const html = buildAdminHtml({
-    site: process.env.SITE_NAME || "Website",
-    name: payload.name,
-    email: payload.fromEmail,
-    message: payload.message,
-  });
+  const siteName = escapeHtml(process.env.SITE_NAME || "Website");
+
+  const subject = `New contact message: ${payload.name}`;
+
+  // --- HTML письмо с фиксированной подписью AlpineBridgeFinance ---
+  const html = `
+    <div style="font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial; line-height:1.55; color:#111;">
+      <h2 style="margin:0 0 12px;">${siteName} — Contact form</h2>
+
+      <p style="margin:0 0 6px;"><strong>Name:</strong> ${escapeHtml(payload.name)}</p>
+      <p style="margin:0 0 6px;"><strong>Email:</strong> ${escapeHtml(payload.fromEmail)}</p>
+      <p style="margin:8px 0 4px;"><strong>Message:</strong></p>
+      <pre style="margin:0; padding:10px 12px; background:#f7f7f8; border-radius:8px; white-space:pre-wrap;">${escapeHtml(
+        payload.message,
+      )}</pre>
+
+      <hr style="border:none; border-top:1px solid #e6e6e6; margin:18px 0 12px;" />
+
+      <div style="font-size:13px; color:#444;">
+        <div><strong>AlpineBridgeFinance</strong></div>
+        <div>CH - 6900 Lugano</div>
+        <div><a href="mailto:info@alpinebf.com" style="color:#444; text-decoration:none;">info@alpinebf.com</a></div>
+        <div><a href="https://www.alpinebf.com" target="_blank" rel="noopener" style="color:#444; text-decoration:none;">https://www.alpinebf.com</a></div>
+      </div>
+    </div>
+  `;
+
+  // --- Плейн-текст версия с той же подписью ---
   const text =
     `Site: ${process.env.SITE_NAME || "Website"}\n` +
-    `Name: ${payload.name}\nEmail: ${payload.fromEmail}\n\n${payload.message}`;
+    `Name: ${payload.name}\n` +
+    `Email: ${payload.fromEmail}\n\n` +
+    `${payload.message}\n\n` +
+    `--\n` +
+    `AlpineBridgeFinance\n` +
+    `CH - 6900 Lugano\n` +
+    `info@alpinebf.com\n` +
+    `https://www.alpinebf.com`;
 
   // envelope.from = реальный аутентифицированный пользователь (Return-Path)
   const info = await transporter.sendMail({
