@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import HeroLeft from "@/components/home/HeroLeft";
 import HeroRight from "@/components/home/HeroRight";
 import IndustriesCarousel from "@/components/home/IndustriesCarousel.client";
-import { languagesAlternates, ogLocale, normalizeLocale } from "@/seo/helpers";
+import { normalizeLocale, buildPageMetadata } from "@/seo/helpers";
 import { getHomeMeta } from "@/seo/meta";
 
 // ⬇️ минимально: читаем JSON индустрий и нормализуем
@@ -21,29 +21,8 @@ export async function generateMetadata({
   const loc = normalizeLocale(locale);
   const meta = getHomeMeta(loc);
 
-  return {
-    title: meta.title,
-    description: meta.description,
-    alternates: {
-      canonical: `/${loc}`,
-      languages: languagesAlternates(""),
-    },
-    openGraph: {
-      title: meta.title,
-      description: meta.description,
-      url: `/${loc}`,
-      locale: ogLocale(loc),
-      siteName: "Alpine Bridge Finance",
-      type: "website",
-      images: ["/og.png"],
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: meta.title,
-      description: meta.description,
-      images: ["/og.png"],
-    },
-  };
+  // ✅ canonical + hreflang (с доменом), OG/Twitter, robots — через helper
+  return buildPageMetadata(meta, loc, "/");
 }
 
 async function readIfExists(p: string) {

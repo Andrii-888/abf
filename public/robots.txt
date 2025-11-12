@@ -2,7 +2,7 @@ User-agent: *
 Allow: /
 
 # Host
-Host: https://alpinebf.com
+Host: https://www.alpinebf.com
 
 # Sitemap
-Sitemap: https://alpinebf.com/sitemap.xml
+Sitemap: https://www.alpinebf.com/sitemap.xml

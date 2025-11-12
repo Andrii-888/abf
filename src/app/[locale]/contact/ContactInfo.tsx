@@ -31,7 +31,7 @@ export default function ContactInfo({ dict }: { dict: InfoDict }) {
   const waLink = `https://wa.me/${phoneRaw}?text=${waText}`;
 
   // Telegram
-  const tgHandle = "andrii_tsq";
+  const tgHandle = "alpinebf";
   const tgLink = `https://t.me/${tgHandle}`;
 
   // Карта
