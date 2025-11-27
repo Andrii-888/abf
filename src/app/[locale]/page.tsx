@@ -11,6 +11,9 @@ import { promises as fs } from "node:fs";
 import path from "node:path";
 import { normalizeIndustries } from "@/config/industries";
 
+// 🔹 новый блок-презентация для интернет-магазинов
+import PresentationSection from "@/components/presentation-section";
+
 // Next 15: params — асинхронные
 export async function generateMetadata({
   params,
@@ -73,16 +76,21 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
   const industries = await loadIndustriesDict(loc);
 
   return (
-    <main className="relative min-h-[85vh] flex flex-col overflow-x-hidden items-center bg-page-light pt-6 md:pt-14 pb-16 md:pb-20">
+    <main className="relative flex min-h-[85vh] flex-col items-center overflow-x-hidden bg-page-light pt-6 pb-16 md:pt-14 md:pb-20">
       {/* Hero section */}
-      <div className="mx-auto max-w-6xl px-4 grid grid-cols-1 md:grid-cols-2 items-center gap-10">
+      <div className="mx-auto grid max-w-6xl grid-cols-1 items-center gap-10 px-4 md:grid-cols-2">
         <HeroLeft />
         <HeroRight />
       </div>
 
       {/* Industries Carousel section */}
-      <div className="mt-4 sm:mt-8 w-full">
+      <div className="mt-4 w-full sm:mt-8">
         <IndustriesCarousel speed={38} title={industries.title} items={industries.items} />
+      </div>
+
+      {/* Presentation section — блок для владельцев интернет-магазинов */}
+      <div className="mt-10 w-full">
+        <PresentationSection />
       </div>
     </main>
   );
