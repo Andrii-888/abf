@@ -54,13 +54,37 @@ export default function PresentationSection() {
               in Europe, Switzerland and abroad.
             </p>
 
-            <div className="flex justify-center lg:justify-start">
+            <div
+              className="
+    flex flex-col items-center gap-3 
+    lg:flex-row lg:items-center
+  "
+            >
+              {/* 🔵 Кнопка: открыть презентацию */}
               <Link
                 href="/en/presentation"
-                className="inline-flex rounded-full bg-black px-6 py-3 text-sm font-medium text-white shadow hover:bg-gray-900"
+                className="
+      inline-flex justify-center rounded-full bg-black 
+      px-6 py-3 text-sm font-medium text-white shadow 
+      hover:bg-gray-900 w-full lg:w-auto
+    "
               >
                 Open detailed presentation
               </Link>
+
+              {/* 🟦 Новая кнопка: демо интеграция */}
+              <a
+                href="https://crypto-pay-iota.vercel.app"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="
+      inline-flex justify-center rounded-full border border-gray-700 
+      px-6 py-3 text-sm font-medium text-gray-800 
+      hover:bg-gray-100 w-full lg:w-auto
+    "
+              >
+                Try Crypto Pay Demo →
+              </a>
             </div>
           </div>
 
